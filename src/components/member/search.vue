@@ -1,0 +1,212 @@
+<template>
+  <div class="search-panel">
+    <el-row class="m-header-searchbar">
+      <el-col :span="3" class="left">
+        <img src="@/assets/img/sport.jpg" alt />
+      </el-col>
+
+      <el-col :span="15" class="searchBar">
+        <div class="searchBar-wrapper">
+          <!-- v-model @focus @blur @input -->
+          <el-input
+            v-model="searchWord"
+            placeholder="请输入内容"
+            @focus="focus"
+            @blur="blur"
+            @input="input"
+          ></el-input>
+          <el-button type="primary" icon="el-icon-search">搜索</el-button>
+ 
+          <!-- 输入关键词的展示 -->
+          <!-- v-if -->
+          <dl class="searchList" v-if="isSearchList">
+            <dd v-for="(item,index) in searchList" :key="index">
+              <!-- params -->
+              <router-link :to="{name:'goods',params:{name:item}}">{{item}}</router-link>
+            </dd>
+          </dl>
+        </div>
+
+        <p class="suggest">
+          <a v-for="(item,index) in suggestList" :key="index" href="#">{{item}}</a>
+        </p>
+      </el-col>
+    </el-row>
+  </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      searchWord: "",
+      // isHotPlace:false,
+      // isSearchList:false,
+      isFocus: false,
+      searchList: [],
+      suggestList: ["哑铃爱好","腹肌撕裂","腿部专训","综合"]
+    };
+  },
+//   created() {
+//     api.getSearchHotList().then(res => {
+//       this.hotPlaceList = res.data.data;
+//       this.suggestList = res.data.data;
+//     });
+//   },
+  computed: {
+    isHotPlace() {
+      return this.isFocus && !this.searchWord;
+    },
+    isSearchList() {
+      return this.isFocus && this.searchWord;
+    }
+  },
+  methods: {
+    focus() {
+      this.isFocus = true;
+    },
+    blur() {
+      let self = this;
+      //延迟触发blur，这样在点击关键字的时候才会跳转，不然先blur了，点击就无效
+      setTimeout(function() {
+        self.isFocus = false;
+      }, 200);
+    },
+    input(){
+
+    }
+    // input() {
+    //   api.getSearchList().then(res => {
+    //     this.searchList = res.data.data.list.filter(item => {
+    //       return item.indexOf(this.searchWord) > -1;
+    //     });
+    //   });
+    // }
+  },
+//   watch: {
+//     "$route.params.name": function() {
+//       this.searchWord = this.$route.params.name;
+//     }
+//   }
+};
+</script>
+<style lang="scss">
+.m-header-searchbar {
+  padding: 10px 20px;
+  background-color:azure;
+  align-items: start;
+  box-sizing: border-box;
+  border-bottom: black;
+  .left {
+    width: 280px;
+    padding-top: 15px;
+    img {
+      margin-left:140px;
+      margin-top: -20px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+  }
+  .searchBar {
+    flex: 1;
+    width: auto;
+    .searchBar-wrapper {
+      margin-top: 16px;
+      border: 1px solid #13d1be;
+      border-radius: 4px;
+      width: 552px;
+      box-sizing: border-box;
+      position: relative;
+      white-space: nowrap;
+      .el-input {
+        width: 462px;
+      }
+      input {
+        border: none;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .el-button {
+        width: 88px;
+        border: none;
+        background:cornflowerblue;
+        font-size: 16px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        vertical-align: -1px;
+        i {
+          font-weight: bold;
+        }
+      }
+      .hotPlace,
+      .searchList {
+        position: absolute;
+        top: 41px;
+        left: 0;
+        background: #fff;
+        padding: 10px;
+        font-size: 12px;
+        width: 462px;
+        box-sizing: border-box;
+        border: 1px solid #e5e5e5;
+        border-top: none;
+        z-index: 999;
+        box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.1);
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+
+        dt {
+          color: #999;
+          font-weight: bold;
+        }
+
+        dd {
+          display: inline-block;
+          color: #666;
+          margin-right: 10px;
+          margin-bottom: 3px;
+          margin-top: 5px;
+          cursor: pointer;
+
+          &:hover {
+            background: #f8f8f8;
+            color: #31bbac;
+          }
+        }
+
+        &.searchList {
+          padding: 0;
+          margin: 0;
+          dd {
+            margin: 0;
+            padding: 3px 10px;
+            display: block;
+            line-height: 1.6;
+          }
+        }
+      }
+    }
+
+    .suggest {
+      width: 552px;
+      overflow: hidden;
+      padding-left: 16px;
+      margin-top: 8px;
+      height: 16px;
+      line-height: 16px;
+
+      a {
+        color: black;
+        margin-right: 10px;
+        margin-bottom: 3px;
+        display: inline-block;
+        font-size: 12px;
+        text-decoration: none;
+        &:hover {
+          color: #31bbac;
+        }
+      }
+    }
+  }
+}
+</style>
