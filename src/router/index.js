@@ -11,6 +11,7 @@ const CoachingCourse = () => import('@/layout/member/coaching-course.vue')
 const MyCourse = () => import('@/layout/member/my-course.vue')
 const MessageBar = () => import('@/layout/member/message-bar.vue')
 const Memberceshi = () => import('@/layout/member/memberceshi.vue')
+const SearchCourse = () => import('@/layout/member/searchCourse.vue')
 //教练
 const Coach = () => import('@/layout/coach.vue')
 const Homepage = () => import('@/layout/coach/main.vue')
@@ -83,6 +84,11 @@ export default new Router({
           path:"memberceshi",
           name:"memberceshi",
           component:Memberceshi
+        },
+        {
+          path:"searchCourse/:searchWord",
+          name:"searchCourse",
+          component:SearchCourse
         }
       ]
     },

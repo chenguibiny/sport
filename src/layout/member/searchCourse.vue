@@ -1,12 +1,12 @@
 <template>
     <div>
         <tap :List="course"/>
-        <c-course />
+        <search-course />
     </div>
 </template>
 <script>
 import tap from '@/components/member/img.vue'
-import cCourse from '@/components/member/coaching-course/course.vue'
+import searchCourse from '@/components/member/searchCourse/index.vue'
 import search from '@/components/member/search.vue'
 import cookie from '@/cookie/cookie.js'
 export default {
@@ -33,7 +33,7 @@ export default {
     },
     components:{
         tap,
-        cCourse,
+        searchCourse,
         search
     }
 }

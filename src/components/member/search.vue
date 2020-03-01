@@ -1,11 +1,20 @@
 <template>
   <div class="search-panel">
     <el-row class="m-header-searchbar">
-      <el-col :span="3" class="left">
-        <img src="@/assets/img/sport.jpg" alt />
+      <el-col
+        :span="3"
+        class="left"
+      >
+        <img
+          src="@/assets/img/sport.jpg"
+          alt
+        />
       </el-col>
 
-      <el-col :span="15" class="searchBar">
+      <el-col
+        :span="15"
+        class="searchBar"
+      >
         <div class="searchBar-wrapper">
           <!-- v-model @focus @blur @input -->
           <el-input
@@ -15,26 +24,44 @@
             @blur="blur"
             @input="input"
           ></el-input>
-          <el-button type="primary" icon="el-icon-search">搜索</el-button>
- 
+          <el-button
+            type="primary"
+            icon="el-icon-search"
+            @click="toSearchCourse"
+          >搜索</el-button>
+
           <!-- 输入关键词的展示 -->
           <!-- v-if -->
-          <dl class="searchList" v-if="isSearchList">
-            <dd v-for="(item,index) in searchList" :key="index">
+          <dl
+            class="searchList"
+            v-if="isSearchList"
+          >
+            <dd
+              class="searchList__item"
+              v-for="(item,index) in searchList"
+              :key="index"
+            >
               <!-- params -->
-              <router-link :to="{name:'goods',params:{name:item}}">{{item}}</router-link>
+              <router-link class="router" :to="{name:'searchCourse',params:{searchWord:item}}">{{item}}</router-link>
+              <!-- <a class="router" @click="toSearchCourse">{{item}}</a> -->
             </dd>
           </dl>
         </div>
 
         <p class="suggest">
-          <a v-for="(item,index) in suggestList" :key="index" href="#">{{item}}</a>
+          <a
+            v-for="(item,index) in suggestList"
+            :key="index"
+            href="#"
+          >{{item}}</a>
         </p>
       </el-col>
     </el-row>
   </div>
 </template>
 <script>
+import cookie from "@/cookie/cookie.js";
+import api from "@/api/index.js";
 export default {
   data() {
     return {
@@ -43,15 +70,17 @@ export default {
       // isSearchList:false,
       isFocus: false,
       searchList: [],
-      suggestList: ["哑铃爱好","腹肌撕裂","腿部专训","综合"]
+      suggestList: ["哑铃爱好", "腹肌撕裂", "腿部专训", "综合"],
+      memberId: null
     };
   },
-//   created() {
-//     api.getSearchHotList().then(res => {
-//       this.hotPlaceList = res.data.data;
-//       this.suggestList = res.data.data;
-//     });
-//   },
+  async created() {
+    let memberId;
+    await cookie.getCookie("memberId", function(data) {
+      memberId = data;
+    });
+    this.memberId = memberId;
+  },
   computed: {
     isHotPlace() {
       return this.isFocus && !this.searchWord;
@@ -71,28 +100,38 @@ export default {
         self.isFocus = false;
       }, 200);
     },
-    input(){
-
+    input() {
+      api
+        .getAllCourseList({
+          params: {
+            sid: this.memberId,
+            keyword: this.searchWord
+          }
+        })
+        .then(res => {
+          let list = res.data.data;
+          let searchList = list.map(v => {
+            return v.cname;
+          });
+          // 展示前5条
+          this.searchList = searchList.slice(0,6);
+        });
+    },
+    toSearchCourse(){
+      this.$router.push({name:"searchCourse",params:{searchWord:this.searchWord}})
     }
-    // input() {
-    //   api.getSearchList().then(res => {
-    //     this.searchList = res.data.data.list.filter(item => {
-    //       return item.indexOf(this.searchWord) > -1;
-    //     });
-    //   });
-    // }
-  },
-//   watch: {
-//     "$route.params.name": function() {
-//       this.searchWord = this.$route.params.name;
-//     }
-//   }
+  }
+  //   watch: {
+  //     "$route.params.name": function() {
+  //       this.searchWord = this.$route.params.name;
+  //     }
+  //   }
 };
 </script>
 <style lang="scss">
 .m-header-searchbar {
   padding: 10px 20px;
-  background-color:azure;
+  background-color: azure;
   align-items: start;
   box-sizing: border-box;
   border-bottom: black;
@@ -100,7 +139,7 @@ export default {
     width: 280px;
     padding-top: 15px;
     img {
-      margin-left:140px;
+      margin-left: 140px;
       margin-top: -20px;
       width: 100px;
       height: 100px;
@@ -129,7 +168,7 @@ export default {
       .el-button {
         width: 88px;
         border: none;
-        background:cornflowerblue;
+        background: cornflowerblue;
         font-size: 16px;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
@@ -138,7 +177,6 @@ export default {
           font-weight: bold;
         }
       }
-      .hotPlace,
       .searchList {
         position: absolute;
         top: 41px;
@@ -207,6 +245,14 @@ export default {
         }
       }
     }
+  }
+}
+.router{
+  text-decoration: none;
+  color:#666;
+  &:hover{
+    background: #f8f8f8;
+    color: #31bbac;
   }
 }
 </style>

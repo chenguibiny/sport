@@ -37,7 +37,7 @@ const api = {
   changeUserPassword(params) {
     return axios.post('/user/changePassword',params)
   },
-  // 获取课程列表
+  // 获取课程列表,可根据教练名字或者课程名字搜索
   getAllCourseList(params) {
     return axios.get('/course/getAllCourseList',params)
   },
