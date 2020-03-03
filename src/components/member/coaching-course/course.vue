@@ -93,7 +93,7 @@
       >
         <el-table :data="gridData">
           <el-table-column
-            property="name"
+            property="username"
             label="评价人"
             width="150"
           ></el-table-column>
@@ -131,7 +131,7 @@ export default {
       index: 0,
       //该会员是否该买了该课程
       havePaid: false,
-      // 课程信息,放置所有数据
+
       obj: {
         cid: 1,
         cname: "背部健美",
@@ -142,6 +142,7 @@ export default {
         count: "36",
         havePaid: 1
       },
+      // 课程信息,放置所有数据
       tableData: [],
       n: 8,
       m: 1,
@@ -149,20 +150,20 @@ export default {
       // 课程评价内容   放临时数据
       gridData: [
         {
-          name: "肖",
+          username: "肖",
           context:
             "教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评！"
         },
         {
-          name: "林",
+          username: "林",
           context: "教练很走心，好评！"
         },
         {
-          name: "邱",
+          username: "邱",
           context: "教练很走心，好评！"
         },
         {
-          name: "钟",
+          username: "钟",
           context: "教练很走心，好评！"
         }
       ],
@@ -226,6 +227,15 @@ export default {
       console.log("cid", this.cid);
     },
     showCourseAdress() {
+      api.getCourseEvaluate({
+        params:{
+          cid:this.cid
+        }
+      }).then( res => {
+        if(res.data.code === 1) {
+          this.gridData = res.data.data;
+        }
+      })
       this.dialogTableVisible = true;
       // 根据this.cid获取课程评价 赋值给this.girdData
     },

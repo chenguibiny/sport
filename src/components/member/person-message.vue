@@ -96,7 +96,6 @@
 </template>
 <script>
 import cookie from '@/cookie/cookie.js'
-import axios from 'axios';
 import api from '@/api/index.js'
 import {deepClone,formatDate} from '@/utils/deepClone.js'
 export default {

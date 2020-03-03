@@ -41,6 +41,10 @@ const api = {
   getAllCourseList(params) {
     return axios.get('/course/getAllCourseList',params)
   },
+  // 获取自己报名的课程
+  getMemberCourseList(params) {
+    return axios.get('/course/getMemberCourseList',params)
+  },
   //
   //
   //
@@ -67,7 +71,7 @@ const api = {
   },
   // 获取课程评价
   getCourseEvaluate(params) {
-    return axios.post('/course/getCourseEvaluate',params)
+    return axios.get('/course/getCourseEvaluate',params)
   }
 }
 

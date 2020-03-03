@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <img src="@/assets/img/img1.png" alt style="width:100%;height:100%;" />
+    <img
+      src="@/assets/img/img1.png"
+      alt
+      style="width:100%;height:100%;"
+    />
     <div class="center">
       <div class="msg">
         <el-form
@@ -11,7 +15,10 @@
           label-width="100px"
           class="demo-registerForm"
         >
-          <el-form-item label="用户名：" prop="username">
+          <el-form-item
+            label="用户名："
+            prop="username"
+          >
             <el-input
               type="text"
               v-model="registerForm.username"
@@ -20,7 +27,10 @@
             ></el-input>
           </el-form-item>
 
-          <el-form-item label="创建密码：" prop="password">
+          <el-form-item
+            label="创建密码："
+            prop="password"
+          >
             <el-input
               type="password"
               v-model="registerForm.password"
@@ -29,7 +39,10 @@
             ></el-input>
           </el-form-item>
 
-          <el-form-item label="确认密码：" prop="repassword">
+          <el-form-item
+            label="确认密码："
+            prop="repassword"
+          >
             <el-input
               type="password"
               v-model="registerForm.repassword"
@@ -43,17 +56,24 @@
           </el-radio-group>
 
           <el-form-item class="btn">
-            <el-button type="primary" @click="submitForm('registerForm')">注册</el-button>
+            <el-button
+              type="primary"
+              @click="submitForm('registerForm')"
+            >注册</el-button>
           </el-form-item>
         </el-form>
       </div>
 
-      <el-button class="login" type="primary" @click="toLogin">已有账号？去登录</el-button>
+      <el-button
+        class="login"
+        type="primary"
+        @click="toLogin"
+      >已有账号？去登录</el-button>
     </div>
   </div>
 </template>
 <script>
-import api from '@/api/index.js';
+import api from "@/api/index.js";
 export default {
   data() {
     var validateUser = (rule, value, callback) => {
@@ -66,7 +86,7 @@ export default {
     var validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
-      } else{
+      } else {
         if (this.registerForm.repassword !== "") {
           this.$refs.registerForm.validateField("repassword");
         }
@@ -97,12 +117,12 @@ export default {
     };
   },
   methods: {
-    clearInput(){
+    clearInput() {
       this.registerForm.username = "";
       this.registerForm.password = "";
       this.registerForm.repassword = "";
     },
-    outAlert(){
+    outAlert() {
       this.$alert("用户名已经存在！", "", {
         confirmButtonText: "确定"
       });
@@ -111,49 +131,51 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          const {username,password} = this.registerForm;
-          var params = {
-            radio:Number(this.radio),
-            id:username,
-            password:String(password)
-          }
-          console.log(params)
-          if(this.radio == 3){
-            api.memberRegister({
-              username:String(username),
-              password:String(password)
-            }).then( res =>{
-              if( res.data.code === 1){
-                this.$message({
-                  message: '恭喜你，注册成功！',
-                  type: 'success'
-                });
-                this.clearInput();
-                console.log(res);
-              }else if(res.data.code === 500100) {
-                this.outAlert();
-              }
-            }).catch( rej => {
-              console.log(rej);
-            })
-          }else if(this.radio == 6 ){
-            api.coachRegister({
-              coachName:String(username),
-              password:String(password)
-            }).then( res => {
-              if(res.data.code === 1) {
-                this.$message({
-                  message: '恭喜你，注册成功！',
-                  type: 'success'
-                });
-                this.clearInput();
-                console.log(res);
-              }else if(res.data.code === 500100) {
-                this.outAlert();
-              }
-            }).catch( rej => {
-              console.log(rej);
-            })
+          const { username, password } = this.registerForm;
+          if (this.radio == 3) {
+            api
+              .memberRegister(
+                {
+                  username: String(username),
+                  password: String(password)
+                }
+              )
+              .then(res => {
+                if (res.data.code === 1) {
+                  this.$message({
+                    message: "恭喜你，注册成功！",
+                    type: "success"
+                  });
+                  this.clearInput();
+                  console.log(res);
+                } else if (res.data.code === 500100) {
+                  this.outAlert();
+                }
+              })
+              .catch(rej => {
+                console.log(rej);
+              });
+          } else if (this.radio == 6) {
+            api
+              .coachRegister({
+                coachName: String(username),
+                password: String(password)
+              })
+              .then(res => {
+                if (res.data.code === 1) {
+                  this.$message({
+                    message: "恭喜你，注册成功！",
+                    type: "success"
+                  });
+                  this.clearInput();
+                  console.log(res);
+                } else if (res.data.code === 500100) {
+                  this.outAlert();
+                }
+              })
+              .catch(rej => {
+                console.log(rej);
+              });
           }
         } else {
           console.log("error submit!!");

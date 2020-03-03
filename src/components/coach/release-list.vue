@@ -2,42 +2,96 @@
   <div>
     <!-- 添加课程 -->
     <div class="btn-release">
-      <el-button type="text" @click="dialogAddFormVisible = true">发布我的新课程</el-button>
+      <el-button
+        type="text"
+        @click="dialogAddFormVisible = true"
+      >发布我的新课程</el-button>
 
-      <el-dialog title="发布课程" :visible.sync="dialogAddFormVisible" width="60%" top="80px" :close-on-click-modal="false">
+      <el-dialog
+        title="发布课程"
+        :visible.sync="dialogAddFormVisible"
+        width="60%"
+        top="80px"
+        :close-on-click-modal="false"
+      >
         <el-form :model="addform">
-          <el-form-item label="课程名称" :label-width="formLabelWidth">
-            <el-input v-model="addform.cname" autocomplete="off"></el-input>
+          <el-form-item
+            label="课程名称"
+            :label-width="formLabelWidth"
+          >
+            <el-input
+              v-model="addform.cname"
+              autocomplete="off"
+            ></el-input>
           </el-form-item>
-          <el-form-item label="报名费用" :label-width="formLabelWidth">
-            <el-input v-model="addform.cost" autocomplete="off"></el-input>
+          <el-form-item
+            label="报名费用"
+            :label-width="formLabelWidth"
+          >
+            <el-input
+              v-model="addform.cost"
+              autocomplete="off"
+            ></el-input>
           </el-form-item>
-          <el-form-item label="上课地址" :label-width="formLabelWidth">
-            <el-input v-model="addform.location" autocomplete="off"></el-input>
+          <el-form-item
+            label="上课地址"
+            :label-width="formLabelWidth"
+          >
+            <el-input
+              v-model="addform.location"
+              autocomplete="off"
+            ></el-input>
           </el-form-item>
-          <el-form-item label="课程介绍" :label-width="formLabelWidth">
-            <textarea class="msg" v-model="addform.description" autocomplete="off" cols="30" rows="10"></textarea>
+          <el-form-item
+            label="课程介绍"
+            :label-width="formLabelWidth"
+          >
+            <textarea
+              class="msg"
+              v-model="addform.description"
+              autocomplete="off"
+              cols="30"
+              rows="10"
+            ></textarea>
           </el-form-item>
         </el-form>
-        <div slot="footer" class="dialog-footer">
+        <div
+          slot="footer"
+          class="dialog-footer"
+        >
           <el-button @click="dialogAddFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addCourse">确 定</el-button>
+          <el-button
+            type="primary"
+            @click="addCourse"
+          >确 定</el-button>
         </div>
       </el-dialog>
     </div>
     <!-- 课程列表 -->
-    <el-table :data="currentPage" style="width: 80%">
-      <el-table-column label="课程名称" width="250">
+    <el-table
+      :data="currentPage"
+      style="width: 80%"
+    >
+      <el-table-column
+        label="课程名称"
+        width="250"
+      >
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.cname }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="报名人数" width="250">
+      <el-table-column
+        label="报名人数"
+        width="250"
+      >
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.count }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="上课地址" width="300">
+      <el-table-column
+        label="上课地址"
+        width="300"
+      >
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.location }}</span>
         </template>
@@ -49,26 +103,27 @@
             type="info"
             size="small"
             @click="showEvaluation(scope.$index, scope.row)"
-            >我的课程评价</el-button
-          >
+          >我的课程评价</el-button>
           <el-button
             class="edit"
             type="primary"
             size="small"
             @click="handleEdit(scope.$index, scope.row)"
-            >编辑</el-button
-          >
+          >编辑</el-button>
           <el-button
             size="small"
             type="danger"
             @click="handleDelete(scope.$index, scope.row)"
-            >删除</el-button
-          >
+          >删除</el-button>
           <!-- 我的课程评价 -->
-          <el-dialog title="课程评价" :visible.sync="dialogTableVisible" :close-on-click-modal="false">
+          <el-dialog
+            title="课程评价"
+            :visible.sync="dialogTableVisible"
+            :close-on-click-modal="false"
+          >
             <el-table :data="gridData">
               <el-table-column
-                property="name"
+                property="username"
                 label="评价人"
                 width="150"
               ></el-table-column>
@@ -87,16 +142,37 @@
             :close-on-click-modal="false"
           >
             <el-form :model="changeform">
-              <el-form-item label="课程名称" :label-width="formLabelWidth">
-                <el-input v-model="changeform.cname" autocomplete="off"></el-input>
+              <el-form-item
+                label="课程名称"
+                :label-width="formLabelWidth"
+              >
+                <el-input
+                  v-model="changeform.cname"
+                  autocomplete="off"
+                ></el-input>
               </el-form-item>
-              <el-form-item label="报名费用" :label-width="formLabelWidth">
-                <el-input v-model="changeform.cost" autocomplete="off"></el-input>
+              <el-form-item
+                label="报名费用"
+                :label-width="formLabelWidth"
+              >
+                <el-input
+                  v-model="changeform.cost"
+                  autocomplete="off"
+                ></el-input>
               </el-form-item>
-              <el-form-item label="上课地址" :label-width="formLabelWidth">
-                <el-input v-model="changeform.location" autocomplete="off"></el-input>
+              <el-form-item
+                label="上课地址"
+                :label-width="formLabelWidth"
+              >
+                <el-input
+                  v-model="changeform.location"
+                  autocomplete="off"
+                ></el-input>
               </el-form-item>
-              <el-form-item label="课程介绍" :label-width="formLabelWidth">
+              <el-form-item
+                label="课程介绍"
+                :label-width="formLabelWidth"
+              >
                 <textarea
                   class="msg"
                   v-model="changeform.description"
@@ -106,11 +182,15 @@
                 ></textarea>
               </el-form-item>
             </el-form>
-            <div slot="footer" class="dialog-footer">
+            <div
+              slot="footer"
+              class="dialog-footer"
+            >
               <el-button @click="dialogFormVisible = false">取 消</el-button>
-              <el-button type="primary" @click="changeCourseMessage"
-                >确 定</el-button
-              >
+              <el-button
+                type="primary"
+                @click="changeCourseMessage"
+              >确 定</el-button>
             </div>
           </el-dialog>
           <!-- <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button> -->
@@ -133,19 +213,18 @@
 </template>
 <script>
 import cookie from "@/cookie/cookie.js";
-import api from '@/api/index.js'
-import {deepClone} from '@/utils/deepClone.js'
+import api from "@/api/index.js";
+import { deepClone } from "@/utils/deepClone.js";
 export default {
   data() {
     return {
       dialogAddFormVisible: false,
       addform: {
-        cname:"",
-        cost:"",
-        location:"",
-        description:""
+        cname: "",
+        cost: "",
+        location: "",
+        description: ""
       },
-
 
       coachId: 0,
       cid: 0,
@@ -320,20 +399,20 @@ export default {
       // 课程评价 为临时数据
       gridData: [
         {
-          name: "肖",
+          username: "肖",
           context:
             "教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评"
         },
         {
-          name: "林",
+          username: "林",
           context: "教练很走心，好评！"
         },
         {
-          name: "邱",
+          username: "邱",
           context: "教练很走心，好评！"
         },
         {
-          name: "钟",
+          username: "钟",
           context: "教练很走心，好评！"
         }
       ],
@@ -360,56 +439,64 @@ export default {
   },
   methods: {
     getData() {
-      api.getCoachCourseList({
-        params:{
-          tid:this.coachId
-        }
-      }).then(res => {
-        if(res.data.code === 1) {
-          let list = res.data.data;
-          list.map( e => {
-            if(e.count === null) {
-              e.count = 0;
-            }
-            return e;
-          })
-          this.tableData = list;
-        }
-      })
-    },
-    addCourse(){
-      if(this.addform.cname && this.addform.cost && this.addform.location && this.addform.description){
-        this.$confirm("确定添加此课程吗？")
-        .then(_ => {
-          api.saveCourse({
-            tid:this.coachId,
-            cname:this.addform.cname,
-            cost:this.addform.cost,
-            location:this.addform.location,
-            description:this.addform.description
-          }).then( res => {
-            if(res.data.code === 1) {
-              this.$message({
-                message: "添加成功！",
-                type: "success"
-              });
-              this.getData();
-            }
-            this.addform.cname = "";
-            this.addform.cost = "";
-            this.addform.location = "";
-            this.addform.description = "";
-
-          })
-          // this.addform coachId 请求接口
-          this.dialogAddFormVisible = false;
-          // this.getData();
+      api
+        .getCoachCourseList({
+          params: {
+            tid: this.coachId
+          }
         })
-        .catch(_ => {})
-      }else{
+        .then(res => {
+          if (res.data.code === 1) {
+            let list = res.data.data;
+            list.map(e => {
+              if (e.count === null) {
+                e.count = 0;
+              }
+              return e;
+            });
+            this.tableData = list;
+          }
+        });
+    },
+    addCourse() {
+      if (
+        this.addform.cname &&
+        this.addform.cost &&
+        this.addform.location &&
+        this.addform.description
+      ) {
+        this.$confirm("确定添加此课程吗？")
+          .then(_ => {
+            api
+              .saveCourse({
+                tid: this.coachId,
+                cname: this.addform.cname,
+                cost: this.addform.cost,
+                location: this.addform.location,
+                description: this.addform.description
+              })
+              .then(res => {
+                if (res.data.code === 1) {
+                  this.$message({
+                    message: "添加成功！",
+                    type: "success"
+                  });
+                  this.getData();
+                }
+                this.addform.cname = "";
+                this.addform.cost = "";
+                this.addform.location = "";
+                this.addform.description = "";
+              });
+            // this.addform coachId 请求接口
+            this.dialogAddFormVisible = false;
+            // this.getData();
+          })
+          .catch(_ => {});
+      } else {
         this.$alert("请完善所有的信息！", "", {
-            confirmButtonText: "确定"
-          });
+          confirmButtonText: "确定"
+        });
         return;
       }
     },
@@ -418,11 +505,17 @@ export default {
       console.log(index, row);
       this.index = index;
       this.cid = row.cid;
-      api.getCourseEvaluate({
-        cid:this.cid
-      }).then ( res => {
-        console.log(res);
-      })
+      api
+        .getCourseEvaluate({
+          params:{
+            cid: this.cid
+          }
+        })
+        .then(res => {
+          if(res.data.code === 1) {
+            this.gridData = res.data.data;
+          }
+        });
       // 根据this.cid获取课程评价赋值给this.girdData
       this.dialogTableVisible = true;
     },
@@ -434,22 +527,35 @@ export default {
       this.dialogFormVisible = true;
     },
     // 确认修改
-    changeCourseMessage(){
+    changeCourseMessage() {
       let change = deepClone(this.changeform);
-      if(change.cname && change.cost && change.description && change.location) {
-        api.saveCourse({
-          cid:change.cid,
-          cname:change.cname,
-          cost:change.cost,
-          count:change.count,
-          description:change.description,
-          location:change.location,
-          tid:change.tid
-        }).then(res => {
-          console.log(res);
-          // this.getData();
-        })
-      }else {
+      if (
+        change.cname &&
+        change.cost &&
+        change.description &&
+        change.location
+      ) {
+        api
+          .saveCourse({
+            cid: change.cid,
+            cname: change.cname,
+            cost: change.cost,
+            count: change.count,
+            description: change.description,
+            location: change.location,
+            tid: change.tid
+          })
+          .then(res => {
+            if (res.data.code === 1) {
+              this.$message({
+                message: "修改成功！",
+                type: "success"
+              });
+            }
+            console.log(res);
+            this.getData();
+          });
+      } else {
         this.$alert("请完善所有的信息！", "", {
           confirmButtonText: "确定"
         });
@@ -463,21 +569,52 @@ export default {
     handleDelete(index, row) {
       console.log(index, row);
       this.cid = row.cid;
-      api.deleteCourse({
-        cid:this.cid,
-        tid:this.coachId
-      }).then(res => {
-        console.log(res);
-        // this.getData();
-      })
-      this.index = index;
       this.$confirm("确定要删除吗？")
         .then(_ => {
-          // this.cid 请求删除课程
-          // this.getData();
-          this.tableData.splice(index, 1);
+          api
+            .deleteCourse({
+              cid: this.cid,
+              tid: this.coachId
+            })
+            .then(res => {
+              if (res.data.code === 1) {
+                this.$message({
+                  message: "删除成功！",
+                  type: "success"
+                });
+                this.getData();
+              } else {
+                alert("res");
+              }
+            })
+            .catch(rej => {
+              alert("rej");
+            });
         })
         .catch(_ => {});
+      // api.deleteCourse({
+      //   cid:this.cid,
+      //   tid:this.coachId
+      // }).then(res => {
+      //   if(res.data.code ===1) {
+      //     this.$message({
+      //           message: "添加成功！",
+      //           type: "success"
+      //         });
+      //   }
+
+      //   console.log(res);
+      //   // this.getData();
+      // })
+
+      // this.index = index;
+      // this.$confirm("确定要删除吗？")
+      //   .then(_ => {
+      //     // this.cid 请求删除课程
+      //     // this.getData();
+      //     this.tableData.splice(index, 1);
+      //   })
+      //   .catch(_ => {});
     },
     //每页多少条数据  `${val}`
     handleSizeChange(val) {

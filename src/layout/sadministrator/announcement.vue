@@ -36,10 +36,12 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
+              type="primary"
               @click="handleEdit(scope.$index, scope.row)"
             >编辑</el-button>
             <el-button
               size="mini"
+              type="info"
               @click="handleShow(scope.$index, scope.row)"
             >查看详情</el-button>
             <el-button
@@ -164,7 +166,6 @@
 <script>
 import cookie from "@/cookie/cookie.js";
 import { deepClone, formatDate } from "@/utils/deepClone.js";
-import axios from "axios";
 import api from "@/api/index.js";
 export default {
   // beforeRouteEnter(to,from,next){
@@ -267,6 +268,7 @@ export default {
                 ptime: form.ptime
               })
               .then(res => {
+                console.log(res);
                 if (res.data.code === 1) {
                   setTimeout(() => {
                     this.$message({
@@ -312,6 +314,13 @@ export default {
             context: this.formChange.context
           })
           .then(res => {
+            if(res.data.code === 1) {
+              this.$message({
+                  message: "修改成功！",
+                  type: "success"
+                });
+              this.getData();
+            }
             console.log(res);
           })
           .catch(rej => {
@@ -389,7 +398,7 @@ export default {
       margin: 0 auto;
       tbody {
         .el-button--mini {
-          background-color: mediumblue;
+          // background-color: mediumblue;
           span {
             color: #fff;
           }
