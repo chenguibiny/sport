@@ -149,9 +149,9 @@ export default {
           if(form.sex === 0){
             form.sex = ""
           }else if(form.sex === 1){
-            form.sex = "男"
+            form.sex = "male"
           }else if(form.sex === 2){
-            form.sex = "女"
+            form.sex = "female"
           }
           form.birthday = formatDate(form.birthday);
           this.form = deepClone(form)
@@ -170,7 +170,22 @@ export default {
           this.loading = true;
           setTimeout(() => {
             this.loading = false;
-            console.log(this.form)
+            let form = deepClone(this.form);
+            console.log(form)
+            api.coachRegister({
+              tid:this.coachId,
+              birthday:form.birthday,
+              phone:form.phone,
+              sex:form.sex? form.sex === "male" ? 1 : 2 : 0,
+              coachName:form.coachName
+            }).then(res => {
+              if(res.data.code ===1 ){
+                this.$message({
+                  message: "修改成功！",
+                  type: "success"
+                });
+              }
+            })
             this.$store.commit("changeCoachMessage", this.form);
             done();
           }, 2000);

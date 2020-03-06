@@ -584,11 +584,11 @@ export default {
                 });
                 this.getData();
               } else {
-                alert("res");
+                console.log(res)
               }
             })
             .catch(rej => {
-              alert("rej");
+              console.log(rej)
             });
         })
         .catch(_ => {});

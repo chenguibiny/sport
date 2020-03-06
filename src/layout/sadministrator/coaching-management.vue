@@ -19,7 +19,7 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" @click="changePass(scope.$index, scope.row)"
+          <el-button size="mini" type="primary" @click="changePass(scope.$index, scope.row)"
             >修改密码</el-button
           >
           <el-button

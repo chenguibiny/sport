@@ -439,7 +439,25 @@ export default {
         }
       }).then( res => {
         if(res.data.code === 1) {
-          this.tableData = res.data.data;
+          let list = res.data.data.map( v=> {
+            if(v.setTime === null) {
+              v.setTime = 0;
+            }
+            if(v.appointment === null) {
+              v.appointment = 0;
+            }
+            if(v.appointok === null) {
+              v.appointok = 0;
+            }
+            if(v.clockin === null) {
+              v.clockin = 0;
+            }
+            if(v.prohibit === null) {
+              v.prohibit = 0;
+            }
+            return v;
+          });
+          this.tableData = list;
         }
       })
       // 根据this.memberId 获取数据赋值给this.tableData

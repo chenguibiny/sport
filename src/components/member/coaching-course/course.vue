@@ -131,7 +131,8 @@ export default {
       index: 0,
       //该会员是否该买了该课程
       havePaid: false,
-
+      // 当前详情的教练的id
+      tid:0,
       obj: {
         cid: 1,
         cname: "背部健美",
@@ -209,22 +210,19 @@ export default {
           console.log(res.data.data)
           if(res.data.code === 1 ){
             this.tableData = res.data.data;
-            // 测试 查看课程是否报名
-            // this.tableData[0].havePaid = 1;
-            // this.tableData[3].havePaid = 1;
-            // this.tableData[9].havePaid = 1;
           }
         });
     },
     handleEdit(index, row) {
       console.log(index, row);
       this.index = index;
+      this.tid = row.tid;
       this.showcourselist = false;
       this.apartList = row;
       // this.gridData = row.evaluation;
       this.havePaid = row.havePaid === 1? true : false;
       this.cid = row.cid;
-      console.log("cid", this.cid);
+      console.log("cid", this.cid,"tid",this.tid);
     },
     showCourseAdress() {
       api.getCourseEvaluate({
@@ -242,7 +240,25 @@ export default {
     sign() {
       this.$confirm("确定要报名吗？")
         .then(_ => {
-          this.havePaid = true;
+          api.apply({
+            tid:this.tid,
+            sid:this.memberId,
+            cid:this.cid,
+            punch:2
+          }).then(res => {
+            if(res.data.code === 1) {
+              this.$message({
+                message: "报名成功！",
+                type: "success"
+              });
+              this.havePaid = true;
+              this.getData();
+            }else {
+              console.log(res)
+            }
+          }).catch( rej => {
+            console.log(rej)
+          })
           // 根据this.memberId this.cid 报名表信息中添加数据
           // this.getData();
         })

@@ -169,17 +169,17 @@ export default {
       }).then( async res => {
         if(res.data.code === 1){
           form = deepClone(res.data.data);
+          console.log("form",res.data.data)
           if(form.sex === 0){
             form.sex = ""
           }else if(form.sex === 1){
-            form.sex = "男"
+            form.sex = "male"
           }else if(form.sex === 2){
-            form.sex = "女"
+            form.sex = "female"
           }
           form.birthday = formatDate(form.birthday);
           this.form = deepClone(form)
           this.dialog = true;
-          console.log(this.form)
         }
       })
       // this.form = this.member;
@@ -192,7 +192,19 @@ export default {
           this.loading = true;
           setTimeout(() => {
             this.loading = false;
+            let form = deepClone(this.form);
             console.log(this.form);
+            api.saveUserInfo({
+              sid:this.memberId,
+              birthday:form.birthday,
+              money:form.money,
+              phone:form.phone,
+              sex:form.sex? form.sex === "male" ? 1 : 2 : 0,
+              username:form.username
+            }).then(res => {
+              if(res.data.code === 1) {
+              }
+            })
             this.$store.commit("changeMemberMessage", this.form);
             done();
           }, 2000);
@@ -246,15 +258,20 @@ export default {
     },
     addChaopiao(){
       this.dialogFormVisible = true;
-      // if(this.form.money){
-      //   return;
-      // }
-      // this.form.money = 0;
     },
     addMoney(){
       this.dialogFormVisible = false;
       this.form.money = Number(this.form.money) + Number(this.addNum);
-      // this.memberId,this.form 请求接口修改个人信息
+      let form = deepClone(this.form);
+      console.log(form);
+      api.saveUserInfo({
+        sid:this.memberId,
+        birthday:form.birthday,
+        money:form.money,
+        phone:form.phone,
+        sex:form.sex? form.sex === "male" ? 1 : 2 : 0,
+        username:form.username
+      })
       this.addNum = 0;
       this.$store.commit("changeMemberMessage", this.form);
     }
