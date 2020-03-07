@@ -19,9 +19,9 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看详情</el-button>
-          <el-button v-if="!scope.row.prohibit" size="mini" class="danger" @click="prohibit(scope.$index, scope.row)">禁用课程</el-button>
-          <el-button v-else size="mini" class="danger" @click="prohibit(scope.$index, scope.row)">取消禁用</el-button>
+          <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">查看详情</el-button>
+          <el-button v-if="!scope.row.prohibit" size="mini" class="danger" type="danger" @click="prohibit(scope.$index, scope.row)">禁用课程</el-button>
+          <el-button v-else size="mini" class="danger" type="danger" @click="prohibit(scope.$index, scope.row)">取消禁用</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -372,9 +372,7 @@ export default {
   min-height: 550px;
   tbody {
     .el-button--mini {
-      background-color: mediumblue;
       &.danger{
-        background-color:red;
       }
       span {
         color: #fff;
@@ -403,7 +401,6 @@ export default {
     height: 40px;
     right: 0;
     border: none;
-    background-color: blue;
     color: #fff;
     font-size: 20px;
     cursor: pointer;

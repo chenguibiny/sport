@@ -314,11 +314,11 @@ export default {
             context: this.formChange.context
           })
           .then(res => {
-            if(res.data.code === 1) {
+            if (res.data.code === 1) {
               this.$message({
-                  message: "修改成功！",
-                  type: "success"
-                });
+                message: "修改成功！",
+                type: "success"
+              });
               this.getData();
             }
             console.log(res);
@@ -345,9 +345,10 @@ export default {
       this.nid = row.nid;
       this.$confirm("确定要删除吗？")
         .then(_ => {
-          api.deleteMessage({
-            nid: this.nid
-          })
+          api
+            .deleteMessage({
+              nid: this.nid
+            })
             .then(res => {
               if (res.data.code === 1) {
                 this.$message({
@@ -358,7 +359,8 @@ export default {
               } else {
                 alert("res");
               }
-            }).catch( rej => {
+            })
+            .catch(rej => {
               alert("rej");
             });
         })

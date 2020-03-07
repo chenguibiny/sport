@@ -50,7 +50,7 @@ const api = {
   getMemberCourseList(params) {
     return axios.get('/course/getMemberCourseList',params)
   },
-  // 报名接口 /apply/apply
+  // 报名接口
   apply(params) {
     return axios.post('/apply/apply',params)
   },
@@ -85,8 +85,27 @@ const api = {
   // 获取我的学员列表
   getTraineeList(params) {
     return axios.get('/coach/traineeList',params)
-  }
-
+  },
+  //
+  //
+  //
+  // 系统管理员
+  // 获取会员列表
+  getUserList(params) {
+    return axios.get('/user/query',params)
+  },
+  // 获取教练列表
+  getCoachList(params) {
+    return axios.get('/coach/getCoachList',params)
+  },
+  // 删除会员
+  deleteUser(params) {
+    return axios.post('/user/del',params)
+  },
+  // 删除教练
+  deleteCoach(params) {
+    return axios.post('/coach/del',params)
+  },
 }
 
 export default api

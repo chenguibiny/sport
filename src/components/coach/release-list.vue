@@ -238,159 +238,159 @@ export default {
       flag: false,
       //存放所有数据
       tableData: [
-        {
-          cid: 1,
-          cname: "腹肌撕裂者初级",
-          name: "陈桂槟",
-          location: "肇庆市肇庆学院",
-          cost: 2030,
-          description:
-            "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-          count: 12
-        },
-        {
-          cid: 2,
-          cname: "腹肌撕裂者进阶",
-          name: "陈",
-          location: "肇庆市肇庆学院123",
-          cost: 2000,
-          description:
-            "全球[最流行]的腹部动作，全方位打造腹肌线条！建议隔天练习，坚持2-4周后腹肌会越发清晰。",
-          count: 12
-        },
-        {
-          cid: 3,
-          cname: "哑铃手臂塑形",
-          name: "肖",
-          location: "上海市普陀区金沙江路343243",
-          cost: 21000,
-          description: "只要一副小哑铃就可以练出[好看的臂膀]",
-          count: 12
-        },
-        {
-          cid: 4,
-          cname: "健身房廋腿训练",
-          name: "林",
-          location: "上海市普陀区金沙江路132123123",
-          cost: 1050,
-          description:
-            "学生党的[廋腿]秘籍！动作简单有效，在床上也能轻松练习，帮你快速打造修长双腿！",
-          count: 12
-        },
-        {
-          cid: 5,
-          cname: "腹肌撕裂",
-          name: "1234",
-          location: "上海市普陀区金沙江路 1516 弄",
-          cost: 2030,
-          description: "",
-          count: 12
-        },
-        {
-          cid: 6,
-          cname: "腹肌撕裂",
-          name: "1234",
-          location: "上海市普陀区金沙江路 1516 弄",
-          cost: 2030,
-          description: "",
-          count: 12
-        },
-        {
-          cid: 7,
-          cname: "腹肌撕裂",
-          name: "1234",
-          location: "上海市普陀区金沙江路 1516 弄",
-          cost: 2030,
-          description: "",
-          count: 12
-        },
-        {
-          cid: 8,
-          cname: "腹肌撕裂",
-          name: "1234",
-          location: "上海市普陀区金沙江路 1516 弄",
-          cost: 2030,
-          description: "",
-          count: 12
-        },
-        {
-          cid: 9,
-          cname: "腹肌撕裂者初级",
-          name: "陈桂槟",
-          location: "肇庆市肇庆学院",
-          cost: 2030,
-          description:
-            "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-          count: 12
-        },
-        {
-          cid: 10,
-          cname: "腹肌撕裂者进阶",
-          name: "陈",
-          location: "肇庆市肇庆学院123",
-          cost: 2000,
-          description:
-            "全球[最流行]的腹部动作，全方位打造腹肌线条！建议隔天练习，坚持2-4周后腹肌会越发清晰。",
-          count: 12
-        },
-        {
-          cid: 11,
-          cname: "哑铃手臂塑形",
-          name: "肖",
-          location: "上海市普陀区金沙江路343243",
-          cost: 21000,
-          description: "只要一副小哑铃就可以练出[好看的臂膀]",
-          count: 12
-        },
-        {
-          cid: 12,
-          cname: "健身房廋腿训练",
-          name: "林",
-          location: "上海市普陀区金沙江路132123123",
-          cost: 1050,
-          description:
-            "学生党的[廋腿]秘籍！动作简单有效，在床上也能轻松练习，帮你快速打造修长双腿！",
-          count: 12
-        },
-        {
-          cid: 13,
-          cname: "腹肌撕裂者初级",
-          name: "陈桂槟",
-          location: "肇庆市肇庆学院",
-          cost: 2030,
-          description:
-            "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-          count: 12
-        },
-        {
-          cid: 14,
-          cname: "腹肌撕裂者进阶",
-          name: "陈",
-          location: "肇庆市肇庆学院123",
-          cost: 2000,
-          description:
-            "全球[最流行]的腹部动作，全方位打造腹肌线条！建议隔天练习，坚持2-4周后腹肌会越发清晰。",
-          count: 12
-        },
-        {
-          cid: 15,
-          cname: "哑铃手臂塑形",
-          name: "肖",
-          location: "上海市普陀区金沙江路343243",
-          cost: 21000,
-          description: "只要一副小哑铃就可以练出[好看的臂膀]",
-          count: 12
-        },
-        {
-          cid: 16,
-          cname: "健身房廋腿训练",
-          name: "林",
-          location: "上海市普陀区金沙江路132123123",
-          cost: 1050,
-          description:
-            "学生党的[廋腿]秘籍！动作简单有效，在床上也能轻松练习，帮你快速打造修长双腿！",
-          count: 12
-        }
+        // {
+        //   cid: 1,
+        //   cname: "腹肌撕裂者初级",
+        //   name: "陈桂槟",
+        //   location: "肇庆市肇庆学院",
+        //   cost: 2030,
+        //   description:
+        //     "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
+        //   count: 12
+        // },
+        // {
+        //   cid: 2,
+        //   cname: "腹肌撕裂者进阶",
+        //   name: "陈",
+        //   location: "肇庆市肇庆学院123",
+        //   cost: 2000,
+        //   description:
+        //     "全球[最流行]的腹部动作，全方位打造腹肌线条！建议隔天练习，坚持2-4周后腹肌会越发清晰。",
+        //   count: 12
+        // },
+        // {
+        //   cid: 3,
+        //   cname: "哑铃手臂塑形",
+        //   name: "肖",
+        //   location: "上海市普陀区金沙江路343243",
+        //   cost: 21000,
+        //   description: "只要一副小哑铃就可以练出[好看的臂膀]",
+        //   count: 12
+        // },
+        // {
+        //   cid: 4,
+        //   cname: "健身房廋腿训练",
+        //   name: "林",
+        //   location: "上海市普陀区金沙江路132123123",
+        //   cost: 1050,
+        //   description:
+        //     "学生党的[廋腿]秘籍！动作简单有效，在床上也能轻松练习，帮你快速打造修长双腿！",
+        //   count: 12
+        // },
+        // {
+        //   cid: 5,
+        //   cname: "腹肌撕裂",
+        //   name: "1234",
+        //   location: "上海市普陀区金沙江路 1516 弄",
+        //   cost: 2030,
+        //   description: "",
+        //   count: 12
+        // },
+        // {
+        //   cid: 6,
+        //   cname: "腹肌撕裂",
+        //   name: "1234",
+        //   location: "上海市普陀区金沙江路 1516 弄",
+        //   cost: 2030,
+        //   description: "",
+        //   count: 12
+        // },
+        // {
+        //   cid: 7,
+        //   cname: "腹肌撕裂",
+        //   name: "1234",
+        //   location: "上海市普陀区金沙江路 1516 弄",
+        //   cost: 2030,
+        //   description: "",
+        //   count: 12
+        // },
+        // {
+        //   cid: 8,
+        //   cname: "腹肌撕裂",
+        //   name: "1234",
+        //   location: "上海市普陀区金沙江路 1516 弄",
+        //   cost: 2030,
+        //   description: "",
+        //   count: 12
+        // },
+        // {
+        //   cid: 9,
+        //   cname: "腹肌撕裂者初级",
+        //   name: "陈桂槟",
+        //   location: "肇庆市肇庆学院",
+        //   cost: 2030,
+        //   description:
+        //     "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
+        //   count: 12
+        // },
+        // {
+        //   cid: 10,
+        //   cname: "腹肌撕裂者进阶",
+        //   name: "陈",
+        //   location: "肇庆市肇庆学院123",
+        //   cost: 2000,
+        //   description:
+        //     "全球[最流行]的腹部动作，全方位打造腹肌线条！建议隔天练习，坚持2-4周后腹肌会越发清晰。",
+        //   count: 12
+        // },
+        // {
+        //   cid: 11,
+        //   cname: "哑铃手臂塑形",
+        //   name: "肖",
+        //   location: "上海市普陀区金沙江路343243",
+        //   cost: 21000,
+        //   description: "只要一副小哑铃就可以练出[好看的臂膀]",
+        //   count: 12
+        // },
+        // {
+        //   cid: 12,
+        //   cname: "健身房廋腿训练",
+        //   name: "林",
+        //   location: "上海市普陀区金沙江路132123123",
+        //   cost: 1050,
+        //   description:
+        //     "学生党的[廋腿]秘籍！动作简单有效，在床上也能轻松练习，帮你快速打造修长双腿！",
+        //   count: 12
+        // },
+        // {
+        //   cid: 13,
+        //   cname: "腹肌撕裂者初级",
+        //   name: "陈桂槟",
+        //   location: "肇庆市肇庆学院",
+        //   cost: 2030,
+        //   description:
+        //     "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
+        //   count: 12
+        // },
+        // {
+        //   cid: 14,
+        //   cname: "腹肌撕裂者进阶",
+        //   name: "陈",
+        //   location: "肇庆市肇庆学院123",
+        //   cost: 2000,
+        //   description:
+        //     "全球[最流行]的腹部动作，全方位打造腹肌线条！建议隔天练习，坚持2-4周后腹肌会越发清晰。",
+        //   count: 12
+        // },
+        // {
+        //   cid: 15,
+        //   cname: "哑铃手臂塑形",
+        //   name: "肖",
+        //   location: "上海市普陀区金沙江路343243",
+        //   cost: 21000,
+        //   description: "只要一副小哑铃就可以练出[好看的臂膀]",
+        //   count: 12
+        // },
+        // {
+        //   cid: 16,
+        //   cname: "健身房廋腿训练",
+        //   name: "林",
+        //   location: "上海市普陀区金沙江路132123123",
+        //   cost: 1050,
+        //   description:
+        //     "学生党的[廋腿]秘籍！动作简单有效，在床上也能轻松练习，帮你快速打造修长双腿！",
+        //   count: 12
+        // }
       ],
       //每页多少数据
       n: 8,
@@ -507,12 +507,12 @@ export default {
       this.cid = row.cid;
       api
         .getCourseEvaluate({
-          params:{
+          params: {
             cid: this.cid
           }
         })
         .then(res => {
-          if(res.data.code === 1) {
+          if (res.data.code === 1) {
             this.gridData = res.data.data;
           }
         });
@@ -523,7 +523,7 @@ export default {
     handleEdit(index, row) {
       console.log(index, row);
       this.cid = row.cid;
-      this.changeform = row;
+      this.changeform = deepClone(row);
       this.dialogFormVisible = true;
     },
     // 确认修改
@@ -584,11 +584,11 @@ export default {
                 });
                 this.getData();
               } else {
-                console.log(res)
+                console.log(res);
               }
             })
             .catch(rej => {
-              console.log(rej)
+              console.log(rej);
             });
         })
         .catch(_ => {});

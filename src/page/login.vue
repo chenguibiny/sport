@@ -1,13 +1,21 @@
 <template>
   <div class="container">
-    <img src="@/assets/img/img1.png" alt style="width:100%;height:100%;" />
+    <img
+      src="@/assets/img/img1.png"
+      alt
+      style="width:100%;height:100%;"
+    />
     <div class="center">
       <div class="header">欢迎登录</div>
 
       <div class="demo-input-suffix">
         <div class="inp">
           <span class="sp">用户名:</span>
-          <el-input v-model="userName" placeholder="请输入用户名" prefix-icon="el-icon-user"></el-input>
+          <el-input
+            v-model="userName"
+            placeholder="请输入用户名"
+            prefix-icon="el-icon-user"
+          ></el-input>
         </div>
         <div class="inp">
           <span class="sp">密码:</span>
@@ -18,22 +26,36 @@
             prefix-icon="el-icon-lock"
           ></el-input>
         </div>
-        <el-radio-group class="btn" v-model="radio">
+        <el-radio-group
+          class="btn"
+          v-model="radio"
+        >
           <el-radio :label="3">会员</el-radio>
           <el-radio :label="6">教练</el-radio>
           <el-radio :label="9">课程管理员</el-radio>
           <el-radio :label="12">系统管理员</el-radio>
         </el-radio-group>
-        <el-button class="btn-login" type="primary" @click="click">登录</el-button>
-        <h4 v-if="error" class="tips">{{error}}</h4>
+        <el-button
+          class="btn-login"
+          type="primary"
+          @click="click"
+        >登录</el-button>
+        <h4
+          v-if="error"
+          class="tips"
+        >{{error}}</h4>
       </div>
-      <el-button class="register" type="primary" @click="toRegister">没有账号？去注册</el-button>
+      <el-button
+        class="register"
+        type="primary"
+        @click="toRegister"
+      >没有账号？去注册</el-button>
     </div>
   </div>
 </template>
 <script>
-import cookie from '@/cookie/cookie.js'
-import api from '@/api/index.js'
+import cookie from "@/cookie/cookie.js";
+import api from "@/api/index.js";
 export default {
   data() {
     return {
@@ -63,10 +85,10 @@ export default {
           this.userName === "cadministrator" &&
           this.password === "cadministrator"
         ) {
-          cookie.setCookie("cadministrator","cadministrator",5000);
+          cookie.setCookie("cadministrator", "cadministrator", 5000);
           this.$router.push({ name: "cadministrator" });
         } else {
-          this.error = "账号或者密码错误!";
+          this.$message.error("账号或密码错误！");
         }
       }
       if (this.radio === 12) {
@@ -75,62 +97,70 @@ export default {
           this.userName === "sadministrator" &&
           this.password === "sadministrator"
         ) {
-          cookie.setCookie("sadministrator","sadministrator",5000);
+          cookie.setCookie("sadministrator", "sadministrator", 5000);
           this.$router.push({ name: "sadministrator" });
         } else {
-          this.error = "账号或者密码错误!";
+          this.$message.error("账号或密码错误！");
         }
       }
       if (this.radio === 3) {
         var params = {
-          id:String(this.userName),
-          password:String(this.password)
-        }
-        api.memberLogin({
-          username:this.userName,
-          password:this.password
-        }).then( res => {
-          if(res.data.code === 1){
-            this.error = null;
-            const sid = res.data.data.user.sid;
-            cookie.setCookie("memberId",sid,5000);
-            cookie.getCookie("memberId",function (data) {
-              console.log(data);
-            })
-            this.$router.push({ name: "main" });
-          }else{
-            this.$message.error('账号或密码错误！');
-          }
-        }).catch( rej => {
-          console.log(rej);
-        })
+          id: String(this.userName),
+          password: String(this.password)
+        };
+        api
+          .memberLogin({
+            username: this.userName,
+            password: this.password
+          })
+          .then(res => {
+            if (res.data.code === 1) {
+              this.error = null;
+              const sid = res.data.data.user.sid;
+              cookie.removeCookie("memberId");
+              cookie.setCookie("memberId", sid, 10000);
+              cookie.getCookie("memberId", function(data) {
+                console.log(data);
+              });
+              this.$router.push({ name: "main" });
+            } else {
+              this.$message.error("账号或密码错误！");
+            }
+          })
+          .catch(rej => {
+            console.log(rej);
+          });
         this.error = null;
       }
       if (this.radio === 6) {
         var params = {
-          id:String(this.userName),
-          password:String(this.password)
-        }
-        console.log(params)
-        api.coachLogin({
-          coachName:this.userName,
-          password:this.password
-        }).then( res => {
-          console.log(res);
-          if(res.data.code === 1){
-            this.error = null;
-            const tid = res.data.data.coach.tid;
-            cookie.setCookie("coachId",tid,5000);
-            cookie.getCookie("coachId",function (data) {
-              console.log(data);
-            })
-            this.$router.push({ name: "homepage" });
-          }else {
-            this.$message.error('账号或密码错误！');
-          }
-        }).catch( rej => {
-          console.log(rej);
-        })
+          id: String(this.userName),
+          password: String(this.password)
+        };
+        console.log(params);
+        api
+          .coachLogin({
+            coachName: this.userName,
+            password: this.password
+          })
+          .then(res => {
+            console.log(res);
+            if (res.data.code === 1) {
+              this.error = null;
+              const tid = res.data.data.coach.tid;
+              cookie.removeCookie("coachId");
+              cookie.setCookie("coachId", tid, 10000);
+              cookie.getCookie("coachId", function(data) {
+                console.log(data);
+              });
+              this.$router.push({ name: "homepage" });
+            } else {
+              this.$message.error("账号或密码错误！");
+            }
+          })
+          .catch(rej => {
+            console.log(rej);
+          });
         this.error = null;
       }
     }

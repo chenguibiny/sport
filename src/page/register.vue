@@ -134,12 +134,10 @@ export default {
           const { username, password } = this.registerForm;
           if (this.radio == 3) {
             api
-              .memberRegister(
-                {
-                  username: String(username),
-                  password: String(password)
-                }
-              )
+              .memberRegister({
+                username: String(username),
+                password: String(password)
+              })
               .then(res => {
                 if (res.data.code === 1) {
                   this.$message({

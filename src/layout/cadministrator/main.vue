@@ -1,9 +1,9 @@
 <template>
-    <carousel />
+  <carousel />
 </template>
 <script>
-import carousel from '@/components/carousel.vue'
-import cookie from '@/cookie/cookie.js'
+import carousel from "@/components/carousel.vue";
+import cookie from "@/cookie/cookie.js";
 export default {
   // beforeRouteEnter(to,from,next){
   //   cookie.getCookie("cadministrator",function (data) {
@@ -21,8 +21,8 @@ export default {
   //     }
   //   })
   // },
-    components:{
-        carousel
-    }
-}
+  components: {
+    carousel
+  }
+};
 </script>

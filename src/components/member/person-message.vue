@@ -1,6 +1,10 @@
 <template>
   <div>
-    <el-button class="btn" type="text" @click="changeMessage">修改信息</el-button>
+    <el-button
+      class="btn"
+      type="text"
+      @click="changeMessage"
+    >修改信息</el-button>
     <el-drawer
       title="我的个人信息！"
       :before-close="handleClose1"
@@ -11,32 +15,79 @@
     >
       <div class="demo-drawer__content">
         <el-form :model="form">
-          <el-form-item label="姓名：" :label-width="formLabelWidth">
-            <el-input v-model="form.username" autocomplete="off" disabled></el-input>
+          <el-form-item
+            label="姓名："
+            :label-width="formLabelWidth"
+          >
+            <el-input
+              v-model="form.username"
+              autocomplete="off"
+              disabled
+            ></el-input>
           </el-form-item>
-          <el-form-item label="性别：" :label-width="formLabelWidth">
-            <el-select v-model="form.sex" placeholder="请选择性别">
-              <el-option label="男" value="male"></el-option>
-              <el-option label="女" value="female"></el-option>
+          <el-form-item
+            label="性别："
+            :label-width="formLabelWidth"
+          >
+            <el-select
+              v-model="form.sex"
+              placeholder="请选择性别"
+            >
+              <el-option
+                label="男"
+                value="male"
+              ></el-option>
+              <el-option
+                label="女"
+                value="female"
+              ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="电话：" :label-width="formLabelWidth">
-            <el-input v-model="form.phone" autocomplete="off"></el-input>
+          <el-form-item
+            label="电话："
+            :label-width="formLabelWidth"
+          >
+            <el-input
+              v-model="form.phone"
+              autocomplete="off"
+            ></el-input>
           </el-form-item>
-          <el-form-item label="生日：" :label-width="formLabelWidth">
+          <el-form-item
+            label="生日："
+            :label-width="formLabelWidth"
+          >
             <div>
-              <el-date-picker v-model="form.birthday" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">></el-date-picker>
+              <el-date-picker
+                v-model="form.birthday"
+                type="date"
+                placeholder="选择日期"
+                value-format="yyyy-MM-dd"
+              >></el-date-picker>
             </div>
           </el-form-item>
-          <el-form-item label="余额：" :label-width="formLabelWidth">
-            <el-input v-model="form.money" autocomplete="off" disabled></el-input>
-            <el-button type="text" @click="addChaopiao" style="background:lightseagreen;color:#fff;text-align:center;width:60px;">充值</el-button>
+          <el-form-item
+            label="余额："
+            :label-width="formLabelWidth"
+          >
+            <el-input
+              v-model="form.money"
+              autocomplete="off"
+              disabled
+            ></el-input>
+            <el-button
+              type="text"
+              @click="addChaopiao"
+              style="background:lightseagreen;color:#fff;text-align:center;width:60px;"
+            >充值</el-button>
           </el-form-item>
         </el-form>
 
         <!-- 修改密码 -->
         <div>
-          <el-button @click="innerDrawer = true" class="changepassword">修改密码</el-button>
+          <el-button
+            @click="innerDrawer = true"
+            class="changepassword"
+          >修改密码</el-button>
           <el-drawer
             title="修改密码"
             :append-to-body="true"
@@ -55,30 +106,65 @@
               label-width="100px"
               class="demo-ruleForm"
             >
-              <h5 v-if="error" style="color:red;margin-left:100px;">旧密码错误,若忘记密码,可联系管理员!</h5>
-              <el-form-item label="旧的密码：" prop="pass">
-                <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+              <h5
+                v-if="error"
+                style="color:red;margin-left:100px;"
+              >{{error}}</h5>
+              <el-form-item
+                label="旧的密码："
+                prop="pass"
+              >
+                <el-input
+                  type="password"
+                  v-model="ruleForm.pass"
+                  autocomplete="off"
+                ></el-input>
               </el-form-item>
-              <el-form-item label="新的密码：" prop="rePass">
-                <el-input type="password" v-model="ruleForm.rePass" autocomplete="off"></el-input>
+              <el-form-item
+                label="新的密码："
+                prop="rePass"
+              >
+                <el-input
+                  type="password"
+                  v-model="ruleForm.rePass"
+                  autocomplete="off"
+                ></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
+                <el-button
+                  type="primary"
+                  @click="submitForm('ruleForm')"
+                >保存</el-button>
               </el-form-item>
             </el-form>
           </el-drawer>
         </div>
 
         <!-- 充值 -->
-        <el-dialog title="" :visible.sync="dialogFormVisible">
+        <el-dialog
+          title=""
+          :visible.sync="dialogFormVisible"
+        >
           <el-form :model="form">
-            <el-form-item label="充值金额" :label-width="formLabelWidth">
-              <el-input v-model="addNum" autocomplete="off"></el-input>
+            <el-form-item
+              label="充值金额"
+              :label-width="formLabelWidth"
+            >
+              <el-input
+                v-model="addNum"
+                autocomplete="off"
+              ></el-input>
             </el-form-item>
           </el-form>
-          <div slot="footer" class="dialog-footer">
+          <div
+            slot="footer"
+            class="dialog-footer"
+          >
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addMoney">确 定</el-button>
+            <el-button
+              type="primary"
+              @click="addMoney"
+            >确 定</el-button>
           </div>
         </el-dialog>
 
@@ -95,9 +181,9 @@
   </div>
 </template>
 <script>
-import cookie from '@/cookie/cookie.js'
-import api from '@/api/index.js'
-import {deepClone,formatDate} from '@/utils/deepClone.js'
+import cookie from "@/cookie/cookie.js";
+import api from "@/api/index.js";
+import { deepClone, formatDate } from "@/utils/deepClone.js";
 export default {
   data() {
     var validatePass = (rule, value, callback) => {
@@ -110,21 +196,22 @@ export default {
     var validatePass2 = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入新密码"));
-      }else {
+      } else {
         callback();
       }
     };
     return {
-      memberId:0,
-
+      memberId: 0,
+      // 暂存的 生日，性别，手机号
+      temporalForm: {},
       // 充值
       dialogFormVisible: false,
-      addNum:0,
+      addNum: 0,
       dialog: false,
       loading: false,
       formLabelWidth: "80px",
       innerDrawer: false,
-      error:null,
+      error: null,
       ruleForm: {
         pass: "",
         rePass: ""
@@ -134,7 +221,7 @@ export default {
         rePass: [{ validator: validatePass2, trigger: "blur" }]
       },
       // 存放个人信息
-      form:{},
+      form: {}
       //  模拟数据
       // member:{
       //       username:"陈桂槟",
@@ -152,36 +239,38 @@ export default {
   //   }
   // },
   methods: {
-    async changeMessage(){
+    async changeMessage() {
       this.error = null;
       let memberId;
       let form;
-      await cookie.getCookie("memberId",function (data) {
+      await cookie.getCookie("memberId", function(data) {
         memberId = data;
-      })
+      });
       this.memberId = memberId;
-      console.log("memberId",this.memberId);
-      // 通过memberId请求接口获取数据赋值给this.form
-      api.getUserInfo({
-        params:{
-          sid:memberId
-        }
-      }).then( async res => {
-        if(res.data.code === 1){
-          form = deepClone(res.data.data);
-          console.log("form",res.data.data)
-          if(form.sex === 0){
-            form.sex = ""
-          }else if(form.sex === 1){
-            form.sex = "male"
-          }else if(form.sex === 2){
-            form.sex = "female"
+      console.log("memberId", this.memberId);
+      api
+        .getUserInfo({
+          params: {
+            sid: memberId
           }
-          form.birthday = formatDate(form.birthday);
-          this.form = deepClone(form)
-          this.dialog = true;
-        }
-      })
+        })
+        .then(async res => {
+          if (res.data.code === 1) {
+            form = deepClone(res.data.data);
+            console.log("form", res.data.data);
+            if (form.sex === 0) {
+              form.sex = "";
+            } else if (form.sex === 1) {
+              form.sex = "male";
+            } else if (form.sex === 2) {
+              form.sex = "female";
+            }
+            form.birthday = formatDate(form.birthday);
+            this.form = deepClone(form);
+            this.temporalForm = deepClone(form);
+            this.dialog = true;
+          }
+        });
       // this.form = this.member;
     },
     // 外层提交表单
@@ -194,24 +283,32 @@ export default {
             this.loading = false;
             let form = deepClone(this.form);
             console.log(this.form);
-            api.saveUserInfo({
-              sid:this.memberId,
-              birthday:form.birthday,
-              money:form.money,
-              phone:form.phone,
-              sex:form.sex? form.sex === "male" ? 1 : 2 : 0,
-              username:form.username
-            }).then(res => {
-              if(res.data.code === 1) {
-              }
-            })
+            api
+              .saveUserInfo({
+                sid: this.memberId,
+                birthday: form.birthday,
+                money: form.money,
+                phone: form.phone,
+                sex: form.sex ? (form.sex === "male" ? 1 : 2) : 0,
+                username: form.username
+              })
+              .then(res => {
+                if (res.data.code === 1) {
+                  this.$message({
+                    message: "修改成功！",
+                    type: "success"
+                  });
+                }
+              });
             this.$store.commit("changeMemberMessage", this.form);
             done();
           }, 2000);
         })
         .catch(_ => {});
     },
+    // 修改密码框退出前回调
     handleClose2(done) {
+      this.error = null;
       done();
     },
 
@@ -221,31 +318,31 @@ export default {
           this.$confirm("确定要保存修改吗？")
             .then(_ => {
               const params = {
-                sid:this.memberId,
-                oldPassword:this.ruleForm.pass,
-                newPassword:this.ruleForm.rePass
-              }
-              api.changeUserPassword({
-                sid:this.memberId,
-                oldPassword:this.ruleForm.pass,
-                newPassword:this.ruleForm.rePass
-              }).then( res => {
-                if(res.data.code === 1) {
-                  this.error = null;
-                  console.log(res);
-                  this.$message({
-                    message: "修改密码成功！",
-                    type: "success"
-                  });
-                }else {
-                  this.error = 1;
-                }
-              }).catch( rej => {
-                console.log(rej)
-              })
-              // console.log(this.ruleForm.pass,this.ruleForm.rePass)
-              // this.memberId,this.ruleForm.pass 请求接口
-              // alert(this.ruleForm.pass+" "+this.ruleForm.rePass+" "+"修改成功!");
+                sid: this.memberId,
+                oldPassword: this.ruleForm.pass,
+                newPassword: this.ruleForm.rePass
+              };
+              api
+                .changeUserPassword({
+                  sid: this.memberId,
+                  oldPassword: this.ruleForm.pass,
+                  newPassword: this.ruleForm.rePass
+                })
+                .then(res => {
+                  if (res.data.code === 1) {
+                    this.error = null;
+                    console.log(res);
+                    this.$message({
+                      message: "修改密码成功！",
+                      type: "success"
+                    });
+                  } else {
+                    this.error = res.data.msg;
+                  }
+                })
+                .catch(rej => {
+                  console.log(rej);
+                });
               this.ruleForm.pass = "";
               this.ruleForm.rePass = "";
             })
@@ -256,24 +353,40 @@ export default {
         }
       });
     },
-    addChaopiao(){
+    addChaopiao() {
       this.dialogFormVisible = true;
     },
-    addMoney(){
-      this.dialogFormVisible = false;
-      this.form.money = Number(this.form.money) + Number(this.addNum);
-      let form = deepClone(this.form);
-      console.log(form);
-      api.saveUserInfo({
-        sid:this.memberId,
-        birthday:form.birthday,
-        money:form.money,
-        phone:form.phone,
-        sex:form.sex? form.sex === "male" ? 1 : 2 : 0,
-        username:form.username
-      })
-      this.addNum = 0;
-      this.$store.commit("changeMemberMessage", this.form);
+    addMoney() {
+      this.$confirm("确定要充值吗？")
+        .then(_ => {
+          this.addNum = Number(this.addNum);
+          let arr = [];
+          arr.push(this.addNum);
+          if (arr.includes(NaN)) {
+            this.$alert("请输入充值的正常金额数目", "", {
+              confirmButtonText: "确定"
+            });
+            return;
+          } else {
+            this.dialogFormVisible = false;
+            this.form.money = Number(this.form.money) + Number(this.addNum.trim());
+            let form = deepClone(this.form);
+            // 拿到暂存的值，防止充值前修改了 性别、电话、生日，充值后一并修改了。
+            let temporalForm = deepClone(this.temporalForm);
+            api.saveUserInfo({
+              sid: this.memberId,
+              birthday: temporalForm.birthday,
+              money: form.money,
+              phone: temporalForm.phone,
+              sex: temporalForm.sex ? (temporalForm.sex === "male" ? 1 : 2) : 0,
+              username: form.username
+            });
+            this.addNum = 0;
+          }
+        })
+        .catch(_ => {});
+
+      // this.$store.commit("changeMemberMessage", this.form);
     }
   }
 };

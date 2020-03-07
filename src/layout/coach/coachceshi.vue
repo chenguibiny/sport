@@ -246,7 +246,7 @@
 </template>
 <script>
 import cookie from "@/cookie/cookie.js";
-import { deepClone } from "@/utils/deepClone.js";
+import { deepClone, formatDate } from "@/utils/deepClone.js";
 import api from "@/api/index.js";
 export default {
   data() {
@@ -520,25 +520,33 @@ export default {
           }
         })
         .then(res => {
-          console.log(res);
           if (res.data.code === 1) {
             let list = deepClone(res.data.data);
+            console.log("list",list)
             let newList = list.map(v => {
               v.punch = Math.random() > 0.3 ? (Math.random() > 0.6 ? 1 : 2) : 0;
+              v.birthday = formatDate(v.birthday);
+              if(v.sex === 1) {
+                v.sex = "男"
+              }else if(v.sex === 2) {
+                v.sex = "女"
+              }else {
+                v.sex = "未知"
+              }
               if (v.setTime === null) {
-                v.setTime = Math.random() > 0.5 ? 0 : 1;
+                v.setTime = 0;
               }
               if (v.appointment === null) {
-                v.appointment = Math.random() > 0.5 ? 0 : 1;
+                v.appointment = 0;
               }
               if (v.appointok === null) {
-                v.appointok = Math.random() > 0.5 ? 0 : 1;
+                v.appointok = 0;
               }
               if (v.clockin === null) {
-                v.clockin = Math.random() > 0.5 ? 0 : 1;
+                v.clockin = 0;
               }
               if (v.prohibit === null) {
-                v.prohibit = Math.random() > 0.5 ? 0 : 1;
+                v.prohibit = 0;
               }
               return v;
             });
