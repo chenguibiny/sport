@@ -199,7 +199,6 @@ export default {
   },
   methods: {
     getData() {
-      // 根据this.memberId获取数据赋值给tableData
       api
         .getAllCourseList({
           params: {
@@ -235,7 +234,6 @@ export default {
           }
         });
       this.dialogTableVisible = true;
-      // 根据this.cid获取课程评价 赋值给this.girdData
     },
     sign() {
       this.$confirm("确定要报名吗？")

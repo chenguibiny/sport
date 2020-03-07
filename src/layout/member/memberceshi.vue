@@ -421,7 +421,7 @@ export default {
       memberId = data;
     });
     this.memberId = memberId;
-    this.getData();
+    // this.getData();
   },
   computed: {
     currentPage() {

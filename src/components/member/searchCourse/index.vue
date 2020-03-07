@@ -129,9 +129,10 @@ export default {
       showcourselist: true,
       // 索引
       index: 0,
-      // searchWord:null,
       //该会员是否该买了该课程
       havePaid: false,
+      // 当前详情的教练的id
+      tid: 0,
       // 课程信息,放置所有数据
       obj: {
         cid: 1,
@@ -199,55 +200,83 @@ export default {
       return this.$route.params.searchWord;
     }
   },
-  watch:{
-    searchWord:function (newValue) {
-      console.log("newValue",newValue);
+  watch: {
+    searchWord: function(newValue) {
+      console.log("newValue", newValue);
       this.getData();
     }
   },
   methods: {
     getData() {
-      // 根据this.memberId获取数据赋值给tableData
       api
         .getAllCourseList({
           params: {
             sid: this.memberId,
-            keyword:this.searchWord
+            keyword: this.searchWord
           }
         })
         .then(res => {
           // console.log(res.data.data)
-          if(res.data.code === 1 ){
+          if (res.data.code === 1) {
             this.tableData = res.data.data;
-            // 测试 查看课程是否报名
-            // this.tableData[0].havePaid = 1;
-            // this.tableData[3].havePaid = 1;
-            // this.tableData[9].havePaid = 1;
           }
         });
     },
     handleEdit(index, row) {
       console.log(index, row);
       this.index = index;
+      this.tid = row.tid;
       this.showcourselist = false;
       this.apartList = row;
-      // this.gridData = row.evaluation;
-      this.havePaid = row.havePaid === 1? true : false;
+      this.havePaid = row.havePaid === 1 ? true : false;
       this.cid = row.cid;
-      console.log("cid", this.cid);
     },
     showCourseAdress() {
+      api
+        .getCourseEvaluate({
+          params: {
+            cid: this.cid
+          }
+        })
+        .then(res => {
+          if (res.data.code === 1) {
+            this.gridData = res.data.data;
+          }
+        });
       this.dialogTableVisible = true;
-      // 根据this.cid获取课程评价 赋值给this.girdData
     },
     sign() {
       this.$confirm("确定要报名吗？")
         .then(_ => {
-          this.havePaid = true;
-          // 根据this.memberId this.cid 报名表信息中添加数据
-          // this.getData();
+          let count = this.apartList.count;
+          api
+            .apply({
+              tid: this.tid,
+              sid: this.memberId,
+              cid: this.cid,
+              count: count,
+              punch: 2
+            })
+            .then(res => {
+              if (res.data.code === 1) {
+                this.$message({
+                  message: "报名成功！",
+                  type: "success"
+                });
+                this.havePaid = true;
+                this.getData();
+              } else {
+                console.log(res);
+              }
+            })
+            .catch(rej => {
+              console.log(rej);
+            });
         })
-        .catch(_ => {});
+        .catch(_ => {
+          let count = this.apartList.count;
+          console.log("count", count);
+        });
     },
     quit() {
       this.showcourselist = true;

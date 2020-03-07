@@ -265,6 +265,9 @@ export default {
             } else if (form.sex === 2) {
               form.sex = "female";
             }
+            if(form.money === null) {
+              form.money = 0;
+            }
             form.birthday = formatDate(form.birthday);
             this.form = deepClone(form);
             this.temporalForm = deepClone(form);
@@ -368,8 +371,7 @@ export default {
             });
             return;
           } else {
-            this.dialogFormVisible = false;
-            this.form.money = Number(this.form.money) + Number(this.addNum.trim());
+            this.form.money = Number(this.form.money) + Number(this.addNum);
             let form = deepClone(this.form);
             // 拿到暂存的值，防止充值前修改了 性别、电话、生日，充值后一并修改了。
             let temporalForm = deepClone(this.temporalForm);
@@ -380,6 +382,14 @@ export default {
               phone: temporalForm.phone,
               sex: temporalForm.sex ? (temporalForm.sex === "male" ? 1 : 2) : 0,
               username: form.username
+            }).then( res => {
+              if(res.data.code === 1) {
+                this.$message({
+                  message: "充值成功！",
+                  type: "success"
+                });
+                this.dialogFormVisible = false;
+              }
             });
             this.addNum = 0;
           }

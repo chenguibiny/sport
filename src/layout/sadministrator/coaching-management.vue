@@ -235,7 +235,31 @@ export default {
     },
     // 确认修改密码
     submitChange() {
-      this.dialogFormVisible = false;
+      let form = deepClone(this.form);
+      this.$confirm(
+        `确认修改会员 "${form.coachName}" 的密码为"${form.password}"吗？`
+      )
+        .then(_ => {
+          api
+            .changePassword({
+              managerName: "sadministrator",
+              managerPassword: "sadministrator",
+              id: this.tid,
+              userType: "coach",
+              newPassword: form.password
+            })
+            .then(res => {
+              if (res.data.code === 1) {
+                this.$message({
+                  message: "修改密码成功！",
+                  type: "success"
+                });
+                this.getData();
+              }
+            });
+          this.dialogFormVisible = false;
+        })
+        .catch(_ => {});
       // console.log(this.form);
       // this.$confirm 弹框，并且this.form 发送请求
     },
@@ -243,6 +267,24 @@ export default {
     handleDelete(index, row) {
       this.tid = row.tid;
       console.log(index, row);
+      this.$confirm("确定删除该教练吗？")
+        .then(_ => {
+          api
+            .deleteCoach({
+              tid: this.tid
+            })
+            .then(res => {
+              console.log("删除教练", res);
+              if (res.data.code === 1) {
+                this.$message({
+                  message: "删除成功！",
+                  type: "success"
+                });
+                this.getData();
+              }
+            });
+        })
+        .catch(_ => {});
     },
     //每页多少条数据  `${val}`
     handleSizeChange(val) {

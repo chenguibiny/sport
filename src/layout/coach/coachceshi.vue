@@ -499,7 +499,7 @@ export default {
       coachId = data;
     });
     this.coachId = coachId;
-    this.getData();
+    // this.getData();
     // console.log("coachId",this.coachId);
     // 根据 coachId 请求接口获取数据赋值给this.tableData
   },

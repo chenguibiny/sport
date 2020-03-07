@@ -106,6 +106,10 @@ const api = {
   deleteCoach(params) {
     return axios.post('/coach/del',params)
   },
+  // 修改会员、教练密码   /user/changePasswordByManager
+  changePassword(params){
+    return axios.post('/user/changePasswordByManager',params)
+  },
 }
 
 export default api

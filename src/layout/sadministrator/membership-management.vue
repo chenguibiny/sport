@@ -236,13 +236,57 @@ export default {
     },
     // 确认修改密码
     submitChange() {
-      this.dialogFormVisible = false;
+      let form = deepClone(this.form);
+      this.$confirm(
+        `确认修改会员 "${form.username}" 的密码为"${form.password}"吗？`
+      )
+        .then(_ => {
+          api
+            .changePassword({
+              managerName: "sadministrator",
+              managerPassword: "sadministrator",
+              id: this.sid,
+              userType: "member",
+              newPassword: form.password
+            })
+            .then(res => {
+              if (res.data.code === 1) {
+                this.$message({
+                  message: "修改密码成功！",
+                  type: "success"
+                });
+                this.getData();
+              }
+            });
+          this.dialogFormVisible = false;
+        })
+        .catch(_ => {});
+
       // console.log(this.form);
       // this.$confirm 弹框，并且this.form 发送请求
     },
     // 删除
     handleDelete(index, row) {
       console.log(index, row);
+      this.sid = row.sid;
+      this.$confirm("确定删除该会员吗？")
+        .then(_ => {
+          api
+            .deleteUser({
+              sid: this.sid
+            })
+            .then(res => {
+              console.log("删除会员", res);
+              if (res.data.code === 1) {
+                this.$message({
+                  message: "删除成功！",
+                  type: "success"
+                });
+                this.getData();
+              }
+            });
+        })
+        .catch(_ => {});
     },
     //每页多少条数据  `${val}`
     handleSizeChange(val) {
