@@ -248,6 +248,7 @@
 import cookie from "@/cookie/cookie.js";
 import { deepClone, formatDate } from "@/utils/deepClone.js";
 import api from "@/api/index.js";
+import moment from 'moment';
 export default {
   data() {
     return {
@@ -603,7 +604,8 @@ export default {
       this.sid = row.sid;
       this.cid = row.cid;
       this.centerDialogVisible = true;
-      this.date = formatDate(row.ctime);
+      // this.date = formatDate(row.ctime);
+      this.date = moment().format('YYYY-MM-DD');
       this.index = index;
     },
     // 重复设置时间
@@ -614,7 +616,8 @@ export default {
       this.sid = row.sid;
       this.cid = row.cid;
       this.centerDialogVisible = true;
-      this.date = formatDate(row.ctime);
+      // this.date = formatDate(row.ctime);
+      this.date = moment().format('YYYY-MM-DD');
       this.index = index;
     },
     // 再次设置时间
@@ -625,7 +628,8 @@ export default {
       this.sid = row.sid;
       this.cid = row.cid;
       this.centerDialogVisible = true;
-      this.date = formatDate(row.ctime);
+      // this.date = formatDate(row.ctime);
+      this.date = moment().format('YYYY-MM-DD');
       this.index = index;
     },
     // 确认设置上课时间
