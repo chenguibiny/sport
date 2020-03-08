@@ -215,7 +215,8 @@
 </template>
 <script>
 import cookie from "@/cookie/cookie.js";
-import api from '@/api/index.js'
+import api from "@/api/index.js";
+import { deepClone, formatDate } from "@/utils/deepClone.js";
 export default {
   data() {
     return {
@@ -224,7 +225,7 @@ export default {
       index: 0,
       // 切换展示
       showcourselist: true,
-
+      cloneMessage: {},
       flag: false,
       // 课程信息
       tableData: [
@@ -433,34 +434,70 @@ export default {
   },
   methods: {
     getData() {
-      api.getMemberCourseList({
-        params:{
-          sid:this.memberId
-        }
-      }).then( res => {
-        if(res.data.code === 1) {
-          let list = res.data.data.map( v=> {
-            if(v.setTime === null) {
-              v.setTime = 0;
-            }
-            if(v.appointment === null) {
-              v.appointment = 0;
-            }
-            if(v.appointok === null) {
-              v.appointok = 0;
-            }
-            if(v.clockin === null) {
-              v.clockin = 0;
-            }
-            if(v.prohibit === null) {
-              v.prohibit = 0;
-            }
-            return v;
-          });
-          this.tableData = list;
-        }
-      })
-      // 根据this.memberId 获取数据赋值给this.tableData
+      api
+        .getMemberCourseList({
+          params: {
+            sid: this.memberId
+          }
+        })
+        .then(res => {
+          if (res.data.code === 1) {
+            let list = res.data.data.map(v => {
+              if (v.setTime === null) {
+                v.setTime = 0;
+              }
+              if (v.appointment === null) {
+                v.appointment = 0;
+              }
+              if (v.appointok === null) {
+                v.appointok = 0;
+              }
+              if (v.clockin === null) {
+                v.clockin = 0;
+              }
+              if (v.prohibit === null) {
+                v.prohibit = 0;
+              }
+              return v;
+            });
+            this.tableData = list;
+          }
+        });
+    },
+    resetTable(form) {
+      // console.log("resetform", form);
+      form.setTime = form.setTime === false ? 0 : 1;
+      form.appointment = form.appointment === false ? 0 : 1;
+      if(form.appointok === false) {
+        form.appointok = 0;
+      }else if(form.appointok === true) {
+        form.appointok = 1;
+      }
+      form.clockin = form.clockin === false ? 0 : 1;
+      console.log("resetform",form);
+      // api
+      //   .changeTable({
+      //     sid: form.sid,
+      //     tid: form.tid,
+      //     cid: form.cid,
+      //     ctime: form.ctime,
+      //     setTime: form.setTime,
+      //     appointment: form.appointment,
+      //     appointok: form.appointok,
+      //     clockin: form.clockin,
+      //     punch: form.punch
+      //   })
+      //   .then(res => {
+      //     if (res.data.code === 1) {
+      //       alert("success");
+      //       this.getData();
+      //     }
+      //   });
+    },
+    // 克隆报名信息
+    cloneCourseMessage(row) {
+      this.cloneMessage = deepClone(row);
+      console.log("cloneMessage", this.cloneMessage);
     },
     // 查看详情
     handleEdit(index, row) {
@@ -472,17 +509,18 @@ export default {
     },
     // 查看课程评价
     showCourseAdress() {
-      api.getCourseEvaluate({
-        params:{
-          cid:this.cid
-        }
-      }).then( res => {
-        if(res.data.code === 1) {
-          this.gridData = res.data.data
-        }
-      })
+      api
+        .getCourseEvaluate({
+          params: {
+            cid: this.cid
+          }
+        })
+        .then(res => {
+          if (res.data.code === 1) {
+            this.gridData = res.data.data;
+          }
+        });
       this.dialogTableVisible = true;
-      // 根据this.cid获取课程评价 赋值给this.girdData
     },
     // 退出查看详情
     quit() {
@@ -491,23 +529,28 @@ export default {
     // 预约上课
     appointsuccess(index, row) {
       console.log(index, row);
+      this.cloneCourseMessage(row);
       this.cid = row.cid;
-      this.$confirm("上课时间为" + row.ctime)
+      this.$confirm("上课时间为" + formatDate(row.ctime))
         .then(_ => {
-          row.appointment = true;
-          // cid，memberid ,object 请求接口
+          this.cloneMessage.appointment = 1;
+          this.resetTable(this.cloneMessage);
+          // row.appointment = true;
         })
         .catch(_ => {});
     },
     // 预约失败，再次预约上课
     appointfail(index, row) {
       console.log(index, row);
+      this.cloneCourseMessage(row);
       this.cid = row.cid;
-      this.$confirm("上课时间为" + row.ctime)
+      this.$confirm("上课时间为" + formarDate(row.ctime))
         .then(_ => {
-          row.appointment = true;
-          row.appointok = 0;
-          // cid，memberid ,object 请求接口
+          this.cloneMessage.appointment = 1;
+          this.cloneMessage.appointok = 0;
+          this.resetTable(this.cloneMessage);
+          // row.appointment = true;
+          // row.appointok = 0;
         })
         .catch(_ => {});
     },
@@ -521,12 +564,15 @@ export default {
     // 评价
     clock(index, row) {
       console.log(index, row);
+      this.cloneCourseMessage(row);
       this.cid = row.cid;
       this.context = row.context;
       this.dialogFormVisible = true;
     },
+    // 提交评价
     submitEvaluate() {
-      // this.evaluate,this.cid,this.memberId 请求接口
+      this.cloneMessage.context = this.context;
+      this.resetTable(this.cloneMessage);
       this.dialogFormVisible = false;
     },
     //每页多少条数据  `${val}`

@@ -498,6 +498,7 @@ export default {
         .then(res => {
           if (res.data.code === 1) {
             let list = res.data.data;
+            console.log("mycourse",list)
             list.map(e => {
               if (e.count === null) {
                 e.count = 0;

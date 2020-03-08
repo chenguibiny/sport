@@ -209,9 +209,22 @@ export default {
           }
         })
         .then(res => {
-          // console.log(res.data.data)
+          // console.log("pro",res.data.data)
           if (res.data.code === 1) {
-            this.tableData = res.data.data;
+            let form = deepClone(res.data.data);
+            let newList = form.map (v => {
+              if(v.prohibit === null) {
+                v.prohibit = 0;
+              }
+              return v;
+            })
+            this.tableData = newList.filter( v => {
+              if(v.prohibit) {
+                return false;
+              }
+              return true;
+            })
+            // console.log("tableData",this.tableData);
           }
         });
     },

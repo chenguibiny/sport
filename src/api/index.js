@@ -86,6 +86,10 @@ const api = {
   getTraineeList(params) {
     return axios.get('/coach/traineeList',params)
   },
+  //修改报名表
+  changeTable(params) {
+    return axios.post('/apply/changeTable',params)
+  },
   //
   //
   //

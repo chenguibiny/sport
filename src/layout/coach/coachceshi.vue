@@ -255,6 +255,7 @@ export default {
       cid: 0,
       sid: 0,
       index: 0,
+      // 学员预约的上课时间
       time: "",
       // 保存当前操作课程的报名信息
       cloneMessage: {},
@@ -482,7 +483,7 @@ export default {
       dialogFormVisible: false,
       form: {},
       formLabelWidth: "120px",
-      //日期
+      //设置的日期
       date: "",
       //上课时间 show
       centerDialogVisible: false,
@@ -499,7 +500,7 @@ export default {
       coachId = data;
     });
     this.coachId = coachId;
-    // this.getData();
+    this.getData();
     // console.log("coachId",this.coachId);
     // 根据 coachId 请求接口获取数据赋值给this.tableData
   },
@@ -522,16 +523,15 @@ export default {
         .then(res => {
           if (res.data.code === 1) {
             let list = deepClone(res.data.data);
-            console.log("list",list)
+            console.log("list",res.data.data );
             let newList = list.map(v => {
-              v.punch = Math.random() > 0.3 ? (Math.random() > 0.6 ? 1 : 2) : 0;
               v.birthday = formatDate(v.birthday);
-              if(v.sex === 1) {
-                v.sex = "男"
-              }else if(v.sex === 2) {
-                v.sex = "女"
-              }else {
-                v.sex = "未知"
+              if (v.sex === 1) {
+                v.sex = "男";
+              } else if (v.sex === 2) {
+                v.sex = "女";
+              } else {
+                v.sex = "未知";
               }
               if (v.setTime === null) {
                 v.setTime = 0;
@@ -554,11 +554,41 @@ export default {
           }
         });
     },
+    resetTable(form) {
+      // console.log("resetform", form);
+      form.setTime = form.setTime === false ? 0 : 1;
+      form.appointment = form.appointment === false ? 0 : 1;
+      if(form.appointok === false) {
+        form.appointok = 0;
+      }else if(form.appointok === true) {
+        form.appointok = 1;
+      }
+      form.clockin = form.clockin === false ? 0 : 1;
+      console.log("resetform",form);
+      api
+        .changeTable({
+          sid: form.sid,
+          tid: this.coachId,
+          cid: form.cid,
+          ctime: form.ctime,
+          setTime: form.setTime,
+          appointment: form.appointment,
+          appointok: form.appointok,
+          clockin: form.clockin,
+          punch: form.punch
+        })
+        .then(res => {
+          if (res.data.code === 1) {
+            alert("success");
+            this.getData();
+          }
+        });
+    },
     // 克隆报名信息
     cloneCourseMessage(row) {
       this.cloneMessage = deepClone(row);
-      delete this.cloneMessage.cid;
-      delete this.cloneMessage.title;
+      // this.cloneMessage.ctime = formatDate(this.cloneMessage.ctime);
+      console.log("cloneMessage", this.cloneMessage);
     },
     handleEdit(index, row) {
       console.log(index, row);
@@ -573,7 +603,7 @@ export default {
       this.sid = row.sid;
       this.cid = row.cid;
       this.centerDialogVisible = true;
-      this.date = row.ctime;
+      this.date = formatDate(row.ctime);
       this.index = index;
     },
     // 重复设置时间
@@ -584,7 +614,7 @@ export default {
       this.sid = row.sid;
       this.cid = row.cid;
       this.centerDialogVisible = true;
-      this.date = row.ctime;
+      this.date = formatDate(row.ctime);
       this.index = index;
     },
     // 再次设置时间
@@ -595,16 +625,18 @@ export default {
       this.sid = row.sid;
       this.cid = row.cid;
       this.centerDialogVisible = true;
-      this.date = row.ctime;
+      this.date = formatDate(row.ctime);
       this.index = index;
     },
     // 确认设置上课时间
-    ok() {
+    async ok() {
       console.log(this.date);
-      console.log(typeof this.date);
+      this.cloneMessage.ctime = this.date;
+      this.cloneMessage.setTime = 1;
+      await this.resetTable(this.cloneMessage);
       this.centerDialogVisible = false;
       // this.tableData[this.index].time = this.date;
-      this.tableData[this.index + (this.m - 1) * this.n].ctime = this.date;
+      // this.tableData[this.index + (this.m - 1) * this.n].ctime = this.date;
     },
     toClock(index, row) {
       console.log(index, row);
@@ -615,18 +647,28 @@ export default {
       this.$confirm("剩余打卡次数：" + row.punch + ",确定打卡此课程吗")
         .then(_ => {
           if (row.punch == 1) {
+            this.cloneMessage.punch -= 1;
+            this.cloneMessage.clockin = 1;
+            this.resetTable(this.cloneMessage);
             // 打卡之后显示打卡结束
-            this.tableData[this.index + (this.m - 1) * this.n].punch -= 1;
-            this.tableData[this.index + (this.m - 1) * this.n].clockin = true;
+
+            // this.tableData[this.index + (this.m - 1) * this.n].punch -= 1;
+            // this.tableData[this.index + (this.m - 1) * this.n].clockin = true;
           } else {
+            this.cloneMessage.punch -= 1;
+            this.cloneMessage.setTime = 0;
+            this.cloneMessage.appointment = 0;
+            this.cloneMessage.appointok = 0;
+            this.cloneMessage.clockin = 0;
+            this.resetTable(this.cloneMessage);
             // 打卡之后显示设置上课时间
-            this.tableData[this.index + (this.m - 1) * this.n].punch -= 1;
-            this.tableData[this.index + (this.m - 1) * this.n].setTime = false;
-            this.tableData[
-              this.index + (this.m - 1) * this.n
-            ].appointment = false;
-            this.tableData[this.index + (this.m - 1) * this.n].appointok = 0;
-            this.tableData[this.index + (this.m - 1) * this.n].clockin = false;
+            // this.tableData[this.index + (this.m - 1) * this.n].punch -= 1;
+            // this.tableData[this.index + (this.m - 1) * this.n].setTime = false;
+            // this.tableData[
+            //   this.index + (this.m - 1) * this.n
+            // ].appointment = false;
+            // this.tableData[this.index + (this.m - 1) * this.n].appointok = 0;
+            // this.tableData[this.index + (this.m - 1) * this.n].clockin = false;
           }
           // this.tableData[this.index + (this.m - 1)*this.n].punch -= 1;
           // this.tableData[this.index + (this.m - 1)*this.n].setTime = false;
@@ -637,25 +679,30 @@ export default {
         })
         .catch(_ => {});
     },
+    // 新的预约
     appointment(index, row) {
       console.log(index, row);
       this.cloneCourseMessage(row);
       this.sid = row.sid;
       this.cid = row.cid;
-      this.time = row.ctime;
+      this.time = formatDate(row.ctime);
       console.log("time", this.time);
       this.dialogVisible = true;
       this.index = index;
     },
     // 拒绝预约
-    refuse() {
+    async refuse() {
+      this.cloneMessage.appointok = 2;
+      await this.resetTable(this.cloneMessage);
       this.dialogVisible = false;
-      this.tableData[this.index + (this.m - 1) * this.n].appointok = 2;
+      // this.tableData[this.index + (this.m - 1) * this.n].appointok = 2;
     },
     // 同意预约
-    agree() {
+    async agree() {
+      this.cloneMessage.appointok = 1;
+      await this.resetTable(this.cloneMessage);
       this.dialogVisible = false;
-      this.tableData[this.index + (this.m - 1) * this.n].appointok = 1;
+      // this.tableData[this.index + (this.m - 1) * this.n].appointok = 1;
     },
     //每页多少条数据  `${val}`
     handleSizeChange(val) {
