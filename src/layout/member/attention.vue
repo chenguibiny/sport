@@ -71,7 +71,7 @@ export default {
 </script>
 <style lang="scss">
 .attention-page {
-  width: 80%;
+  width: 90%;
   min-height: 400px;
   margin: 0 auto;
   background-color: #fff;

@@ -98,7 +98,7 @@ export default {
 </script>
 <style lang="scss">
 .message-page {
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
   &::after {
     content: "";
@@ -108,7 +108,7 @@ export default {
   ul {
     float: left;
     width: 40%;
-    background: #ccc;
+    background: #d3dce6;
     min-height: 400px;
     padding: 0;
     margin: 0;
@@ -143,7 +143,7 @@ export default {
     width: 60%;
     height: 400px;
     box-sizing: border-box;
-    background-color: #fff;
+    background-color:#fff;
     p {
       box-sizing: border-box;
       &:nth-of-type(1) {

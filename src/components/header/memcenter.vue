@@ -16,6 +16,9 @@
       <li>
         <router-link class="msg" :to="{name:'mycourse'}">我的课程</router-link>
       </li>
+      <!-- <li>
+        <router-link class="msg" :to="{name:'experience'}">吐槽大会</router-link>
+      </li> -->
       <li>
         <router-link class="msg" :to="{name:'memberceshi'}">测试页</router-link>
       </li>
@@ -34,7 +37,7 @@ export default {
   position: relative;
   width: 100%;
   height: 50px;
-  background: #606266;
+  background: #6a7682;
   ul {
     position: absolute;
     height: 50px;

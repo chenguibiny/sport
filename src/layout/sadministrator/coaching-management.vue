@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div class="top"></div>
     <el-table
       :data="currentPage"
       style="width: 90%;margin:0 auto;min-height:500px;"

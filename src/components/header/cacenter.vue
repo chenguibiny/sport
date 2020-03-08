@@ -23,7 +23,7 @@ export default {
   position: relative;
   width: 100%;
   height: 50px;
-  background: #606266;
+  background: #6a7682;
   ul {
     position: absolute;
     height: 50px;

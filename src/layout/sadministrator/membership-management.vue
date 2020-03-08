@@ -1,9 +1,8 @@
 <template>
   <div>
-    <div class="top"></div>
     <el-table
       :data="currentPage"
-      style="width: 90%;margin:0 auto;"
+      style="width: 90%;margin:0 auto; min-height:500px;"
     >
       <el-table-column
         label="账号"

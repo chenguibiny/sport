@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div class="top"></div>
-    <el-table :data="currentPage" style="width: 80%" v-if="showcourselist">
+    <el-table :data="currentPage" style="width: 90%" v-if="showcourselist">
       <el-table-column label="教练" width="250">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.content.name }}</span>
@@ -361,7 +360,7 @@ export default {
 <style lang="scss">
 .top{
   margin:0 auto;
-  width:80%;
+  width:90%;
   height:10px;
   border-bottom: 1px solid #ccc;
   background-color: ghostwhite;
@@ -382,14 +381,14 @@ export default {
 }
 .course-message {
   margin: 0 auto;
-  width: 80%;
+  width: 90%;
   overflow: hidden;
   background-color: #ccc;
   button.quit {
     width: 100px;
     height: 40px;
     border: none;
-    background-color: forestgreen;
+    background-color: rgb(26, 201, 26);
     color: #fff;
     font-size: 20px;
     cursor: pointer;

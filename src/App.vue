@@ -18,6 +18,6 @@ export default {
       height: 100%;
       list-style: none;
       text-decoration: none;
-      background-color: ghostwhite;
+      background-color:#E9EEF3;
     }
 </style>

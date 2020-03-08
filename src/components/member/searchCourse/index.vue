@@ -2,12 +2,12 @@
   <div>
     <el-table
       :data="currentPage"
-      style="width: 80%"
+      style="width: 90%"
       v-if="showcourselist"
     >
       <el-table-column
         label="教练"
-        width="250"
+        width="300"
       >
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.coachName }}</span>
@@ -15,7 +15,7 @@
       </el-table-column>
       <el-table-column
         label="课程名称"
-        width="250"
+        width="300"
       >
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.cname }}</span>
@@ -42,6 +42,7 @@
 
     <div
       class="course-message"
+      style="width:90%;"
       v-else
     >
       <button
@@ -120,6 +121,7 @@
 </template>
 <script>
 import cookie from "@/cookie/cookie.js";
+import { deepClone, formatDate } from "@/utils/deepClone.js";
 import api from "@/api/index.js";
 export default {
   data() {
@@ -133,6 +135,7 @@ export default {
       havePaid: false,
       // 当前详情的教练的id
       tid: 0,
+      myselfform: {},
       // 课程信息,放置所有数据
       obj: {
         cid: 1,
@@ -245,33 +248,74 @@ export default {
         });
       this.dialogTableVisible = true;
     },
-    sign() {
+    async sign() {
+      await api
+        .getUserInfo({
+          params: {
+            sid: this.memberId
+          }
+        })
+        .then(res => {
+          if (res.data.code === 1) {
+            let form = deepClone(res.data.data);
+            if (form.sex === 0) {
+              form.sex = "";
+            } else if (form.sex === 1) {
+              form.sex = "male";
+            } else if (form.sex === 2) {
+              form.sex = "female";
+            }
+            if (form.money === null) {
+              form.money = 0;
+            }
+            form.birthday = formatDate(form.birthday);
+            delete form.password;
+            this.myselfform = deepClone(form);
+            console.log("myselfform", this.myselfform);
+          }
+        });
       this.$confirm("确定要报名吗？")
         .then(_ => {
-          let count = this.apartList.count;
-          api
-            .apply({
-              tid: this.tid,
-              sid: this.memberId,
-              cid: this.cid,
-              count: count,
-              punch: 2
-            })
-            .then(res => {
-              if (res.data.code === 1) {
-                this.$message({
-                  message: "报名成功！",
-                  type: "success"
-                });
-                this.havePaid = true;
-                this.getData();
-              } else {
-                console.log(res);
-              }
-            })
-            .catch(rej => {
-              console.log(rej);
-            });
+          if (this.myselfform.money >= this.apartList.cost) {
+            let count = this.apartList.count;
+            api
+              .apply({
+                tid: this.tid,
+                sid: this.memberId,
+                cid: this.cid,
+                count: count,
+                punch: 2
+              })
+              .then(res => {
+                if (res.data.code === 1) {
+                  this.$message({
+                    message: "报名成功！",
+                    type: "success"
+                  });
+                  this.havePaid = true;
+                  let form = deepClone(this.myselfform);
+                  form.money = form.money - this.apartList.cost;
+                  api.saveUserInfo({
+                    sid: this.memberId,
+                    birthday: form.birthday,
+                    money: form.money,
+                    phone: form.phone,
+                    sex: form.sex ? (form.sex === "male" ? 1 : 2) : 0,
+                    username: form.username
+                  });
+                  this.getData();
+                } else {
+                  console.log(res);
+                }
+              })
+              .catch(rej => {
+                console.log(rej);
+              });
+          } else {
+            this.$confirm("余额不足以购买该课程，请先充值！")
+              .then(_ => {})
+              .catch(_ => {});
+          }
         })
         .catch(_ => {
           let count = this.apartList.count;
@@ -309,7 +353,7 @@ export default {
 }
 .course-message {
   margin: 0 auto;
-  width: 80%;
+  width: 90%;
   overflow: hidden;
   background-color: #ccc;
   button.quit {

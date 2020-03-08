@@ -1,6 +1,6 @@
 ﻿<template>
   <div>
-    <el-table class="traineelist" :data="currentPage" style="width: 80%">
+    <el-table class="traineelist" :data="currentPage" style="width: 90%">
       <el-table-column label="课程名称" width="280">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.title }}</span>

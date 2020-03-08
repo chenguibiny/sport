@@ -12,8 +12,8 @@ export default {
 <style lang="scss">
     .img{
         position: relative;
-        width: 80%;
-        height: 120px;
+        width: 90%;
+        height: 150px;
         margin: 0 auto;
         img{
             width: 100%;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="currentPage" style="width: 80%" v-if="showcourselist">
+    <el-table :data="currentPage" style="width: 90%" v-if="showcourselist">
       <el-table-column label="教练" width="400">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.content.name }}</span>

@@ -53,6 +53,7 @@
             v-for="(item,index) in suggestList"
             :key="index"
             href="#"
+            @click="hotSearch(item)"
           >{{item}}</a>
         </p>
       </el-col>
@@ -70,7 +71,7 @@ export default {
       // isSearchList:false,
       isFocus: false,
       searchList: [],
-      suggestList: ["哑铃爱好", "腹肌撕裂", "腿部专训", "综合"],
+      suggestList: ["哑铃", "腹肌", "腿部", "胸肌","手臂"],
       memberId: null
     };
   },
@@ -117,6 +118,9 @@ export default {
           this.searchList = searchList.slice(0,6);
         });
     },
+    hotSearch(item){
+      this.$router.push({name:"searchCourse",params:{searchWord:item}})
+    },
     toSearchCourse(){
       this.$router.push({name:"searchCourse",params:{searchWord:this.searchWord}})
     }
@@ -131,7 +135,7 @@ export default {
 <style lang="scss">
 .m-header-searchbar {
   padding: 10px 20px;
-  background-color: azure;
+  background-color: #E9EEF3;
   align-items: start;
   box-sizing: border-box;
   border-bottom: black;
