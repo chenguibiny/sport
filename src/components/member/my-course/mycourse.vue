@@ -1,21 +1,80 @@
 <template>
   <div>
-    <el-table :data="currentPage" style="width: 90%" v-if="showcourselist">
-      <el-table-column label="教练" width="400">
+    <el-table
+      :data="currentPage"
+      style="width: 90%"
+      v-if="showcourselist"
+    >
+      <el-table-column
+        label="教练"
+        width="400"
+      >
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.content.name }}</span>
+          <span style="margin-left: 10px">{{ scope.row.coachName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="课程名称" width="400">
+      <el-table-column
+        label="课程名称"
+        width="400"
+      >
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.content.title }}</span>
+          <span style="margin-left: 10px">{{ scope.row.cname }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">查看详情</el-button>
-          <!-- 细节操作 -->
           <el-button
+            size="mini"
+            type="primary"
+            @click="handleEdit(scope.$index, scope.row)"
+          >查看详情</el-button>
+          <!-- 细节操作 -->
+          <template v-if="scope.row.punch == 0">
+            <el-button
+              size="small"
+              type="success"
+              @click="clock(scope.$index, scope.row)"
+            >评价</el-button>
+          </template>
+          <template v-else>
+            <el-button
+              size="small"
+              type="info"
+              v-if="scope.row.setTime == false"
+              @click="appointago(scope.$index, scope.row)"
+            >教练未设置</el-button>
+            <el-button
+              size="small"
+              type="danger"
+              v-else-if="scope.row.setTime == true && scope.row.appointment == false"
+              @click="appointsuccess(scope.$index, scope.row)"
+            >预约上课</el-button>
+            <el-button
+              size="small"
+              type="danger"
+              v-else-if="scope.row.setTime == true && scope.row.appointment == true && scope.row.appointok == 2"
+              @click="appointfail(scope.$index, scope.row)"
+            >预约失败，重新预约</el-button>
+            <el-button
+              size="small"
+              v-else-if="scope.row.setTime == true && scope.row.appointment == true && scope.row.appointok == 1 && scope.row.clockin == false"
+              class="success"
+              disabled
+            >预约成功</el-button>
+            <el-button
+              size="small"
+              type="success"
+              v-else-if="scope.row.setTime == true && scope.row.appointment == true && scope.row.appointok == 1 && scope.row.clockin == true && scope.row.punch == 0"
+              @click="clock(scope.$index, scope.row)"
+            >评价</el-button>
+            <el-button
+              size="small"
+              v-else-if="scope.row.setTime == true && scope.row.appointment == true "
+              class="success"
+              disabled
+            >已经预约</el-button>
+          </template>
+          <!-- <el-button
             size="small"
             type="info"
             v-if="scope.row.setTime == false"
@@ -23,13 +82,11 @@
           >教练未设置</el-button>
           <el-button
             size="small"
-            type="danger"
             v-else-if="scope.row.setTime == true && scope.row.appointment == false"
             @click="appointsuccess(scope.$index, scope.row)"
           >预约上课</el-button>
           <el-button
             size="small"
-            type="danger"
             v-else-if="scope.row.setTime == true && scope.row.appointment == true && scope.row.appointok == 2"
             @click="appointfail(scope.$index, scope.row)"
           >预约失败，重新预约</el-button>
@@ -41,7 +98,6 @@
           >预约成功</el-button>
           <el-button
             size="small"
-            type="success"
             v-else-if="scope.row.setTime == true && scope.row.appointment == true && scope.row.appointok == 1 && scope.row.clockin == true"
             @click="clock(scope.$index, scope.row)"
           >评价</el-button>
@@ -50,58 +106,96 @@
             v-else-if="scope.row.setTime == true && scope.row.appointment == true "
             class="success"
             disabled
-          >已经预约</el-button>
+          >已经预约</el-button> -->
         </template>
       </el-table-column>
     </el-table>
 
     <!-- 课程详情 -->
-    <div class="course-message" v-else>
-      <button class="quit" @click="quit">退出</button>
+    <div
+      class="course-message"
+      v-else
+    >
+      <button
+        class="quit"
+        @click="quit"
+      >退出</button>
       <div class="course-message-content">
-        <div class="top">{{apartList.title}}</div>
+        <div class="top">{{apartList.cname}}</div>
         <div class="name">
           <span>教练：</span>
-          {{apartList.name}}
+          {{apartList.coachName}}
         </div>
         <div class="money">
           <span>报名费用：</span>
-          {{apartList.money}}
+          {{apartList.cost}}
         </div>
         <div class="adress">
           <span>上课地址：</span>
-          {{apartList.address}}
+          {{apartList.location}}
         </div>
         <div class="adress">
           <span>报名人数：</span>
-          {{apartList.selectNum}}
+          {{apartList.count}}
         </div>
         <div class="introduce">
           <span>课程介绍：</span>
-          <div>{{apartList.context}}</div>
+          <div>{{apartList.description}}</div>
         </div>
       </div>
 
-      <el-button type="text" @click="showCourseAdress">课程评价</el-button>
+      <el-button
+        type="text"
+        @click="showCourseAdress"
+      >课程评价</el-button>
 
-      <el-dialog title="课程评价" :visible.sync="dialogTableVisible" :close-on-click-modal="false">
+      <el-dialog
+        title="课程评价"
+        :visible.sync="dialogTableVisible"
+        :close-on-click-modal="false"
+      >
         <el-table :data="gridData">
-          <el-table-column property="date" label="评价人" width="150"></el-table-column>
-          <el-table-column property="name" label="评价"></el-table-column>
+          <el-table-column
+            property="username"
+            label="评价人"
+            width="150"
+          ></el-table-column>
+          <el-table-column
+            property="context"
+            label="评价"
+          ></el-table-column>
         </el-table>
       </el-dialog>
     </div>
 
     <!-- 评价课程 -->
-    <el-dialog title="评价课程" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
-      <el-form >
-        <el-form-item label="评价内容" :label-width="formLabelWidth">
-          <textarea v-model="evaluate" autocomplete="off" cols="30" rows="10"></textarea>
+    <el-dialog
+      title="评价课程"
+      :visible.sync="dialogFormVisible"
+      :close-on-click-modal="false"
+    >
+      <el-form>
+        <el-form-item
+          label="评价内容"
+          :label-width="formLabelWidth"
+        >
+          <textarea
+            v-model="context"
+            autocomplete="off"
+            cols="30"
+            rows="10"
+          ></textarea>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitEvaluate">确 定</el-button>
+        <el-button
+          type="primary"
+          @click="submitEvaluate"
+        >确 定</el-button>
       </div>
     </el-dialog>
 
@@ -120,233 +214,313 @@
   </div>
 </template>
 <script>
-import cookie from '@/cookie/cookie.js'
+import cookie from "@/cookie/cookie.js";
+import api from "@/api/index.js";
+import { deepClone, formatDate } from "@/utils/deepClone.js";
 export default {
   data() {
     return {
-      memberId:0,
-      cid:0,
-      index:0,
+      memberId: 0,
+      cid: 0,
+      index: 0,
       // 切换展示
       showcourselist: true,
-
+      cloneMessage: {},
       flag: false,
       // 课程信息
       tableData: [
         // 教练未设置
         {
-          time: "1991-01-01",
+          ctime: "1991-01-01",
           setTime: false,
           appointment: false,
           appointok: 0,
           clockin: false,
-          content: {
-            cid:1,
-            title: "腹肌撕裂者初级",
-            name: "陈桂槟",
-            address: "肇庆市肇庆学院",
-            money: 2030,
-            context:
-              "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-            selectNum: 12,
-            evaluate:"好评"
-          }
+          punch: 2,
+
+          cid: 1,
+          cname: "腹肌撕裂者初级",
+          coachName: "陈桂槟",
+          location: "肇庆市肇庆学院",
+          cost: 2030,
+          description:
+            "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
+          count: 12,
+          context: "好评"
         },
         // 预约上课
         {
-          time: "1991-01-01",
+          ctime: "1991-01-01",
           setTime: true,
           appointment: false,
           appointok: 0,
           clockin: false,
-          content: {
-            cid:2,
-            title: "腹肌撕裂者进阶",
-            name: "陈",
-            address: "肇庆市肇庆学院123",
-            money: 2000,
-            context:
-              "全球[最流行]的腹部动作，全方位打造腹肌线条！建议隔天练习，坚持2-4周后腹肌会越发清晰。",
-            selectNum: 12,
-            evaluate:"好评"
-          }
+          punch: 1,
+
+          cid: 2,
+          cname: "腹肌撕裂者进阶",
+          coachName: "陈",
+          location: "肇庆市肇庆学院123",
+          cost: 2000,
+          description:
+            "全球[最流行]的腹部动作，全方位打造腹肌线条！建议隔天练习，坚持2-4周后腹肌会越发清晰。",
+          count: 12,
+          context: "好评"
         },
         // 已经预约 bug
         {
-          time: "1991-01-01",
+          ctime: "1991-01-01",
           setTime: true,
           appointment: true,
           appointok: 0,
           clockin: false,
-          content: {
-            cid:3,
-            title: "哑铃手臂塑形",
-            name: "肖",
-            address: "上海市普陀区金沙江路343243",
-            money: 21000,
-            context: "只要一副小哑铃就可以练出[好看的臂膀]",
-            selectNum: 12,
-            evaluate:"好评"
-          }
+          punch: 2,
+
+          cid: 3,
+          cname: "哑铃手臂塑形",
+          coachName: "肖",
+          location: "上海市普陀区金沙江路343243",
+          cost: 21000,
+          description: "只要一副小哑铃就可以练出[好看的臂膀]",
+          count: 12,
+          context: "好评"
         },
         // 预约失败
         {
-          time: "1991-01-01",
+          ctime: "1991-01-01",
           setTime: true,
           appointment: true,
           appointok: 2,
           clockin: false,
-          content: {
-            cid:4,
-            title: "健身房廋腿训练",
-            name: "林",
-            address: "上海市普陀区金沙江路132123123",
-            money: 1050,
-            context:
-              "学生党的[廋腿]秘籍！动作简单有效，在床上也能轻松练习，帮你快速打造修长双腿！",
-            selectNum: 12,
-            evaluate:"好评"
-          }
+          punch: 2,
+
+          cid: 4,
+          cname: "健身房廋腿训练",
+          coachName: "林",
+          location: "上海市普陀区金沙江路132123123",
+          cost: 1050,
+          description:
+            "学生党的[廋腿]秘籍！动作简单有效，在床上也能轻松练习，帮你快速打造修长双腿！",
+          count: 12,
+          context: "好评"
         },
         // 预约成功
         {
-          time: "1991-01-01",
+          ctime: "1991-01-01",
           setTime: true,
           appointment: true,
           appointok: 1,
           clockin: false,
-          content: {
-            cid:5,
-            title: "腹肌撕裂",
-            name: "1234",
-            address: "上海市普陀区金沙江路 1516 弄",
-            money: 2030,
-            context: "",
-            selectNum: 12,
-            evaluate:"好评"
-          }
+          punch: 2,
+
+          cid: 5,
+          cname: "腹肌撕裂",
+          coachName: "1234",
+          location: "上海市普陀区金沙江路 1516 弄",
+          cost: 2030,
+          description: "",
+          count: 12,
+          context: "好评"
         },
         // 评价
         {
-          time: "1991-01-01",
+          ctime: "1991-01-01",
           setTime: true,
           appointment: true,
           appointok: 1,
           clockin: true,
-          content: {
-            cid:6,
-            title: "腹肌撕裂",
-            name: "1234",
-            address: "上海市普陀区金沙江路 1516 弄",
-            money: 2030,
-            context: "",
-            selectNum: 12,
-            evaluate:"好评,赶紧报名吧！"
-          }
+          punch: 0,
+
+          cid: 6,
+          cname: "腹肌撕裂",
+          coachName: "1234",
+          location: "上海市普陀区金沙江路 1516 弄",
+          cost: 2030,
+          description: "",
+          count: 12,
+          context: "好评,赶紧报名吧！"
+        },
+        // 预约失败
+        {
+          ctime: "1991-01-01",
+          setTime: true,
+          appointment: true,
+          appointok: 2,
+          clockin: false,
+          punch: 1,
+
+          cid: 7,
+          cname: "腹肌撕裂",
+          coachName: "1234",
+          location: "上海市普陀区金沙江路 1516 弄",
+          cost: 2030,
+          description: "",
+          count: 12,
+          context: ""
         },
         {
-          time: "1991-01-01",
+          ctime: "1991-01-01",
           setTime: true,
           appointment: true,
           appointok: 1,
           clockin: true,
-          content: {
-            cid:7,
-            title: "腹肌撕裂",
-            name: "1234",
-            address: "上海市普陀区金沙江路 1516 弄",
-            money: 2030,
-            context: "",
-            selectNum: 12,
-            evaluate:""
-          }
-        },
-        {
-          time: "1991-01-01",
-          setTime: true,
-          appointment: true,
-          appointok: 1,
-          clockin: true,
-          content: {
-            cid:8,
-            title: "腹肌撕裂",
-            name: "1234",
-            address: "上海市普陀区金沙江路 1516 弄",
-            money: 2030,
-            context: "",
-            selectNum: 12,
-            evaluate:"好评，教练很帅"
-          }
+          punch: 0,
+
+          cid: 8,
+          cname: "腹肌撕裂",
+          coachName: "1234",
+          location: "上海市普陀区金沙江路 1516 弄",
+          cost: 2030,
+          description: "",
+          count: 12,
+          context: "好评，教练很帅"
         }
       ],
-      n:8,
-      m:1,
+      n: 8,
+      m: 1,
       // 评价内容  为临时数据
       gridData: [
         {
-          date: "肖",
-          name:
+          username: "肖",
+          context:
             "教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评！"
         },
         {
-          date: "林",
-          name: "教练很走心，好评！"
+          username: "林",
+          context: "教练很走心，好评！"
         },
         {
-          date: "邱",
-          name: "教练很走心，好评！"
+          username: "邱",
+          context: "教练很走心，好评！"
         },
         {
-          date: "钟",
-          name: "教练很走心，好评！"
+          username: "钟",
+          context: "教练很走心，好评！"
         }
       ],
       // 课程详情页  放临时数据
       apartList: {
-        title: "腹肌撕裂者初级",
-        name: "陈桂槟",
-        money: 2030,
-        address: "广东省肇庆市端州区黄冈街道肇庆学院主校区",
-        context:
+        cname: "腹肌撕裂者初级",
+        coachName: "陈桂槟",
+        cost: 2030,
+        location: "广东省肇庆市端州区黄冈街道肇庆学院主校区",
+        description:
           "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-        selectNum: 12
+        count: 12
       },
       dialogTableVisible: false,
       centerDialogVisible: false,
-      dialogFormVisible:false,
-      formLabelWidth: '120px',
-      evaluate:""
+      dialogFormVisible: false,
+      formLabelWidth: "120px",
+      // 我对某课程的课程评价
+      context: ""
     };
   },
-  async created(){
+  async created() {
     let memberId;
-    await cookie.getCookie("memberId", function (data) {
+    await cookie.getCookie("memberId", function(data) {
       memberId = data;
-    })
+    });
     this.memberId = memberId;
-    // this.getData();
+    this.getData();
   },
-  computed:{
-    currentPage(){
-      return this.tableData.slice((this.m-1)*this.n,(this.m-1)*this.n + this.n);
+  computed: {
+    currentPage() {
+      return this.tableData.slice(
+        (this.m - 1) * this.n,
+        (this.m - 1) * this.n + this.n
+      );
     }
   },
   methods: {
-    getData(){
-      // 根据this.memberId 获取数据赋值给this.tableData
+    getData() {
+      api
+        .getMemberCourseList({
+          params: {
+            sid: this.memberId
+          }
+        })
+        .then(res => {
+          if (res.data.code === 1) {
+            let list = res.data.data.map(v => {
+              if (v.setTime === null) {
+                v.setTime = 0;
+              }
+              if (v.appointment === null) {
+                v.appointment = 0;
+              }
+              if (v.appointok === null) {
+                v.appointok = 0;
+              }
+              if (v.clockin === null) {
+                v.clockin = 0;
+              }
+              if (v.prohibit === null) {
+                v.prohibit = 0;
+              }
+              return v;
+            });
+            this.tableData = list;
+          }
+        });
+    },
+    resetTable(form) {
+      // console.log("resetform", form);
+      form.setTime = form.setTime === false ? 0 : 1;
+      form.appointment = form.appointment === false ? 0 : 1;
+      if (form.appointok === false) {
+        form.appointok = 0;
+      } else if (form.appointok === true) {
+        form.appointok = 1;
+      }
+      form.clockin = form.clockin === false ? 0 : 1;
+      console.log("resetform", form);
+      // api
+      //   .changeTable({
+      //     sid: form.sid,
+      //     tid: form.tid,
+      //     cid: form.cid,
+      //     ctime: form.ctime,
+      //     setTime: form.setTime,
+      //     appointment: form.appointment,
+      //     appointok: form.appointok,
+      //     clockin: form.clockin,
+      //     punch: form.punch
+      //   })
+      //   .then(res => {
+      //     if (res.data.code === 1) {
+      //       alert("success");
+      //       this.getData();
+      //     }
+      //   });
+    },
+    // 克隆报名信息
+    cloneCourseMessage(row) {
+      this.cloneMessage = deepClone(row);
+      console.log("cloneMessage", this.cloneMessage);
     },
     // 查看详情
     handleEdit(index, row) {
       console.log(index, row);
       this.showcourselist = false;
-      this.apartList = row.content;
-      this.cid = row.content.cid;
+      this.apartList = row;
+      this.cid = row.cid;
       this.index = index;
     },
     // 查看课程评价
-    showCourseAdress(){
+    showCourseAdress() {
+      api
+        .getCourseEvaluate({
+          params: {
+            cid: this.cid
+          }
+        })
+        .then(res => {
+          if (res.data.code === 1) {
+            this.gridData = res.data.data;
+          }
+        });
       this.dialogTableVisible = true;
-       // 根据this.cid获取课程评价 赋值给this.girdData
     },
     // 退出查看详情
     quit() {
@@ -355,23 +529,28 @@ export default {
     // 预约上课
     appointsuccess(index, row) {
       console.log(index, row);
-      this.cid = row.content.cid;
-      this.$confirm("上课时间为" + row.time)
+      this.cloneCourseMessage(row);
+      this.cid = row.cid;
+      this.$confirm("上课时间为" + formatDate(row.ctime))
         .then(_ => {
-          row.appointment = true;
-          // cid，memberid ,object 请求接口
+          this.cloneMessage.appointment = 1;
+          this.resetTable(this.cloneMessage);
+          // row.appointment = true;
         })
         .catch(_ => {});
     },
     // 预约失败，再次预约上课
     appointfail(index, row) {
       console.log(index, row);
-      this.cid = row.content.cid;
-      this.$confirm("上课时间为" + row.time)
+      this.cloneCourseMessage(row);
+      this.cid = row.cid;
+      this.$confirm("上课时间为" + formarDate(row.ctime))
         .then(_ => {
-          row.appointment = true;
-          row.appointok = 0;
-          // cid，memberid ,object 请求接口
+          this.cloneMessage.appointment = 1;
+          this.cloneMessage.appointok = 0;
+          this.resetTable(this.cloneMessage);
+          // row.appointment = true;
+          // row.appointok = 0;
         })
         .catch(_ => {});
     },
@@ -385,14 +564,16 @@ export default {
     // 评价
     clock(index, row) {
       console.log(index, row);
-      this.cid = row.content.cid;
-      this.evaluate = row.content.evaluate;
+      this.cloneCourseMessage(row);
+      this.cid = row.cid;
+      this.context = row.context;
       this.dialogFormVisible = true;
     },
-    submitEvaluate(){
-      // this.evaluate,this.cid,this.memberId 请求接口
+    // 提交评价
+    submitEvaluate() {
+      this.cloneMessage.context = this.context;
+      this.resetTable(this.cloneMessage);
       this.dialogFormVisible = false;
-
     },
     //每页多少条数据  `${val}`
     handleSizeChange(val) {

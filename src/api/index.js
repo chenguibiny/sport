@@ -110,10 +110,23 @@ const api = {
   deleteCoach(params) {
     return axios.post('/coach/del',params)
   },
-  // 修改会员、教练密码   /user/changePasswordByManager
+  // 修改会员、教练密码
   changePassword(params){
     return axios.post('/user/changePasswordByManager',params)
   },
+  //
+  //
+  //
+  // 课程管理员
+  // 获取所有课程
+  getAllCourse(params) {
+    return axios.get('',params)
+  },
+  // 禁用课程
+  setProhibit(params) {
+    return axios.get('/course/banOrNot',params)
+  }
+
 }
 
 export default api

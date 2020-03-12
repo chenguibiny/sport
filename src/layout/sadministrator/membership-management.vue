@@ -227,7 +227,7 @@ export default {
     },
     // 点击修改密码
     changePass(index, row) {
-      console.log(index, row);
+      console.log("修改密码", index, row);
       this.sid = row.sid;
       this.form = deepClone(row);
       delete this.form.password;
@@ -260,13 +260,10 @@ export default {
           this.dialogFormVisible = false;
         })
         .catch(_ => {});
-
-      // console.log(this.form);
-      // this.$confirm 弹框，并且this.form 发送请求
     },
     // 删除
     handleDelete(index, row) {
-      console.log(index, row);
+      console.log("删除", index, row);
       this.sid = row.sid;
       this.$confirm("确定删除该会员吗？")
         .then(_ => {
@@ -275,7 +272,6 @@ export default {
               sid: this.sid
             })
             .then(res => {
-              console.log("删除会员", res);
               if (res.data.code === 1) {
                 this.$message({
                   message: "删除成功！",

@@ -1,32 +1,67 @@
 <template>
   <div>
-    <el-table :data="currentPage" style="width: 90%" v-if="showcourselist">
-      <el-table-column label="教练" width="250">
+    <el-table
+      :data="currentPage"
+      style="width: 90%"
+      v-if="showcourselist"
+    >
+      <el-table-column
+        label="教练"
+        width="250"
+      >
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.content.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="课程名称" width="250">
+      <el-table-column
+        label="课程名称"
+        width="250"
+      >
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.content.title }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="报名费用" width="300">
+      <el-table-column
+        label="报名费用"
+        width="300"
+      >
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.content.money }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">查看详情</el-button>
-          <el-button v-if="!scope.row.prohibit" size="mini" class="danger" type="danger" @click="prohibit(scope.$index, scope.row)">禁用课程</el-button>
-          <el-button v-else size="mini" class="danger" type="danger" @click="prohibit(scope.$index, scope.row)">取消禁用</el-button>
+          <el-button
+            size="mini"
+            type="primary"
+            @click="handleEdit(scope.$index, scope.row)"
+          >查看详情</el-button>
+          <el-button
+            v-if="!scope.row.prohibit"
+            size="mini"
+            class="danger"
+            type="danger"
+            @click="prohibit(scope.$index, scope.row)"
+          >禁用课程</el-button>
+          <el-button
+            v-else
+            size="mini"
+            class="danger"
+            type="danger"
+            @click="prohibit(scope.$index, scope.row)"
+          >取消禁用</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <div class="course-message" v-else>
-      <button class="quit" @click="quit">退出</button>
+    <div
+      class="course-message"
+      v-else
+    >
+      <button
+        class="quit"
+        @click="quit"
+      >退出</button>
       <div class="course-message-content">
         <div class="top">{{apartList.title}}</div>
         <div class="name">
@@ -51,31 +86,50 @@
         </div>
       </div>
 
-      <el-button type="text" @click="showCourseAdress">课程评价</el-button>
+      <el-button
+        type="text"
+        @click="showCourseAdress"
+      >课程评价</el-button>
 
-      <el-dialog title="课程评价" :visible.sync="dialogTableVisible" :close-on-click-modal="false">
+      <el-dialog
+        title="课程评价"
+        :visible.sync="dialogTableVisible"
+        :close-on-click-modal="false"
+      >
         <el-table :data="gridData">
-          <el-table-column property="name" label="评价人" width="150"></el-table-column>
-          <el-table-column property="context" label="评价"></el-table-column>
+          <el-table-column
+            property="name"
+            label="评价人"
+            width="150"
+          ></el-table-column>
+          <el-table-column
+            property="context"
+            label="评价"
+          ></el-table-column>
         </el-table>
       </el-dialog>
     </div>
-
 
     <!-- 弹框 -->
     <el-dialog
       title="提示"
       :visible.sync="dialogVisible"
       width="30%"
-      :before-close="handleClose">
+      :before-close="handleClose"
+    >
       <span v-if="!isprohibit">确定禁用该课程吗？</span>
       <span v-else>确定取消禁用该课程吗？</span>
-      <span slot="footer" class="dialog-footer">
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="changeProhibit">确 定</el-button>
+        <el-button
+          type="primary"
+          @click="changeProhibit"
+        >确 定</el-button>
       </span>
     </el-dialog>
-
 
     <div class="block">
       <el-pagination
@@ -92,17 +146,19 @@
   </div>
 </template>
 <script>
+import api from "@/api/index.js";
+import { deepClone } from "@/utils/deepClone.js";
 export default {
   data() {
     return {
-      cid:0,
+      cid: 0,
       showcourselist: true,
       buy: false,
       // 课程信息,放置所有数据
       tableData: [
         {
           content: {
-            cid:1,
+            cid: 1,
             title: "腹肌撕裂者初级",
             name: "陈桂槟",
             address: "肇庆市肇庆学院",
@@ -111,11 +167,11 @@ export default {
               "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
             selectNum: 12
           },
-          prohibit: true,
+          prohibit: true
         },
         {
           content: {
-            cid:2,
+            cid: 2,
             title: "腹肌撕裂者初级",
             name: "陈桂槟",
             address: "肇庆市肇庆学院",
@@ -124,11 +180,11 @@ export default {
               "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
             selectNum: 12
           },
-          prohibit: false,
+          prohibit: false
         },
         {
           content: {
-            cid:3,
+            cid: 3,
             title: "腹肌撕裂者初级",
             name: "陈桂槟",
             address: "肇庆市肇庆学院",
@@ -137,11 +193,11 @@ export default {
               "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
             selectNum: 12
           },
-          prohibit: false,
+          prohibit: false
         },
         {
           content: {
-            cid:4,
+            cid: 4,
             title: "腹肌撕裂者初级",
             name: "陈桂槟",
             address: "肇庆市肇庆学院",
@@ -150,11 +206,11 @@ export default {
               "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
             selectNum: 12
           },
-          prohibit: false,
+          prohibit: false
         },
         {
           content: {
-            cid:5,
+            cid: 5,
             title: "腹肌撕裂者初级",
             name: "陈桂槟",
             address: "肇庆市肇庆学院",
@@ -163,11 +219,11 @@ export default {
               "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
             selectNum: 12
           },
-          prohibit: false,
+          prohibit: false
         },
         {
           content: {
-            cid:6,
+            cid: 6,
             title: "腹肌撕裂者初级",
             name: "陈桂槟",
             address: "肇庆市肇庆学院",
@@ -176,11 +232,11 @@ export default {
               "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
             selectNum: 12
           },
-          prohibit: false,
+          prohibit: false
         },
         {
           content: {
-            cid:7,
+            cid: 7,
             title: "腹肌撕裂者进阶",
             name: "陈",
             address: "肇庆市肇庆学院123",
@@ -189,11 +245,11 @@ export default {
               "全球[最流行]的腹部动作，全方位打造腹肌线条！建议隔天练习，坚持2-4周后腹肌会越发清晰。",
             selectNum: 12
           },
-          prohibit: true,
+          prohibit: true
         },
         {
           content: {
-            cid:8,
+            cid: 8,
             title: "哑铃手臂塑形",
             name: "肖",
             address: "上海市普陀区金沙江路343243",
@@ -201,11 +257,11 @@ export default {
             context: "只要一副小哑铃就可以练出[好看的臂膀]",
             selectNum: 12
           },
-          prohibit: false,
+          prohibit: false
         },
         {
           content: {
-            cid:9,
+            cid: 9,
             title: "健身房廋腿训练",
             name: "林",
             address: "上海市普陀区金沙江路132123123",
@@ -214,11 +270,11 @@ export default {
               "学生党的[廋腿]秘籍！动作简单有效，在床上也能轻松练习，帮你快速打造修长双腿！",
             selectNum: 12
           },
-          prohibit: true,
+          prohibit: true
         },
         {
           content: {
-            cid:10,
+            cid: 10,
             title: "腹肌撕裂",
             name: "1234",
             address: "上海市普陀区金沙江路 1516 弄",
@@ -226,11 +282,11 @@ export default {
             context: "",
             selectNum: 12
           },
-          prohibit: true,
+          prohibit: true
         },
         {
           content: {
-            cid:11,
+            cid: 11,
             title: "腹肌撕裂",
             name: "1234",
             address: "上海市普陀区金沙江路 1516 弄",
@@ -238,11 +294,11 @@ export default {
             context: "",
             selectNum: 12
           },
-          prohibit: true,
+          prohibit: true
         },
         {
           content: {
-            cid:12,
+            cid: 12,
             title: "腹肌撕裂",
             name: "1234",
             address: "上海市普陀区金沙江路 1516 弄",
@@ -250,11 +306,11 @@ export default {
             context: "",
             selectNum: 12
           },
-          prohibit: true,
+          prohibit: true
         },
         {
           content: {
-            cid:13,
+            cid: 13,
             title: "腹肌撕裂",
             name: "1234",
             address: "上海市普陀区金沙江路 1516 弄",
@@ -262,11 +318,11 @@ export default {
             context: "",
             selectNum: 12
           },
-          prohibit: true,
+          prohibit: true
         }
       ],
-      n:10,
-      m:1,
+      n: 10,
+      m: 1,
 
       // 课程评价内容   放临时数据
       gridData: [
@@ -293,21 +349,28 @@ export default {
       // 弹框
       dialogVisible: false,
       // 禁用标志
-      isprohibit:false,
+      isprohibit: false,
       // 课程详情页  放临时数据
-      apartList: {},
+      apartList: {}
     };
   },
-  created(){
-    // this.getData();
+  created() {
+    this.getData();
   },
-  computed:{
-    currentPage(){
-      return this.tableData.slice((this.m-1)*this.n,(this.m-1)*this.n + this.n);
+  computed: {
+    currentPage() {
+      return this.tableData.slice(
+        (this.m - 1) * this.n,
+        (this.m - 1) * this.n + this.n
+      );
     }
   },
   methods: {
-    getData(){},
+    getData() {
+      // api.getAllCourse().then(res => {
+      //   console.log(res);
+      // });
+    },
     handleEdit(index, row) {
       console.log(index, row);
       this.cid = row.content.cid;
@@ -315,16 +378,16 @@ export default {
       this.apartList = row.content;
       this.buy = row.flag;
     },
-    prohibit(index,row){
+    prohibit(index, row) {
       this.cid = row.content.cid;
       this.isprohibit = row.prohibit;
       // row.prohibit = !row.prohibit;
       this.dialogVisible = true;
     },
-    changeProhibit(){
+    changeProhibit() {
       this.dialogVisible = false;
     },
-    showCourseAdress(){
+    showCourseAdress() {
       this.dialogTableVisible = true;
     },
     sign() {
@@ -338,7 +401,7 @@ export default {
       this.showcourselist = true;
     },
     handleClose(done) {
-      this.$confirm('确认关闭？')
+      this.$confirm("确认关闭？")
         .then(_ => {
           done();
         })
@@ -358,10 +421,10 @@ export default {
 };
 </script>
 <style lang="scss">
-.top{
-  margin:0 auto;
-  width:90%;
-  height:10px;
+.top {
+  margin: 0 auto;
+  width: 90%;
+  height: 10px;
   border-bottom: 1px solid #ccc;
   background-color: ghostwhite;
   margin-bottom: 10px;
@@ -371,7 +434,7 @@ export default {
   min-height: 550px;
   tbody {
     .el-button--mini {
-      &.danger{
+      &.danger {
       }
       span {
         color: #fff;

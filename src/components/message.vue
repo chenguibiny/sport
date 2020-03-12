@@ -3,12 +3,19 @@
     <!-- <tap :List="message"/> -->
     <div class="message-page">
       <ul>
-        <li v-for="(item,index) in currentPage" :key="index" v-on:click="show(index)">
+        <li
+          v-for="(item,index) in currentPage"
+          :key="index"
+          v-on:click="show(index)"
+        >
           <span>{{item.title}}</span>
           <span>{{item.ptime}}</span>
         </li>
       </ul>
-      <div class="message-show" v-if="showRight">
+      <div
+        class="message-show"
+        v-if="showRight"
+      >
         <p>{{title}}</p>
         <p>{{time}}</p>
         <p>{{context}} </p>
@@ -28,25 +35,25 @@
 </template>
 <script>
 import tap from "@/components/member/img.vue";
-import api from '@/api/index.js'
-import { deepClone, formatDate} from '@/utils/deepClone.js'
+import api from "@/api/index.js";
+import { deepClone, formatDate } from "@/utils/deepClone.js";
 export default {
   data() {
     return {
       // message:["看过来咯","这里将会有最新的消息哦！"],
       indexshow: null,
-      showRight:null,
+      showRight: null,
       //存放所有数据
-      title:"",
-      time:"",
-      context:"",
+      title: "",
+      time: "",
+      context: "",
       arrList: [],
       //每页多少数据
       n: 8,
       //当前页
       m: 1,
       // 默认一开始第几页
-      currentPage1:1
+      currentPage1: 1
     };
   },
   computed: {
@@ -55,14 +62,14 @@ export default {
       return this.arrList.slice(
         (this.m - 1) * this.n,
         (this.m - 1) * this.n + this.n
-      )
+      );
     }
   },
-  created(){
+  created() {
     this.getData();
   },
   methods: {
-    getData(){
+    getData() {
       let list;
       api
         .getMessage()
@@ -73,9 +80,7 @@ export default {
           });
           this.arrList = list;
         })
-        .catch(rej => {
-          console.log(rej);
-        });
+        .catch(rej => {});
     },
     show(index) {
       this.indexshow = index;
@@ -83,7 +88,6 @@ export default {
       this.title = this.currentPage[index].title;
       this.time = this.currentPage[index].ptime;
       this.context = this.currentPage[index].context;
-      console.log(this.indexshow);
     },
     //当前页数  parseInt(`${val}`)
     handleCurrentChange(val) {
@@ -143,7 +147,7 @@ export default {
     width: 60%;
     height: 400px;
     box-sizing: border-box;
-    background-color:#fff;
+    background-color: #fff;
     p {
       box-sizing: border-box;
       &:nth-of-type(1) {

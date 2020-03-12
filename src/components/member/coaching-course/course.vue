@@ -209,22 +209,20 @@ export default {
           }
         })
         .then(res => {
-          // console.log("pro",res.data.data)
           if (res.data.code === 1) {
             let form = deepClone(res.data.data);
-            let newList = form.map (v => {
-              if(v.prohibit === null) {
+            let newList = form.map(v => {
+              if (v.prohibit === null) {
                 v.prohibit = 0;
               }
               return v;
-            })
-            this.tableData = newList.filter( v => {
-              if(v.prohibit) {
+            });
+            this.tableData = newList.filter(v => {
+              if (v.prohibit) {
                 return false;
               }
               return true;
-            })
-            // console.log("tableData",this.tableData);
+            });
           }
         });
     },
@@ -274,7 +272,6 @@ export default {
             form.birthday = formatDate(form.birthday);
             delete form.password;
             this.myselfform = deepClone(form);
-            console.log("myselfform", this.myselfform);
           }
         });
       this.$confirm("确定要报名吗？")
@@ -308,12 +305,9 @@ export default {
                   });
                   this.getData();
                 } else {
-                  console.log(res);
                 }
               })
-              .catch(rej => {
-                console.log(rej);
-              });
+              .catch(rej => {});
           } else {
             this.$confirm("余额不足以购买该课程，请先充值！")
               .then(_ => {})

@@ -74,6 +74,7 @@
                   <el-input
                     v-model="formChange.context"
                     autocomplete="off"
+                    style="width:100%;"
                   ></el-input>
                 </el-form-item>
               </el-form>
@@ -222,6 +223,15 @@ export default {
     }
   },
   methods: {
+    timeSort(a, b) {
+      let oDate1 = new Date(a);
+      let oDate2 = new Date(b);
+      if (oDate1.getTime() > oDate2.getTime()) {
+        return -1;
+      } else {
+        return 1;
+      }
+    },
     getData() {
       let list;
       api
@@ -231,11 +241,12 @@ export default {
             v.ptime = formatDate(v.ptime);
             return v;
           });
+          list.sort((a, b) => {
+            return this.timeSort(a.ptime, b.ptime);
+          });
           this.tableData = list;
         })
-        .catch(rej => {
-          console.log(rej);
-        });
+        .catch(rej => {});
     },
     getTime() {
       var ct = new Date();
@@ -249,7 +260,6 @@ export default {
         day = "0" + day;
       }
       var time = year + "-" + month + "-" + day;
-      console.log("time", time);
       return time;
     },
     // 提交新公告
@@ -260,7 +270,6 @@ export default {
           .then(_ => {
             this.loading = true;
             let form = deepClone(this.form);
-            console.log(form);
             api
               .saveMessage({
                 title: form.title,
@@ -268,7 +277,6 @@ export default {
                 ptime: form.ptime
               })
               .then(res => {
-                console.log(res);
                 if (res.data.code === 1) {
                   setTimeout(() => {
                     this.$message({
@@ -283,9 +291,7 @@ export default {
                   }, 1000);
                 }
               })
-              .catch(rej => {
-                console.log(rej);
-              });
+              .catch(rej => {});
           })
           .catch(_ => {});
       } else {
@@ -298,13 +304,12 @@ export default {
     // 编辑公告
     handleEdit(index, row) {
       console.log(index, row);
-      this.formChange = row;
+      this.formChange = deepClone(row);
       this.nid = row.nid;
       this.dialogFormVisible = true;
     },
     // 确认修改公告
     changeNodes() {
-      console.log(this.nid, this.formChange);
       if (this.formChange.title && this.formChange.context) {
         api
           .saveMessage({
@@ -321,11 +326,8 @@ export default {
               });
               this.getData();
             }
-            console.log(res);
           })
-          .catch(rej => {
-            console.log(rej);
-          });
+          .catch(rej => {});
         this.dialogFormVisible = false;
       } else {
         this.$alert("请完善所有的信息！", "", {
@@ -336,7 +338,7 @@ export default {
     },
     // 查看详情
     handleShow(index, row) {
-      console.log(index, row);
+      console.log("查看详情", index, row);
       this.currentForm = row;
       this.show = false;
     },
@@ -357,11 +359,11 @@ export default {
                 });
                 this.getData();
               } else {
-                alert("res");
+                console.log(res);
               }
             })
             .catch(rej => {
-              alert("rej");
+              console.log(rej);
             });
         })
         .catch(_ => {});

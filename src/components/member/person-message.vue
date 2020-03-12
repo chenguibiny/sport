@@ -257,7 +257,6 @@ export default {
         .then(async res => {
           if (res.data.code === 1) {
             form = deepClone(res.data.data);
-            console.log("form", res.data.data);
             if (form.sex === 0) {
               form.sex = "";
             } else if (form.sex === 1) {
@@ -265,7 +264,7 @@ export default {
             } else if (form.sex === 2) {
               form.sex = "female";
             }
-            if(form.money === null) {
+            if (form.money === null) {
               form.money = 0;
             }
             form.birthday = formatDate(form.birthday);
@@ -285,7 +284,6 @@ export default {
           setTimeout(() => {
             this.loading = false;
             let form = deepClone(this.form);
-            console.log(this.form);
             api
               .saveUserInfo({
                 sid: this.memberId,
@@ -320,11 +318,6 @@ export default {
         if (valid) {
           this.$confirm("确定要保存修改吗？")
             .then(_ => {
-              const params = {
-                sid: this.memberId,
-                oldPassword: this.ruleForm.pass,
-                newPassword: this.ruleForm.rePass
-              };
               api
                 .changeUserPassword({
                   sid: this.memberId,
@@ -334,7 +327,6 @@ export default {
                 .then(res => {
                   if (res.data.code === 1) {
                     this.error = null;
-                    console.log(res);
                     this.$message({
                       message: "修改密码成功！",
                       type: "success"
@@ -343,15 +335,12 @@ export default {
                     this.error = res.data.msg;
                   }
                 })
-                .catch(rej => {
-                  console.log(rej);
-                });
+                .catch(rej => {});
               this.ruleForm.pass = "";
               this.ruleForm.rePass = "";
             })
             .catch(_ => {});
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -375,27 +364,32 @@ export default {
             let form = deepClone(this.form);
             // 拿到暂存的值，防止充值前修改了 性别、电话、生日，充值后一并修改了。
             let temporalForm = deepClone(this.temporalForm);
-            api.saveUserInfo({
-              sid: this.memberId,
-              birthday: temporalForm.birthday,
-              money: form.money,
-              phone: temporalForm.phone,
-              sex: temporalForm.sex ? (temporalForm.sex === "male" ? 1 : 2) : 0,
-              username: form.username
-            }).then( res => {
-              if(res.data.code === 1) {
-                this.$message({
-                  message: "充值成功！",
-                  type: "success"
-                });
-                this.dialogFormVisible = false;
-              }
-            });
+            api
+              .saveUserInfo({
+                sid: this.memberId,
+                birthday: temporalForm.birthday,
+                money: form.money,
+                phone: temporalForm.phone,
+                sex: temporalForm.sex
+                  ? temporalForm.sex === "male"
+                    ? 1
+                    : 2
+                  : 0,
+                username: form.username
+              })
+              .then(res => {
+                if (res.data.code === 1) {
+                  this.$message({
+                    message: "充值成功！",
+                    type: "success"
+                  });
+                  this.dialogFormVisible = false;
+                }
+              });
             this.addNum = 0;
           }
         })
         .catch(_ => {});
-
       // this.$store.commit("changeMemberMessage", this.form);
     }
   }

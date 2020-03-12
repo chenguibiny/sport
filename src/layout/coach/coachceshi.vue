@@ -3,7 +3,7 @@
     <el-table
       class="traineelist"
       :data="currentPage"
-      style="width: 80%; min-height:550px;"
+      style="width: 90%; min-height:550px;"
     >
       <el-table-column
         label="课程名称"

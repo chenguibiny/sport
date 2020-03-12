@@ -497,16 +497,19 @@ export default {
         })
         .then(res => {
           if (res.data.code === 1) {
-            let list = res.data.data;
-            console.log("mycourse",list)
+            let list = deepClone(res.data.data);
+            console.log("mycourse", list);
             list.map(e => {
               if (e.count === null) {
                 e.count = 0;
               }
+              if(e.prohibit === null){
+                e.prohibit = 0;
+              }
               return e;
             });
             this.tableData = list;
-            // this.listSort();
+            this.listSort();
           }
         });
     },
@@ -620,8 +623,6 @@ export default {
         });
         return;
       }
-      // this.cid thid.changeform 请求接口
-      // this.getData();
       this.dialogFormVisible = false;
     },
     // 删除
@@ -651,29 +652,6 @@ export default {
             });
         })
         .catch(_ => {});
-      // api.deleteCourse({
-      //   cid:this.cid,
-      //   tid:this.coachId
-      // }).then(res => {
-      //   if(res.data.code ===1) {
-      //     this.$message({
-      //           message: "添加成功！",
-      //           type: "success"
-      //         });
-      //   }
-
-      //   console.log(res);
-      //   // this.getData();
-      // })
-
-      // this.index = index;
-      // this.$confirm("确定要删除吗？")
-      //   .then(_ => {
-      //     // this.cid 请求删除课程
-      //     // this.getData();
-      //     this.tableData.splice(index, 1);
-      //   })
-      //   .catch(_ => {});
     },
     //每页多少条数据  `${val}`
     handleSizeChange(val) {

@@ -220,12 +220,9 @@ export default {
             form.birthday = formatDate(form.birthday);
             this.form = deepClone(form);
             this.dialog = true;
-            console.log(this.form);
           }
         })
-        .catch(rej => {
-          console.log(rej);
-        });
+        .catch(rej => {});
     },
     // 外层提交表单
     handleClose1(done) {
@@ -236,7 +233,7 @@ export default {
           setTimeout(() => {
             this.loading = false;
             let form = deepClone(this.form);
-            console.log(form);
+            console.log("提交的form", form);
             api
               .coachRegister({
                 tid: this.coachId,
@@ -269,11 +266,6 @@ export default {
         if (valid) {
           this.$confirm("确定要保存修改吗？")
             .then(_ => {
-              const params = {
-                tid: this.coachId,
-                oldPassword: this.ruleForm.pass,
-                newPassword: this.ruleForm.rePass
-              };
               api
                 .changeCoachPassword({
                   tid: this.coachId,
@@ -283,7 +275,6 @@ export default {
                 .then(res => {
                   if (res.data.code === 1) {
                     this.error = null;
-                    console.log(res);
                     this.$message({
                       message: "修改密码成功！",
                       type: "success"
@@ -292,15 +283,12 @@ export default {
                     this.error = res.data.msg;
                   }
                 })
-                .catch(rej => {
-                  console.log(rej);
-                });
+                .catch(rej => {});
               this.ruleForm.pass = "";
               this.ruleForm.rePass = "";
             })
             .catch(_ => {});
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
