@@ -10,7 +10,7 @@
         width="250"
       >
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.content.name }}</span>
+          <span style="margin-left: 10px">{{ scope.row.coachName }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -18,7 +18,7 @@
         width="250"
       >
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.content.title }}</span>
+          <span style="margin-left: 10px">{{ scope.row.cname }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -26,7 +26,7 @@
         width="300"
       >
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.content.money }}</span>
+          <span style="margin-left: 10px">{{ scope.row.cost }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作">
@@ -47,7 +47,7 @@
             v-else
             size="mini"
             class="danger"
-            type="danger"
+            type="success"
             @click="prohibit(scope.$index, scope.row)"
           >取消禁用</el-button>
         </template>
@@ -63,26 +63,26 @@
         @click="quit"
       >退出</button>
       <div class="course-message-content">
-        <div class="top">{{apartList.title}}</div>
+        <div class="top">{{apartList.cname}}</div>
         <div class="name">
           <span>教练：</span>
-          {{apartList.name}}
+          {{apartList.coachName}}
         </div>
         <div class="money">
           <span>报名费用：</span>
-          {{apartList.money}}
+          {{apartList.cost}}
         </div>
         <div class="adress">
           <span>上课地址：</span>
-          {{apartList.address}}
+          {{apartList.location}}
         </div>
         <div class="adress">
           <span>报名人数：</span>
-          {{apartList.selectNum}}
+          {{apartList.count}}
         </div>
         <div class="introduce">
           <span>课程介绍：</span>
-          <div>{{apartList.context}}</div>
+          <div>{{apartList.description}}</div>
         </div>
       </div>
 
@@ -151,198 +151,173 @@ import { deepClone } from "@/utils/deepClone.js";
 export default {
   data() {
     return {
+      sid: 0,
       cid: 0,
       showcourselist: true,
       buy: false,
       // 课程信息,放置所有数据
       tableData: [
-        {
-          content: {
-            cid: 1,
-            title: "腹肌撕裂者初级",
-            name: "陈桂槟",
-            address: "肇庆市肇庆学院",
-            money: 2030,
-            context:
-              "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-            selectNum: 12
-          },
-          prohibit: true
-        },
-        {
-          content: {
-            cid: 2,
-            title: "腹肌撕裂者初级",
-            name: "陈桂槟",
-            address: "肇庆市肇庆学院",
-            money: 2030,
-            context:
-              "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-            selectNum: 12
-          },
-          prohibit: false
-        },
-        {
-          content: {
-            cid: 3,
-            title: "腹肌撕裂者初级",
-            name: "陈桂槟",
-            address: "肇庆市肇庆学院",
-            money: 2030,
-            context:
-              "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-            selectNum: 12
-          },
-          prohibit: false
-        },
-        {
-          content: {
-            cid: 4,
-            title: "腹肌撕裂者初级",
-            name: "陈桂槟",
-            address: "肇庆市肇庆学院",
-            money: 2030,
-            context:
-              "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-            selectNum: 12
-          },
-          prohibit: false
-        },
-        {
-          content: {
-            cid: 5,
-            title: "腹肌撕裂者初级",
-            name: "陈桂槟",
-            address: "肇庆市肇庆学院",
-            money: 2030,
-            context:
-              "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-            selectNum: 12
-          },
-          prohibit: false
-        },
-        {
-          content: {
-            cid: 6,
-            title: "腹肌撕裂者初级",
-            name: "陈桂槟",
-            address: "肇庆市肇庆学院",
-            money: 2030,
-            context:
-              "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-            selectNum: 12
-          },
-          prohibit: false
-        },
-        {
-          content: {
-            cid: 7,
-            title: "腹肌撕裂者进阶",
-            name: "陈",
-            address: "肇庆市肇庆学院123",
-            money: 2000,
-            context:
-              "全球[最流行]的腹部动作，全方位打造腹肌线条！建议隔天练习，坚持2-4周后腹肌会越发清晰。",
-            selectNum: 12
-          },
-          prohibit: true
-        },
-        {
-          content: {
-            cid: 8,
-            title: "哑铃手臂塑形",
-            name: "肖",
-            address: "上海市普陀区金沙江路343243",
-            money: 21000,
-            context: "只要一副小哑铃就可以练出[好看的臂膀]",
-            selectNum: 12
-          },
-          prohibit: false
-        },
-        {
-          content: {
-            cid: 9,
-            title: "健身房廋腿训练",
-            name: "林",
-            address: "上海市普陀区金沙江路132123123",
-            money: 1050,
-            context:
-              "学生党的[廋腿]秘籍！动作简单有效，在床上也能轻松练习，帮你快速打造修长双腿！",
-            selectNum: 12
-          },
-          prohibit: true
-        },
-        {
-          content: {
-            cid: 10,
-            title: "腹肌撕裂",
-            name: "1234",
-            address: "上海市普陀区金沙江路 1516 弄",
-            money: 2030,
-            context: "",
-            selectNum: 12
-          },
-          prohibit: true
-        },
-        {
-          content: {
-            cid: 11,
-            title: "腹肌撕裂",
-            name: "1234",
-            address: "上海市普陀区金沙江路 1516 弄",
-            money: 2030,
-            context: "",
-            selectNum: 12
-          },
-          prohibit: true
-        },
-        {
-          content: {
-            cid: 12,
-            title: "腹肌撕裂",
-            name: "1234",
-            address: "上海市普陀区金沙江路 1516 弄",
-            money: 2030,
-            context: "",
-            selectNum: 12
-          },
-          prohibit: true
-        },
-        {
-          content: {
-            cid: 13,
-            title: "腹肌撕裂",
-            name: "1234",
-            address: "上海市普陀区金沙江路 1516 弄",
-            money: 2030,
-            context: "",
-            selectNum: 12
-          },
-          prohibit: true
-        }
+        // {
+        //   cid: 1,
+        //   cname: "腹肌撕裂者初级",
+        //   coachName: "陈桂槟",
+        //   location: "肇庆市肇庆学院",
+        //   cost: 2030,
+        //   description:
+        //     "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
+        //   count: 12,
+        //   prohibit: true
+        // },
+        // {
+        //   cid: 2,
+        //   cname: "腹肌撕裂者初级",
+        //   coachName: "陈桂槟",
+        //   location: "肇庆市肇庆学院",
+        //   cost: 2030,
+        //   description:
+        //     "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
+        //   count: 12,
+        //   prohibit: false
+        // },
+        // {
+        //   cid: 3,
+        //   cname: "腹肌撕裂者初级",
+        //   coachName: "陈桂槟",
+        //   location: "肇庆市肇庆学院",
+        //   cost: 2030,
+        //   description:
+        //     "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
+        //   count: 12,
+        //   prohibit: false
+        // },
+        // {
+        //   cid: 4,
+        //   cname: "腹肌撕裂者初级",
+        //   coachName: "陈桂槟",
+        //   location: "肇庆市肇庆学院",
+        //   cost: 2030,
+        //   description:
+        //     "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
+        //   count: 12,
+        //   prohibit: false
+        // },
+        // {
+        //   cid: 5,
+        //   cname: "腹肌撕裂者初级",
+        //   coachName: "陈桂槟",
+        //   location: "肇庆市肇庆学院",
+        //   cost: 2030,
+        //   description:
+        //     "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
+        //   count: 12,
+        //   prohibit: false
+        // },
+        // {
+        //   cid: 6,
+        //   cname: "腹肌撕裂者初级",
+        //   coachName: "陈桂槟",
+        //   location: "肇庆市肇庆学院",
+        //   cost: 2030,
+        //   description:
+        //     "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
+        //   count: 12,
+        //   prohibit: false
+        // },
+        // {
+        //   cid: 7,
+        //   cname: "腹肌撕裂者进阶",
+        //   coachName: "陈",
+        //   location: "肇庆市肇庆学院123",
+        //   cost: 2000,
+        //   description:
+        //     "全球[最流行]的腹部动作，全方位打造腹肌线条！建议隔天练习，坚持2-4周后腹肌会越发清晰。",
+        //   count: 12,
+        //   prohibit: true
+        // },
+        // {
+        //   cid: 8,
+        //   cname: "哑铃手臂塑形",
+        //   coachName: "肖",
+        //   location: "上海市普陀区金沙江路343243",
+        //   cost: 21000,
+        //   description: "只要一副小哑铃就可以练出[好看的臂膀]",
+        //   count: 12,
+        //   prohibit: false
+        // },
+        // {
+        //   cid: 9,
+        //   cname: "健身房廋腿训练",
+        //   coachName: "林",
+        //   location: "上海市普陀区金沙江路132123123",
+        //   cost: 1050,
+        //   description:
+        //     "学生党的[廋腿]秘籍！动作简单有效，在床上也能轻松练习，帮你快速打造修长双腿！",
+        //   count: 12,
+        //   prohibit: true
+        // },
+        // {
+        //   cid: 10,
+        //   cname: "腹肌撕裂",
+        //   coachName: "1234",
+        //   location: "上海市普陀区金沙江路 1516 弄",
+        //   cost: 2030,
+        //   description: "",
+        //   count: 12,
+        //   prohibit: true
+        // },
+        // {
+        //   cid: 11,
+        //   cname: "腹肌撕裂",
+        //   coachName: "1234",
+        //   location: "上海市普陀区金沙江路 1516 弄",
+        //   cost: 2030,
+        //   description: "",
+        //   count: 12,
+        //   prohibit: true
+        // },
+        // {
+        //   cid: 12,
+        //   cname: "腹肌撕裂",
+        //   coachName: "1234",
+        //   location: "上海市普陀区金沙江路 1516 弄",
+        //   cost: 2030,
+        //   description: "",
+        //   count: 12,
+        //   prohibit: true
+        // },
+        // {
+        //   cid: 13,
+        //   cname: "腹肌撕裂",
+        //   coachName: "1234",
+        //   location: "上海市普陀区金沙江路 1516 弄",
+        //   cost: 2030,
+        //   description: "",
+        //   count: 12,
+        //   prohibit: true
+        // }
       ],
       n: 10,
       m: 1,
 
       // 课程评价内容   放临时数据
       gridData: [
-        {
-          name: "肖",
-          context:
-            "教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评！"
-        },
-        {
-          name: "林",
-          context: "教练很走心，好评！"
-        },
-        {
-          name: "邱",
-          context: "教练很走心，好评！"
-        },
-        {
-          name: "钟",
-          context: "教练很走心，好评！"
-        }
+        // {
+        //   name: "肖",
+        //   context:
+        //     "教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评！"
+        // },
+        // {
+        //   name: "林",
+        //   context: "教练很走心，好评！"
+        // },
+        // {
+        //   name: "邱",
+        //   context: "教练很走心，好评！"
+        // },
+        // {
+        //   name: "钟",
+        //   context: "教练很走心，好评！"
+        // }
       ],
       // 课程评价弹框
       dialogTableVisible: false,
@@ -354,8 +329,8 @@ export default {
       apartList: {}
     };
   },
-  created() {
-    this.getData();
+  async created() {
+    await this.getData();
   },
   computed: {
     currentPage() {
@@ -366,25 +341,55 @@ export default {
     }
   },
   methods: {
-    getData() {
-      // api.getAllCourse().then(res => {
-      //   console.log(res);
-      // });
+    async getData() {
+      await api.getUserList().then(res => {
+        this.sid = res.data.data.list[0].sid;
+      });
+      await api
+        .getAllCourse({
+          params: {
+            sid: this.sid
+          }
+        })
+        .then(res => {
+          let list = res.data.data.map(v => {
+            if (v.prohibit === null) {
+              v.prohibit = 0;
+            }
+            return v;
+          });
+          this.tableData = list;
+        });
     },
+    // 查看详情
     handleEdit(index, row) {
       console.log(index, row);
-      this.cid = row.content.cid;
+      this.cid = row.cid;
       this.showcourselist = false;
-      this.apartList = row.content;
+      this.apartList = row;
       this.buy = row.flag;
     },
+    // 点击禁用按钮
     prohibit(index, row) {
-      this.cid = row.content.cid;
+      this.cid = row.cid;
       this.isprohibit = row.prohibit;
-      // row.prohibit = !row.prohibit;
       this.dialogVisible = true;
     },
+    // 改变禁用状态
     changeProhibit() {
+      const prohibit = this.isprohibit == 1 ? 0 : 1;
+      api
+        .setProhibit({
+          cid: this.cid,
+          prohibit: prohibit
+        })
+        .then(res => {
+          this.$message({
+            message: `${prohibit == 1 ? "禁用" : "取禁"}课程成功`,
+            type: "success"
+          });
+          this.getData();
+        });
       this.dialogVisible = false;
     },
     showCourseAdress() {

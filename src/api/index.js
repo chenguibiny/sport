@@ -54,6 +54,10 @@ const api = {
   apply(params) {
     return axios.post('/apply/apply',params)
   },
+  // 评价课程
+  toEvaluate(params) {
+    return axios.post('/course/evaluate',params)
+  },
   //
   //
   //
@@ -120,11 +124,11 @@ const api = {
   // 课程管理员
   // 获取所有课程
   getAllCourse(params) {
-    return axios.get('',params)
+    return axios.get('/course/getAllCourseList',params)
   },
   // 禁用课程
   setProhibit(params) {
-    return axios.get('/course/banOrNot',params)
+    return axios.post('/course/banOrNot',params)
   }
 
 }

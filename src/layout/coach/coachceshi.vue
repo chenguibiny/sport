@@ -248,7 +248,7 @@
 import cookie from "@/cookie/cookie.js";
 import { deepClone, formatDate } from "@/utils/deepClone.js";
 import api from "@/api/index.js";
-import moment from 'moment';
+import moment from "moment";
 export default {
   data() {
     return {
@@ -524,7 +524,7 @@ export default {
         .then(res => {
           if (res.data.code === 1) {
             let list = deepClone(res.data.data);
-            console.log("list",res.data.data );
+            console.log("list", res.data.data);
             let newList = list.map(v => {
               v.birthday = formatDate(v.birthday);
               if (v.sex === 1) {
@@ -534,56 +534,68 @@ export default {
               } else {
                 v.sex = "未知";
               }
-              if (v.setTime === null) {
+              if (v.setTime === null || v.setTime === false) {
                 v.setTime = 0;
+              } else if (v.setTime === true) {
+                v.setTime = 1;
               }
-              if (v.appointment === null) {
+              if (v.appointment === null || v.appointment === false) {
                 v.appointment = 0;
+              } else if (v.appointment === true) {
+                v.appointment = 1;
               }
-              if (v.appointok === null) {
+              if (v.appointok === null || v.appointok === false) {
                 v.appointok = 0;
+              } else if (v.appointok === true) {
+                v.appointok = 1;
               }
-              if (v.clockin === null) {
+              if (v.clockin === null || v.clockin === false) {
                 v.clockin = 0;
+              } else if (v.clockin === true) {
+                v.clockin = 1;
               }
-              if (v.prohibit === null) {
+              if (v.prohibit === null || v.prohibit === false) {
                 v.prohibit = 0;
               }
               return v;
             });
+            console.log("newList",newList);
             this.tableData = newList;
           }
         });
     },
     resetTable(form) {
       // console.log("resetform", form);
-      form.setTime = form.setTime === false ? 0 : 1;
-      form.appointment = form.appointment === false ? 0 : 1;
-      if(form.appointok === false) {
-        form.appointok = 0;
-      }else if(form.appointok === true) {
-        form.appointok = 1;
-      }
-      form.clockin = form.clockin === false ? 0 : 1;
-      console.log("resetform",form);
-      api
-        .changeTable({
-          sid: form.sid,
-          tid: this.coachId,
-          cid: form.cid,
-          ctime: form.ctime,
-          setTime: form.setTime,
-          appointment: form.appointment,
-          appointok: form.appointok,
-          clockin: form.clockin,
-          punch: form.punch
-        })
-        .then(res => {
-          if (res.data.code === 1) {
-            alert("success");
-            this.getData();
-          }
-        });
+      // form.setTime = form.setTime === false ? 0 : 1;
+      // form.appointment = form.appointment === false ? 0 : 1;
+      // if (form.appointok === false) {
+      //   form.appointok = 0;
+      // } else if (form.appointok === true) {
+      //   form.appointok = 1;
+      // }
+      // form.clockin = form.clockin === false ? 0 : 1;
+      console.log("resetform", form);
+      // api
+      //   .changeTable({
+      //     sid: form.sid,
+      //     tid: this.coachId,
+      //     cid: form.cid,
+      //     ctime: form.ctime,
+      //     setTime: form.setTime,
+      //     appointment: form.appointment,
+      //     appointok: form.appointok,
+      //     clockin: form.clockin,
+      //     punch: form.punch
+      //   })
+      //   .then(res => {
+      //     if (res.data.code === 1) {
+      //       this.$message({
+      //         message: "成功！",
+      //         type: "success"
+      //       });
+      //       this.getData();
+      //     }
+      //   });
     },
     // 克隆报名信息
     cloneCourseMessage(row) {
@@ -605,7 +617,7 @@ export default {
       this.cid = row.cid;
       this.centerDialogVisible = true;
       // this.date = formatDate(row.ctime);
-      this.date = moment().format('YYYY-MM-DD');
+      this.date = moment().format("YYYY-MM-DD");
       this.index = index;
     },
     // 重复设置时间
@@ -617,7 +629,7 @@ export default {
       this.cid = row.cid;
       this.centerDialogVisible = true;
       // this.date = formatDate(row.ctime);
-      this.date = moment().format('YYYY-MM-DD');
+      this.date = moment().format("YYYY-MM-DD");
       this.index = index;
     },
     // 再次设置时间
@@ -629,7 +641,7 @@ export default {
       this.cid = row.cid;
       this.centerDialogVisible = true;
       // this.date = formatDate(row.ctime);
-      this.date = moment().format('YYYY-MM-DD');
+      this.date = moment().format("YYYY-MM-DD");
       this.index = index;
     },
     // 确认设置上课时间
@@ -696,6 +708,7 @@ export default {
     },
     // 拒绝预约
     async refuse() {
+      this.cloneMessage.ctime = this.time;
       this.cloneMessage.appointok = 2;
       await this.resetTable(this.cloneMessage);
       this.dialogVisible = false;
@@ -703,6 +716,7 @@ export default {
     },
     // 同意预约
     async agree() {
+      this.cloneMessage.ctime = this.time;
       this.cloneMessage.appointok = 1;
       await this.resetTable(this.cloneMessage);
       this.dialogVisible = false;

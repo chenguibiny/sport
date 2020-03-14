@@ -469,11 +469,6 @@ export default {
     console.log("coachId", this.coachId);
     this.getData();
   },
-  // created() {
-  //   this.tableData.sort((a, b) => {
-  //     return a.prohibit - b.prohibit;
-  //   });
-  // },
   computed: {
     currentPage() {
       return this.tableData.slice(
@@ -503,7 +498,7 @@ export default {
               if (e.count === null) {
                 e.count = 0;
               }
-              if(e.prohibit === null){
+              if (e.prohibit === null) {
                 e.prohibit = 0;
               }
               return e;
@@ -550,9 +545,7 @@ export default {
                 this.addform.location = "";
                 this.addform.description = "";
               });
-            // this.addform coachId 请求接口
             this.dialogAddFormVisible = false;
-            // this.getData();
           })
           .catch(_ => {});
       } else {
@@ -578,7 +571,6 @@ export default {
             this.gridData = res.data.data;
           }
         });
-      // 根据this.cid获取课程评价赋值给this.girdData
       this.dialogTableVisible = true;
     },
     // 编辑
@@ -614,7 +606,6 @@ export default {
                 type: "success"
               });
             }
-            console.log(res);
             this.getData();
           });
       } else {

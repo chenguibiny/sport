@@ -443,44 +443,65 @@ export default {
         .then(res => {
           if (res.data.code === 1) {
             let list = res.data.data.map(v => {
-              if (v.setTime === null) {
+              // if (v.setTime === null) {
+              //   v.setTime = 0;
+              // }
+              // if (v.appointment === null) {
+              //   v.appointment = 0;
+              // }
+              // if (v.appointok === null) {
+              //   v.appointok = 0;
+              // }
+              // if (v.clockin === null) {
+              //   v.clockin = 0;
+              // }
+              if (v.setTime === null || v.setTime === false) {
                 v.setTime = 0;
+              } else if (v.setTime === true) {
+                v.setTime = 1;
               }
-              if (v.appointment === null) {
+              if (v.appointment === null || v.appointment === false) {
                 v.appointment = 0;
+              } else if (v.appointment === true) {
+                v.appointment = 1;
               }
-              if (v.appointok === null) {
+              if (v.appointok === null || v.appointok === false) {
                 v.appointok = 0;
+              } else if (v.appointok === true) {
+                v.appointok = 1;
               }
-              if (v.clockin === null) {
+              if (v.clockin === null || v.clockin === false) {
                 v.clockin = 0;
+              } else if (v.clockin === true) {
+                v.clockin = 1;
               }
               if (v.prohibit === null) {
                 v.prohibit = 0;
               }
               return v;
             });
+            console.log("newList", list);
             this.tableData = list;
           }
         });
     },
     resetTable(form) {
       // console.log("resetform", form);
-      form.setTime = form.setTime === false ? 0 : 1;
-      form.appointment = form.appointment === false ? 0 : 1;
-      if(form.appointok === false) {
-        form.appointok = 0;
-      }else if(form.appointok === true) {
-        form.appointok = 1;
-      }
-      form.clockin = form.clockin === false ? 0 : 1;
-      console.log("resetform",form);
+      // form.setTime = form.setTime === false ? 0 : 1;
+      // form.appointment = form.appointment === false ? 0 : 1;
+      // if(form.appointok === false) {
+      //   form.appointok = 0;
+      // }else if(form.appointok === true) {
+      //   form.appointok = 1;
+      // }
+      // form.clockin = form.clockin === false ? 0 : 1;
+      console.log("resetform", form);
       // api
       //   .changeTable({
-      //     sid: form.sid,
+      //     sid: this.memberId,
       //     tid: form.tid,
       //     cid: form.cid,
-      //     ctime: form.ctime,
+      //     ctime: moment(form.ctime).format("YYYY-MM-DD"),
       //     setTime: form.setTime,
       //     appointment: form.appointment,
       //     appointok: form.appointok,
@@ -489,7 +510,10 @@ export default {
       //   })
       //   .then(res => {
       //     if (res.data.code === 1) {
-      //       alert("success");
+      //       this.$message({
+      //         message: "成功！",
+      //         type: "success"
+      //       });
       //       this.getData();
       //     }
       //   });
@@ -544,13 +568,11 @@ export default {
       console.log(index, row);
       this.cloneCourseMessage(row);
       this.cid = row.cid;
-      this.$confirm("上课时间为" + formarDate(row.ctime))
+      this.$confirm("上课时间为" + formatDate(row.ctime))
         .then(_ => {
           this.cloneMessage.appointment = 1;
           this.cloneMessage.appointok = 0;
           this.resetTable(this.cloneMessage);
-          // row.appointment = true;
-          // row.appointok = 0;
         })
         .catch(_ => {});
     },
@@ -571,8 +593,18 @@ export default {
     },
     // 提交评价
     submitEvaluate() {
-      this.cloneMessage.context = this.context;
-      this.resetTable(this.cloneMessage);
+      api
+        .toEvaluate({
+          cid: this.cid,
+          sid: this.memberId,
+          context: this.context
+        })
+        .then(res => {
+          this.$message({
+            message: "评价成功！",
+            type: "success"
+          });
+        });
       this.dialogFormVisible = false;
     },
     //每页多少条数据  `${val}`
