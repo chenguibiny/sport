@@ -119,7 +119,6 @@ export default {
               const sid = res.data.data.user.sid;
               cookie.removeCookie("memberId");
               cookie.setCookie("memberId", sid, 10000);
-              cookie.getCookie("memberId", function(data) {});
               this.$router.push({ name: "main" });
             } else {
               this.$message.error("账号或密码错误！");
@@ -148,7 +147,6 @@ export default {
               const tid = res.data.data.coach.tid;
               cookie.removeCookie("coachId");
               cookie.setCookie("coachId", tid, 10000);
-              cookie.getCookie("coachId", function(data) {});
               this.$router.push({ name: "homepage" });
             } else {
               this.$message.error("账号或密码错误！");

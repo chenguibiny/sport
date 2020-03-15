@@ -14,7 +14,7 @@
 
       <el-table
         :data="currentPage"
-        style="width: 100%;min-height:460px;"
+        style="width: 100%;min-height:600px;"
       >
         <el-table-column
           label="标题"

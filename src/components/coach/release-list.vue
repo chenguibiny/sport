@@ -70,7 +70,7 @@
     <!-- 课程列表 -->
     <el-table
       :data="currentPage"
-      style="width: 90%"
+      style="width: 90%; min-height:500px;"
       :row-class-name="tableRowClassName"
     >
       <el-table-column

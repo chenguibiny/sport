@@ -2,7 +2,7 @@
   <div>
     <el-table
       :data="currentPage"
-      style="width: 90%"
+      style="width: 90%;min-height:600px;"
       v-if="showcourselist"
     >
       <el-table-column
@@ -74,39 +74,6 @@
               disabled
             >已经预约</el-button>
           </template>
-          <!-- <el-button
-            size="small"
-            type="info"
-            v-if="scope.row.setTime == false"
-            @click="appointago(scope.$index, scope.row)"
-          >教练未设置</el-button>
-          <el-button
-            size="small"
-            v-else-if="scope.row.setTime == true && scope.row.appointment == false"
-            @click="appointsuccess(scope.$index, scope.row)"
-          >预约上课</el-button>
-          <el-button
-            size="small"
-            v-else-if="scope.row.setTime == true && scope.row.appointment == true && scope.row.appointok == 2"
-            @click="appointfail(scope.$index, scope.row)"
-          >预约失败，重新预约</el-button>
-          <el-button
-            size="small"
-            v-else-if="scope.row.setTime == true && scope.row.appointment == true && scope.row.appointok == 1 && scope.row.clockin == false"
-            class="success"
-            disabled
-          >预约成功</el-button>
-          <el-button
-            size="small"
-            v-else-if="scope.row.setTime == true && scope.row.appointment == true && scope.row.appointok == 1 && scope.row.clockin == true"
-            @click="clock(scope.$index, scope.row)"
-          >评价</el-button>
-          <el-button
-            size="small"
-            v-else-if="scope.row.setTime == true && scope.row.appointment == true "
-            class="success"
-            disabled
-          >已经预约</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -217,6 +184,7 @@
 import cookie from "@/cookie/cookie.js";
 import api from "@/api/index.js";
 import { deepClone, formatDate } from "@/utils/deepClone.js";
+import moment from "moment";
 export default {
   data() {
     return {
@@ -230,151 +198,143 @@ export default {
       // 课程信息
       tableData: [
         // 教练未设置
-        {
-          ctime: "1991-01-01",
-          setTime: false,
-          appointment: false,
-          appointok: 0,
-          clockin: false,
-          punch: 2,
-
-          cid: 1,
-          cname: "腹肌撕裂者初级",
-          coachName: "陈桂槟",
-          location: "肇庆市肇庆学院",
-          cost: 2030,
-          description:
-            "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-          count: 12,
-          context: "好评"
-        },
-        // 预约上课
-        {
-          ctime: "1991-01-01",
-          setTime: true,
-          appointment: false,
-          appointok: 0,
-          clockin: false,
-          punch: 1,
-
-          cid: 2,
-          cname: "腹肌撕裂者进阶",
-          coachName: "陈",
-          location: "肇庆市肇庆学院123",
-          cost: 2000,
-          description:
-            "全球[最流行]的腹部动作，全方位打造腹肌线条！建议隔天练习，坚持2-4周后腹肌会越发清晰。",
-          count: 12,
-          context: "好评"
-        },
-        // 已经预约 bug
-        {
-          ctime: "1991-01-01",
-          setTime: true,
-          appointment: true,
-          appointok: 0,
-          clockin: false,
-          punch: 2,
-
-          cid: 3,
-          cname: "哑铃手臂塑形",
-          coachName: "肖",
-          location: "上海市普陀区金沙江路343243",
-          cost: 21000,
-          description: "只要一副小哑铃就可以练出[好看的臂膀]",
-          count: 12,
-          context: "好评"
-        },
-        // 预约失败
-        {
-          ctime: "1991-01-01",
-          setTime: true,
-          appointment: true,
-          appointok: 2,
-          clockin: false,
-          punch: 2,
-
-          cid: 4,
-          cname: "健身房廋腿训练",
-          coachName: "林",
-          location: "上海市普陀区金沙江路132123123",
-          cost: 1050,
-          description:
-            "学生党的[廋腿]秘籍！动作简单有效，在床上也能轻松练习，帮你快速打造修长双腿！",
-          count: 12,
-          context: "好评"
-        },
-        // 预约成功
-        {
-          ctime: "1991-01-01",
-          setTime: true,
-          appointment: true,
-          appointok: 1,
-          clockin: false,
-          punch: 2,
-
-          cid: 5,
-          cname: "腹肌撕裂",
-          coachName: "1234",
-          location: "上海市普陀区金沙江路 1516 弄",
-          cost: 2030,
-          description: "",
-          count: 12,
-          context: "好评"
-        },
-        // 评价
-        {
-          ctime: "1991-01-01",
-          setTime: true,
-          appointment: true,
-          appointok: 1,
-          clockin: true,
-          punch: 0,
-
-          cid: 6,
-          cname: "腹肌撕裂",
-          coachName: "1234",
-          location: "上海市普陀区金沙江路 1516 弄",
-          cost: 2030,
-          description: "",
-          count: 12,
-          context: "好评,赶紧报名吧！"
-        },
-        // 预约失败
-        {
-          ctime: "1991-01-01",
-          setTime: true,
-          appointment: true,
-          appointok: 2,
-          clockin: false,
-          punch: 1,
-
-          cid: 7,
-          cname: "腹肌撕裂",
-          coachName: "1234",
-          location: "上海市普陀区金沙江路 1516 弄",
-          cost: 2030,
-          description: "",
-          count: 12,
-          context: ""
-        },
-        {
-          ctime: "1991-01-01",
-          setTime: true,
-          appointment: true,
-          appointok: 1,
-          clockin: true,
-          punch: 0,
-
-          cid: 8,
-          cname: "腹肌撕裂",
-          coachName: "1234",
-          location: "上海市普陀区金沙江路 1516 弄",
-          cost: 2030,
-          description: "",
-          count: 12,
-          context: "好评，教练很帅"
-        }
+        // {
+        //   ctime: "1991-01-01",
+        //   setTime: false,
+        //   appointment: false,
+        //   appointok: 0,
+        //   clockin: false,
+        //   punch: 2,
+        //   cid: 1,
+        //   cname: "腹肌撕裂者初级",
+        //   coachName: "陈桂槟",
+        //   location: "肇庆市肇庆学院",
+        //   cost: 2030,
+        //   description:
+        //     "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
+        //   count: 12,
+        //   context: "好评"
+        // },
+        // // 预约上课
+        // {
+        //   ctime: "1991-01-01",
+        //   setTime: true,
+        //   appointment: false,
+        //   appointok: 0,
+        //   clockin: false,
+        //   punch: 1,
+        //   cid: 2,
+        //   cname: "腹肌撕裂者进阶",
+        //   coachName: "陈",
+        //   location: "肇庆市肇庆学院123",
+        //   cost: 2000,
+        //   description:
+        //     "全球[最流行]的腹部动作，全方位打造腹肌线条！建议隔天练习，坚持2-4周后腹肌会越发清晰。",
+        //   count: 12,
+        //   context: "好评"
+        // },
+        // // 已经预约 bug
+        // {
+        //   ctime: "1991-01-01",
+        //   setTime: true,
+        //   appointment: true,
+        //   appointok: 0,
+        //   clockin: false,
+        //   punch: 2,
+        //   cid: 3,
+        //   cname: "哑铃手臂塑形",
+        //   coachName: "肖",
+        //   location: "上海市普陀区金沙江路343243",
+        //   cost: 21000,
+        //   description: "只要一副小哑铃就可以练出[好看的臂膀]",
+        //   count: 12,
+        //   context: "好评"
+        // },
+        // // 预约失败
+        // {
+        //   ctime: "1991-01-01",
+        //   setTime: true,
+        //   appointment: true,
+        //   appointok: 2,
+        //   clockin: false,
+        //   punch: 2,
+        //   cid: 4,
+        //   cname: "健身房廋腿训练",
+        //   coachName: "林",
+        //   location: "上海市普陀区金沙江路132123123",
+        //   cost: 1050,
+        //   description:
+        //     "学生党的[廋腿]秘籍！动作简单有效，在床上也能轻松练习，帮你快速打造修长双腿！",
+        //   count: 12,
+        //   context: "好评"
+        // },
+        // // 预约成功
+        // {
+        //   ctime: "1991-01-01",
+        //   setTime: true,
+        //   appointment: true,
+        //   appointok: 1,
+        //   clockin: false,
+        //   punch: 2,
+        //   cid: 5,
+        //   cname: "腹肌撕裂",
+        //   coachName: "1234",
+        //   location: "上海市普陀区金沙江路 1516 弄",
+        //   cost: 2030,
+        //   description: "",
+        //   count: 12,
+        //   context: "好评"
+        // },
+        // // 评价
+        // {
+        //   ctime: "1991-01-01",
+        //   setTime: true,
+        //   appointment: true,
+        //   appointok: 1,
+        //   clockin: true,
+        //   punch: 0,
+        //   cid: 6,
+        //   cname: "腹肌撕裂",
+        //   coachName: "1234",
+        //   location: "上海市普陀区金沙江路 1516 弄",
+        //   cost: 2030,
+        //   description: "",
+        //   count: 12,
+        //   context: "好评,赶紧报名吧！"
+        // },
+        // // 预约失败
+        // {
+        //   ctime: "1991-01-01",
+        //   setTime: true,
+        //   appointment: true,
+        //   appointok: 2,
+        //   clockin: false,
+        //   punch: 1,
+        //   cid: 7,
+        //   cname: "腹肌撕裂",
+        //   coachName: "1234",
+        //   location: "上海市普陀区金沙江路 1516 弄",
+        //   cost: 2030,
+        //   description: "",
+        //   count: 12,
+        //   context: ""
+        // },
+        // {
+        //   ctime: "1991-01-01",
+        //   setTime: true,
+        //   appointment: true,
+        //   appointok: 1,
+        //   clockin: true,
+        //   punch: 0,
+        //   cid: 8,
+        //   cname: "腹肌撕裂",
+        //   coachName: "1234",
+        //   location: "上海市普陀区金沙江路 1516 弄",
+        //   cost: 2030,
+        //   description: "",
+        //   count: 12,
+        //   context: "好评，教练很帅"
+        // }
       ],
       n: 8,
       m: 1,
@@ -464,40 +424,34 @@ export default {
           }
         });
     },
-    resetTable(form) {
-      // console.log("resetform", form);
-      form.setTime = form.setTime === false ? 0 : 1;
-      form.appointment = form.appointment === false ? 0 : 1;
-      if (form.appointok === false) {
-        form.appointok = 0;
-      } else if (form.appointok === true) {
-        form.appointok = 1;
-      }
-      form.clockin = form.clockin === false ? 0 : 1;
-      console.log("resetform", form);
-      // api
-      //   .changeTable({
-      //     sid: form.sid,
-      //     tid: form.tid,
-      //     cid: form.cid,
-      //     ctime: form.ctime,
-      //     setTime: form.setTime,
-      //     appointment: form.appointment,
-      //     appointok: form.appointok,
-      //     clockin: form.clockin,
-      //     punch: form.punch
-      //   })
-      //   .then(res => {
-      //     if (res.data.code === 1) {
-      //       alert("success");
-      //       this.getData();
-      //     }
-      //   });
+    resetForm(form) {
+      let cloneForm = deepClone(form);
+      cloneForm.ctime = moment(cloneForm.ctime).format("YYYY-MM-DD");
+      api
+        .changeTable({
+          sid: this.memberId,
+          tid: cloneForm.tid,
+          cid: cloneForm.cid,
+          ctime: cloneForm.ctime,
+          setTime: cloneForm.setTime,
+          appointment: cloneForm.appointment,
+          appointok: cloneForm.appointok,
+          clockin: cloneForm.clockin,
+          punch: cloneForm.punch
+        })
+        .then(res => {
+          if (res.data.code === 1) {
+            this.$message({
+              message: "预约成功！",
+              type: "success"
+            });
+            this.getData();
+          }
+        });
     },
     // 克隆报名信息
     cloneCourseMessage(row) {
       this.cloneMessage = deepClone(row);
-      console.log("cloneMessage", this.cloneMessage);
     },
     // 查看详情
     handleEdit(index, row) {
@@ -528,14 +482,12 @@ export default {
     },
     // 预约上课
     appointsuccess(index, row) {
-      console.log(index, row);
       this.cloneCourseMessage(row);
       this.cid = row.cid;
       this.$confirm("上课时间为" + formatDate(row.ctime))
         .then(_ => {
           this.cloneMessage.appointment = 1;
-          this.resetTable(this.cloneMessage);
-          // row.appointment = true;
+          this.resetForm(this.cloneMessage);
         })
         .catch(_ => {});
     },
@@ -544,13 +496,11 @@ export default {
       console.log(index, row);
       this.cloneCourseMessage(row);
       this.cid = row.cid;
-      this.$confirm("上课时间为" + formarDate(row.ctime))
+      this.$confirm("上课时间为" + formatDate(row.ctime))
         .then(_ => {
           this.cloneMessage.appointment = 1;
           this.cloneMessage.appointok = 0;
-          this.resetTable(this.cloneMessage);
-          // row.appointment = true;
-          // row.appointok = 0;
+          this.resetForm(this.cloneMessage);
         })
         .catch(_ => {});
     },
@@ -562,17 +512,28 @@ export default {
         .catch(_ => {});
     },
     // 评价
-    clock(index, row) {
+    async clock(index, row) {
       console.log(index, row);
-      this.cloneCourseMessage(row);
+      await this.cloneCourseMessage(row);
       this.cid = row.cid;
       this.context = row.context;
       this.dialogFormVisible = true;
     },
     // 提交评价
     submitEvaluate() {
-      this.cloneMessage.context = this.context;
-      this.resetTable(this.cloneMessage);
+      api
+        .toEvaluate({
+          cid: this.cid,
+          sid: this.memberId,
+          context: this.context
+        })
+        .then(res => {
+          this.$message({
+            message: "评价成功！",
+            type: "success"
+          });
+          this.getData();
+        });
       this.dialogFormVisible = false;
     },
     //每页多少条数据  `${val}`

@@ -2,7 +2,7 @@
   <div>
     <el-table
       :data="currentPage"
-      style="width: 90%;margin:0 auto; min-height:500px;"
+      style="width: 90%;margin:0 auto; min-height:600px;"
     >
       <el-table-column
         label="账号"

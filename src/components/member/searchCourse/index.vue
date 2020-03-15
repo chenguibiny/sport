@@ -313,6 +313,7 @@ export default {
                     username: form.username
                   });
                   this.getData();
+                  this.quit();
                 } else {
                 }
               })

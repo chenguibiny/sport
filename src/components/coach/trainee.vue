@@ -22,11 +22,11 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="联系方式"
+        label="上课时间"
         width="280"
       >
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.phone }}</span>
+          <span style="margin-left: 10px">{{ scope.row.ctime === "Invalid date" ? "--" : scope.row.ctime }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作">
@@ -83,42 +83,6 @@
               @click="appointment(scope.$index, scope.row)"
             >新的预约</el-button>
           </template>
-          <!-- <el-button
-            size="small"
-            type="danger"
-            v-if="scope.row.setTime == false"
-            @click="setTimeFirst(scope.$index, scope.row)"
-          >设置上课时间</el-button>
-          <el-button
-            size="small"
-            type="danger"
-            v-else-if="scope.row.setTime == true && scope.row.appointment == false"
-            @click="setTimeAgain(scope.$index, scope.row)"
-          >设置上课时间</el-button>
-          <el-button
-            size="small"
-            type="danger"
-            v-else-if="scope.row.setTime == true && scope.row.appointment == true && scope.row.appointok == 2"
-            @click="setTimeAgainAgain(scope.$index, scope.row)"
-          >重设上课时间</el-button>
-          <el-button
-            size="small"
-            type="danger"
-            v-else-if="scope.row.setTime == true && scope.row.appointment == true && scope.row.appointok == 1 && scope.row.clockin == false"
-            @click="toClock(scope.$index, scope.row)"
-          >打卡</el-button>
-          <el-button
-            size="small"
-            type="info"
-            v-else-if="scope.row.setTime == true && scope.row.appointment == true && scope.row.appointok == 1 && scope.row.clockin == true"
-            disabled
-          >打卡成功</el-button>
-          <el-button
-            size="small"
-            type="danger"
-            v-else-if="scope.row.setTime == true && scope.row.appointment == true "
-            @click="appointment(scope.$index, scope.row)"
-          >新的预约</el-button> -->
 
           <!-- 学员信息 -->
           <el-dialog
@@ -200,7 +164,6 @@
               class="dialog-footer"
             >
               <el-button @click="centerDialogVisible = false">取 消</el-button>
-              <!-- 确定之后如何传递值，data定义一个index，然后ok点击事件传index，改变数组值 -->
               <el-button
                 type="primary"
                 @click="ok()"
@@ -262,218 +225,218 @@ export default {
       cloneMessage: {},
       //列表信息
       tableData: [
-        {
-          sid: 1,
-          username: "陈桂槟",
-          sex: "男",
-          phone: "15218968678",
-          birthday: "1998-01-23",
-          cid: 1,
-          title: "手臂爆炸训练",
-          ctime: "2020-01-01",
-          setTime: false,
-          appointment: false,
-          appointok: 0,
-          clockin: false,
-          punch: 1
-        },
-        {
-          sid: 2,
-          username: "xiao",
-          sex: "男",
-          phone: "1234",
-          birthday: "1996-05-23",
-          cid: 2,
-          title: "手臂爆炸训练",
-          ctime: "2020-02-01",
-          setTime: true,
-          appointment: false,
-          appointok: 0,
-          clockin: false,
-          punch: 2
-        },
-        {
-          sid: 3,
-          username: "lin",
-          sex: "男",
-          phone: "1312312321",
-          birthday: "1998-01-23",
-          cid: 3,
-          title: "手臂爆炸训练",
-          ctime: "2020-01-04",
-          setTime: true,
-          appointment: true,
-          appointok: 0,
-          clockin: false,
-          punch: 1
-        },
-        {
-          sid: 4,
-          username: "qiu",
-          sex: "男",
-          phone: "113123123234",
-          birthday: "1998-01-23",
-          cid: 4,
-          title: "手臂爆炸训练",
-          ctime: "2020-01-07",
-          setTime: true,
-          appointment: true,
-          appointok: 2,
-          clockin: false,
-          punch: 2
-        },
-        {
-          sid: 5,
-          username: "陈桂槟",
-          sex: "男",
-          phone: "1234",
-          birthday: "1998-01-23",
-          cid: 5,
-          title: "手臂爆炸训练",
-          ctime: "2020-01-01",
-          setTime: true,
-          appointment: true,
-          appointok: 1,
-          clockin: false,
-          punch: 2
-        },
         // {
-        //   person: {
-        //     sid:5,
-        //     username: "陈桂槟",
-        //     sex: "男",
-        //     phone: "1234",
-        //     birthday: "1998-01-23"
-        //   },
-        //   cid:5,
+        //   sid: 1,
+        //   username: "陈桂槟",
+        //   sex: "男",
+        //   phone: "15218968678",
+        //   birthday: "1998-01-23",
+        //   cid: 1,
+        //   title: "手臂爆炸训练",
+        //   ctime: "2020-01-01",
+        //   setTime: false,
+        //   appointment: false,
+        //   appointok: 0,
+        //   clockin: false,
+        //   punch: 1
+        // },
+        // {
+        //   sid: 2,
+        //   username: "xiao",
+        //   sex: "男",
+        //   phone: "1234",
+        //   birthday: "1996-05-23",
+        //   cid: 2,
+        //   title: "手臂爆炸训练",
+        //   ctime: "2020-02-01",
+        //   setTime: true,
+        //   appointment: false,
+        //   appointok: 0,
+        //   clockin: false,
+        //   punch: 2
+        // },
+        // {
+        //   sid: 3,
+        //   username: "lin",
+        //   sex: "男",
+        //   phone: "1312312321",
+        //   birthday: "1998-01-23",
+        //   cid: 3,
+        //   title: "手臂爆炸训练",
+        //   ctime: "2020-01-04",
+        //   setTime: true,
+        //   appointment: true,
+        //   appointok: 0,
+        //   clockin: false,
+        //   punch: 1
+        // },
+        // {
+        //   sid: 4,
+        //   username: "qiu",
+        //   sex: "男",
+        //   phone: "113123123234",
+        //   birthday: "1998-01-23",
+        //   cid: 4,
+        //   title: "手臂爆炸训练",
+        //   ctime: "2020-01-07",
+        //   setTime: true,
+        //   appointment: true,
+        //   appointok: 2,
+        //   clockin: false,
+        //   punch: 2
+        // },
+        // {
+        //   sid: 5,
+        //   username: "陈桂槟",
+        //   sex: "男",
+        //   phone: "1234",
+        //   birthday: "1998-01-23",
+        //   cid: 5,
         //   title: "手臂爆炸训练",
         //   ctime: "2020-01-01",
         //   setTime: true,
         //   appointment: true,
         //   appointok: 1,
         //   clockin: false,
-        //   punch:2
+        //   punch: 2
         // },
-        {
-          sid: 6,
-          username: "陈桂槟",
-          sex: "男",
-          phone: "1234",
-          birthday: "1998-01-23",
-          cid: 6,
-          title: "手臂爆炸训练",
-          ctime: "2020-01-01",
-          setTime: true,
-          appointment: true,
-          appointok: 1,
-          clockin: false,
-          punch: 1
-        },
-        {
-          sid: 7,
-          username: "陈桂槟",
-          sex: "男",
-          phone: "1234",
-          birthday: "1998-01-23",
-          cid: 7,
-          title: "手臂爆炸训练",
-          ctime: "2020-01-01",
-          setTime: true,
-          appointment: true,
-          appointok: 0,
-          clockin: false,
-          punch: 1
-        },
-        {
-          sid: 8,
-          username: "陈桂槟",
-          sex: "男",
-          phone: "1234",
-          birthday: "1998-01-23",
-          cid: 8,
-          title: "手臂爆炸训练",
-          ctime: "2020-01-01",
-          setTime: true,
-          appointment: true,
-          appointok: 1,
-          clockin: true,
-          punch: 0
-        },
-        {
-          sid: 9,
-          username: "陈桂槟",
-          sex: "男",
-          phone: "1234",
-          birthday: "1998-01-23",
-          cid: 9,
-          title: "手臂爆炸训练",
-          ctime: "2020-01-01",
-          setTime: true,
-          appointment: true,
-          appointok: 1,
-          clockin: true,
-          punch: 1
-        },
-        {
-          sid: 10,
-          username: "陈桂槟",
-          sex: "男",
-          phone: "1234",
-          birthday: "1998-01-23",
-          cid: 10,
-          title: "手臂爆炸训练",
-          ctime: "2020-01-01",
-          setTime: true,
-          appointment: true,
-          appointok: 1,
-          clockin: true,
-          punch: 1
-        },
-        {
-          sid: 11,
-          username: "陈桂槟",
-          sex: "男",
-          phone: "1234",
-          birthday: "1998-01-23",
-          cid: 11,
-          title: "手臂爆炸训练",
-          ctime: "2020-01-01",
-          setTime: true,
-          appointment: true,
-          appointok: 1,
-          clockin: true,
-          punch: 2
-        },
-        {
-          sid: 12,
-          username: "陈桂槟",
-          sex: "男",
-          phone: "15218968678",
-          birthday: "1998-01-23",
-          cid: 12,
-          title: "手臂爆炸训练",
-          ctime: "2020-01-01",
-          setTime: false,
-          appointment: false,
-          appointok: 0,
-          clockin: false,
-          punch: 2
-        },
-        {
-          sid: 13,
-          username: "陈桂槟",
-          sex: "男",
-          phone: "1234",
-          birthday: "1998-01-23",
-          cid: 13,
-          title: "手臂爆炸训练",
-          ctime: "2020-01-01",
-          setTime: true,
-          appointment: true,
-          appointok: 1,
-          clockin: false,
-          punch: 2
-        }
+        // // {
+        // //   person: {
+        // //     sid:5,
+        // //     username: "陈桂槟",
+        // //     sex: "男",
+        // //     phone: "1234",
+        // //     birthday: "1998-01-23"
+        // //   },
+        // //   cid:5,
+        // //   title: "手臂爆炸训练",
+        // //   ctime: "2020-01-01",
+        // //   setTime: true,
+        // //   appointment: true,
+        // //   appointok: 1,
+        // //   clockin: false,
+        // //   punch:2
+        // // },
+        // {
+        //   sid: 6,
+        //   username: "陈桂槟",
+        //   sex: "男",
+        //   phone: "1234",
+        //   birthday: "1998-01-23",
+        //   cid: 6,
+        //   title: "手臂爆炸训练",
+        //   ctime: "2020-01-01",
+        //   setTime: true,
+        //   appointment: true,
+        //   appointok: 1,
+        //   clockin: false,
+        //   punch: 1
+        // },
+        // {
+        //   sid: 7,
+        //   username: "陈桂槟",
+        //   sex: "男",
+        //   phone: "1234",
+        //   birthday: "1998-01-23",
+        //   cid: 7,
+        //   title: "手臂爆炸训练",
+        //   ctime: "2020-01-01",
+        //   setTime: true,
+        //   appointment: true,
+        //   appointok: 0,
+        //   clockin: false,
+        //   punch: 1
+        // },
+        // {
+        //   sid: 8,
+        //   username: "陈桂槟",
+        //   sex: "男",
+        //   phone: "1234",
+        //   birthday: "1998-01-23",
+        //   cid: 8,
+        //   title: "手臂爆炸训练",
+        //   ctime: "2020-01-01",
+        //   setTime: true,
+        //   appointment: true,
+        //   appointok: 1,
+        //   clockin: true,
+        //   punch: 0
+        // },
+        // {
+        //   sid: 9,
+        //   username: "陈桂槟",
+        //   sex: "男",
+        //   phone: "1234",
+        //   birthday: "1998-01-23",
+        //   cid: 9,
+        //   title: "手臂爆炸训练",
+        //   ctime: "2020-01-01",
+        //   setTime: true,
+        //   appointment: true,
+        //   appointok: 1,
+        //   clockin: true,
+        //   punch: 1
+        // },
+        // {
+        //   sid: 10,
+        //   username: "陈桂槟",
+        //   sex: "男",
+        //   phone: "1234",
+        //   birthday: "1998-01-23",
+        //   cid: 10,
+        //   title: "手臂爆炸训练",
+        //   ctime: "2020-01-01",
+        //   setTime: true,
+        //   appointment: true,
+        //   appointok: 1,
+        //   clockin: true,
+        //   punch: 1
+        // },
+        // {
+        //   sid: 11,
+        //   username: "陈桂槟",
+        //   sex: "男",
+        //   phone: "1234",
+        //   birthday: "1998-01-23",
+        //   cid: 11,
+        //   title: "手臂爆炸训练",
+        //   ctime: "2020-01-01",
+        //   setTime: true,
+        //   appointment: true,
+        //   appointok: 1,
+        //   clockin: true,
+        //   punch: 2
+        // },
+        // {
+        //   sid: 12,
+        //   username: "陈桂槟",
+        //   sex: "男",
+        //   phone: "15218968678",
+        //   birthday: "1998-01-23",
+        //   cid: 12,
+        //   title: "手臂爆炸训练",
+        //   ctime: "2020-01-01",
+        //   setTime: false,
+        //   appointment: false,
+        //   appointok: 0,
+        //   clockin: false,
+        //   punch: 2
+        // },
+        // {
+        //   sid: 13,
+        //   username: "陈桂槟",
+        //   sex: "男",
+        //   phone: "1234",
+        //   birthday: "1998-01-23",
+        //   cid: 13,
+        //   title: "手臂爆炸训练",
+        //   ctime: "2020-01-01",
+        //   setTime: true,
+        //   appointment: true,
+        //   appointok: 1,
+        //   clockin: false,
+        //   punch: 2
+        // }
       ],
 
       //每页多少数据
@@ -502,8 +465,6 @@ export default {
     });
     this.coachId = coachId;
     this.getData();
-    // console.log("coachId",this.coachId);
-    // 根据 coachId 请求接口获取数据赋值给this.tableData
   },
   computed: {
     currentPage() {
@@ -524,9 +485,9 @@ export default {
         .then(res => {
           if (res.data.code === 1) {
             let list = deepClone(res.data.data);
-            console.log("list", res.data.data);
             let newList = list.map(v => {
               v.birthday = formatDate(v.birthday);
+              v.ctime = moment(v.ctime).format("YYYY-MM-DD");
               if (v.sex === 1) {
                 v.sex = "男";
               } else if (v.sex === 2) {
@@ -534,19 +495,27 @@ export default {
               } else {
                 v.sex = "未知";
               }
-              if (v.setTime === null) {
+              if (v.setTime === null || v.setTime === false) {
                 v.setTime = 0;
+              } else if (v.setTime === true) {
+                v.setTime = 1;
               }
-              if (v.appointment === null) {
+              if (v.appointment === null || v.appointment === false) {
                 v.appointment = 0;
+              } else if (v.appointment === true) {
+                v.appointment = 1;
               }
-              if (v.appointok === null) {
+              if (v.appointok === null || v.appointok === false) {
                 v.appointok = 0;
+              } else if (v.appointok === true) {
+                v.appointok = 1;
               }
-              if (v.clockin === null) {
+              if (v.clockin === null || v.clockin === false) {
                 v.clockin = 0;
+              } else if (v.clockin === true) {
+                v.clockin = 1;
               }
-              if (v.prohibit === null) {
+              if (v.prohibit === null || v.prohibit === false) {
                 v.prohibit = 0;
               }
               return v;
@@ -556,16 +525,7 @@ export default {
         });
     },
     resetTable(form) {
-      // console.log("resetform", form);
-      form.setTime = form.setTime === false ? 0 : 1;
-      form.appointment = form.appointment === false ? 0 : 1;
-      if (form.appointok === false) {
-        form.appointok = 0;
-      } else if (form.appointok === true) {
-        form.appointok = 1;
-      }
-      form.clockin = form.clockin === false ? 0 : 1;
-      console.log("resetform", form);
+      console.log("resetTable", form);
       api
         .changeTable({
           sid: form.sid,
@@ -580,7 +540,10 @@ export default {
         })
         .then(res => {
           if (res.data.code === 1) {
-            alert("success");
+            this.$message({
+              message: "成功！",
+              type: "success"
+            });
             this.getData();
           }
         });
@@ -588,7 +551,6 @@ export default {
     // 克隆报名信息
     cloneCourseMessage(row) {
       this.cloneMessage = deepClone(row);
-      // this.cloneMessage.ctime = formatDate(this.cloneMessage.ctime);
       console.log("cloneMessage", this.cloneMessage);
     },
     handleEdit(index, row) {
@@ -604,7 +566,6 @@ export default {
       this.sid = row.sid;
       this.cid = row.cid;
       this.centerDialogVisible = true;
-      // this.date = formatDate(row.ctime);
       this.date = moment().format("YYYY-MM-DD");
       this.index = index;
     },
@@ -616,7 +577,6 @@ export default {
       this.sid = row.sid;
       this.cid = row.cid;
       this.centerDialogVisible = true;
-      // this.date = formatDate(row.ctime);
       this.date = moment().format("YYYY-MM-DD");
       this.index = index;
     },
@@ -628,19 +588,22 @@ export default {
       this.sid = row.sid;
       this.cid = row.cid;
       this.centerDialogVisible = true;
-      // this.date = formatDate(row.ctime);
       this.date = moment().format("YYYY-MM-DD");
       this.index = index;
     },
     // 确认设置上课时间
     async ok() {
-      console.log(this.date);
-      this.cloneMessage.ctime = this.date;
-      this.cloneMessage.setTime = 1;
-      await this.resetTable(this.cloneMessage);
-      this.centerDialogVisible = false;
-      // this.tableData[this.index].time = this.date;
-      // this.tableData[this.index + (this.m - 1) * this.n].ctime = this.date;
+      let today = moment().format("YYYY-MM-DD");
+      if (new Date(today) > new Date(this.date)) {
+        this.$alert("上课时间不能设置今天之前的日期！", "", {
+          confirmButtonText: "确定"
+        });
+      } else {
+        this.cloneMessage.ctime = this.date;
+        this.cloneMessage.setTime = 1;
+        await this.resetTable(this.cloneMessage);
+        this.centerDialogVisible = false;
+      }
     },
     toClock(index, row) {
       console.log(index, row);
@@ -650,36 +613,21 @@ export default {
       this.cid = row.cid;
       this.$confirm("剩余打卡次数：" + row.punch + ",确定打卡此课程吗")
         .then(_ => {
-          if (row.punch == 1) {
+          if (this.cloneMessage.punch == 1) {
+            // 打卡之后显示打卡结束
             this.cloneMessage.punch -= 1;
             this.cloneMessage.clockin = 1;
             this.resetTable(this.cloneMessage);
-            // 打卡之后显示打卡结束
-
-            // this.tableData[this.index + (this.m - 1) * this.n].punch -= 1;
-            // this.tableData[this.index + (this.m - 1) * this.n].clockin = true;
           } else {
+            // 打卡之后显示设置上课时间
             this.cloneMessage.punch -= 1;
             this.cloneMessage.setTime = 0;
             this.cloneMessage.appointment = 0;
             this.cloneMessage.appointok = 0;
             this.cloneMessage.clockin = 0;
+            this.cloneMessage.ctime = null;
             this.resetTable(this.cloneMessage);
-            // 打卡之后显示设置上课时间
-            // this.tableData[this.index + (this.m - 1) * this.n].punch -= 1;
-            // this.tableData[this.index + (this.m - 1) * this.n].setTime = false;
-            // this.tableData[
-            //   this.index + (this.m - 1) * this.n
-            // ].appointment = false;
-            // this.tableData[this.index + (this.m - 1) * this.n].appointok = 0;
-            // this.tableData[this.index + (this.m - 1) * this.n].clockin = false;
           }
-          // this.tableData[this.index + (this.m - 1)*this.n].punch -= 1;
-          // this.tableData[this.index + (this.m - 1)*this.n].setTime = false;
-          // this.tableData[this.index + (this.m - 1)*this.n].appointment = false;
-          // this.tableData[this.index + (this.m - 1)*this.n].appointok = 0;
-          // this.tableData[this.index + (this.m - 1)*this.n].clockin = false;
-          // row.clockin = true;
         })
         .catch(_ => {});
     },
@@ -689,24 +637,23 @@ export default {
       this.cloneCourseMessage(row);
       this.sid = row.sid;
       this.cid = row.cid;
-      this.time = formatDate(row.ctime);
-      console.log("time", this.time);
+      this.time = row.ctime;
       this.dialogVisible = true;
       this.index = index;
     },
     // 拒绝预约
     async refuse() {
+      this.cloneMessage.ctime = this.time;
       this.cloneMessage.appointok = 2;
       await this.resetTable(this.cloneMessage);
       this.dialogVisible = false;
-      // this.tableData[this.index + (this.m - 1) * this.n].appointok = 2;
     },
     // 同意预约
     async agree() {
+      this.cloneMessage.ctime = this.time;
       this.cloneMessage.appointok = 1;
       await this.resetTable(this.cloneMessage);
       this.dialogVisible = false;
-      // this.tableData[this.index + (this.m - 1) * this.n].appointok = 1;
     },
     //每页多少条数据  `${val}`
     handleSizeChange(val) {

@@ -42,7 +42,10 @@
               :key="index"
             >
               <!-- params -->
-              <router-link class="router" :to="{name:'searchCourse',params:{searchWord:item}}">{{item}}</router-link>
+              <router-link
+                class="router"
+                :to="{name:'searchCourse',params:{searchWord:item}}"
+              >{{item}}</router-link>
               <!-- <a class="router" @click="toSearchCourse">{{item}}</a> -->
             </dd>
           </dl>
@@ -71,7 +74,7 @@ export default {
       // isSearchList:false,
       isFocus: false,
       searchList: [],
-      suggestList: ["哑铃", "腹肌", "腿部", "胸肌","手臂"],
+      suggestList: ["哑铃", "腹肌", "腿部", "胸肌", "手臂"],
       memberId: null
     };
   },
@@ -115,14 +118,17 @@ export default {
             return v.cname;
           });
           // 展示前5条
-          this.searchList = searchList.slice(0,6);
+          this.searchList = searchList.slice(0, 6);
         });
     },
-    hotSearch(item){
-      this.$router.push({name:"searchCourse",params:{searchWord:item}})
+    hotSearch(item) {
+      this.$router.push({ name: "searchCourse", params: { searchWord: item } });
     },
-    toSearchCourse(){
-      this.$router.push({name:"searchCourse",params:{searchWord:this.searchWord}})
+    toSearchCourse() {
+      this.$router.push({
+        name: "searchCourse",
+        params: { searchWord: this.searchWord }
+      });
     }
   }
   //   watch: {
@@ -135,7 +141,7 @@ export default {
 <style lang="scss">
 .m-header-searchbar {
   padding: 10px 20px;
-  background-color: #E9EEF3;
+  background-color: #e9eef3;
   align-items: start;
   box-sizing: border-box;
   border-bottom: black;
@@ -251,10 +257,10 @@ export default {
     }
   }
 }
-.router{
+.router {
   text-decoration: none;
-  color:#666;
-  &:hover{
+  color: #666;
+  &:hover {
     background: #f8f8f8;
     color: #31bbac;
   }
