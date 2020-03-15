@@ -19,9 +19,9 @@
       <!-- <li>
         <router-link class="msg" :to="{name:'experience'}">吐槽大会</router-link>
       </li> -->
-      <li>
+      <!-- <li>
         <router-link class="msg" :to="{name:'memberceshi'}">测试页</router-link>
-      </li>
+      </li> -->
     </ul>
   </div>
 </template>

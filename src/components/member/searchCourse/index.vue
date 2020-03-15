@@ -244,8 +244,8 @@ export default {
       this.havePaid = row.havePaid === 1 ? true : false;
       this.cid = row.cid;
     },
-    showCourseAdress() {
-      api
+    async showCourseAdress() {
+      await api
         .getCourseEvaluate({
           params: {
             cid: this.cid
@@ -362,7 +362,7 @@ export default {
   margin: 0 auto;
   width: 90%;
   overflow: hidden;
-  background-color: #ccc;
+  background-color: rgb(223, 223, 248);
   button.quit {
     width: 100px;
     height: 40px;
@@ -406,7 +406,6 @@ export default {
       margin-bottom: 20px;
       border-bottom: 1px solid #888;
       font-size: 35px;
-      font-weight: bolder;
     }
     .name,
     .money,

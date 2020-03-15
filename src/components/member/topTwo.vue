@@ -1,8 +1,6 @@
 <template>
   <div class="content">
-    <!-- <button class="btn">修改信息</button> -->
     <change-message></change-message>
-    <!-- <router-link class="toLogin" to="/">注销</router-link> -->
     <button class="toLogin" @click="centerDialogVisible = true">注销</button>
     <el-dialog
       title=""

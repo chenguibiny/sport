@@ -462,8 +462,8 @@ export default {
       this.index = index;
     },
     // 查看课程评价
-    showCourseAdress() {
-      api
+    async showCourseAdress() {
+      await api
         .getCourseEvaluate({
           params: {
             cid: this.cid
@@ -573,9 +573,9 @@ export default {
 }
 .course-message {
   margin: 0 auto;
-  width: 80%;
+  width: 90%;
   overflow: hidden;
-  background-color: #ccc;
+  background-color: rgb(223, 223, 248);
   button.quit {
     width: 100px;
     height: 40px;
@@ -599,13 +599,13 @@ export default {
       font-size: 20px;
     }
     .top {
+      width: 100%;
       height: 50px;
       text-align: center;
       line-height: 50px;
       margin-bottom: 20px;
       border-bottom: 1px solid #888;
       font-size: 35px;
-      font-weight: bolder;
     }
     .name,
     .money,

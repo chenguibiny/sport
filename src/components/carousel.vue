@@ -43,7 +43,6 @@ export default {};
 .main-page {
   position: relative;
   height: 700px;
-  //   background-color: #c0c4cc;
   .center-page {
     position: absolute;
     width: 90%;

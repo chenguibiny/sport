@@ -13,9 +13,9 @@
       <li>
         <router-link class="msg" :to="{name:'cmessagebar'}">消息栏</router-link>
       </li>
-      <li>
+      <!-- <li>
         <router-link class="msg" :to="{name:'coachceshi'}">测试页</router-link>
-      </li>
+      </li> -->
     </ul>
   </div>
 </template>

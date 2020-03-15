@@ -556,11 +556,11 @@ export default {
       }
     },
     // 查看课程评价
-    showEvaluation(index, row) {
+    async showEvaluation(index, row) {
       console.log(index, row);
       this.index = index;
       this.cid = row.cid;
-      api
+      await api
         .getCourseEvaluate({
           params: {
             cid: this.cid

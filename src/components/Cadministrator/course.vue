@@ -98,7 +98,7 @@
       >
         <el-table :data="gridData">
           <el-table-column
-            property="name"
+            property="username"
             label="评价人"
             width="150"
           ></el-table-column>
@@ -392,7 +392,18 @@ export default {
         });
       this.dialogVisible = false;
     },
-    showCourseAdress() {
+    async showCourseAdress() {
+      await api
+        .getCourseEvaluate({
+          params: {
+            cid: this.cid
+          }
+        })
+        .then(res => {
+          if (res.data.code === 1) {
+            this.gridData = res.data.data;
+          }
+        });
       this.dialogTableVisible = true;
     },
     sign() {
@@ -451,7 +462,7 @@ export default {
   margin: 0 auto;
   width: 90%;
   overflow: hidden;
-  background-color: #ccc;
+  background-color: rgb(223, 223, 248);
   button.quit {
     width: 100px;
     height: 40px;
@@ -488,14 +499,14 @@ export default {
       font-size: 20px;
     }
     .top {
+      width: 100%;
       height: 50px;
       text-align: center;
       line-height: 50px;
       margin-bottom: 20px;
       border-bottom: 1px solid #888;
-      background-color: #ccc;
+      background-color: rgb(223, 223, 248);
       font-size: 35px;
-      font-weight: bolder;
     }
     .name,
     .money,
