@@ -596,7 +596,7 @@ export default {
       let today = moment().format("YYYY-MM-DD");
       if (new Date(today) > new Date(this.date)) {
         this.$alert("上课时间不能设置今天之前的日期！", "", {
-          confirmButtonText: "确定",
+          confirmButtonText: "确定"
         });
       } else {
         this.cloneMessage.ctime = this.date;

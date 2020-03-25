@@ -142,6 +142,7 @@
 
         <!-- 充值 -->
         <el-dialog
+          append-to-body="true"
           title=""
           :visible.sync="dialogFormVisible"
         >
@@ -206,7 +207,7 @@ export default {
       temporalForm: {},
       // 充值
       dialogFormVisible: false,
-      addNum: 0,
+      addNum: '',
       dialog: false,
       loading: false,
       formLabelWidth: "80px",
@@ -386,7 +387,7 @@ export default {
                   this.dialogFormVisible = false;
                 }
               });
-            this.addNum = 0;
+            this.addNum = '';
           }
         })
         .catch(_ => {});

@@ -99,22 +99,24 @@ import cookie from "@/cookie/cookie.js";
 import { deepClone } from "@/utils/deepClone.js";
 import api from "@/api/index.js";
 export default {
-  //   beforeRouteEnter(to,from,next){
-  //   cookie.getCookie("sadministrator",function (data) {
-  //     if(data !== "undefined"){
-  //       to.matched[0].meta.login = true;
-  //       next();
-  //       return
-  //     }else {
-  //       const answer = confirm('你还没有登陆，要登陆后才能浏览信息，确定登陆吗？');
-  //       if(answer) {
-  //         next('/')
-  //       }else{
-  //         next('/')
-  //       }
-  //     }
-  //   })
-  // },
+  beforeRouteEnter(to, from, next) {
+    cookie.getCookie("sadministrator", function(data) {
+      if (data !== "undefined") {
+        to.matched[0].meta.login = true;
+        next();
+        return;
+      } else {
+        const answer = confirm(
+          "你还没有登陆，要登陆后才能浏览信息，确定登陆吗？"
+        );
+        if (answer) {
+          next("/");
+        } else {
+          next("/");
+        }
+      }
+    });
+  },
   data() {
     return {
       tid: 0,
