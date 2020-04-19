@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <search /> -->
     <tap :List="course" />
     <m-course />
   </div>
@@ -8,13 +7,12 @@
 <script>
 import tap from "@/components/member/img.vue";
 import mCourse from "@/components/member/my-course/mycourse.vue";
-import search from "@/components/member/search.vue";
 import cookie from "@/cookie/cookie.js";
 export default {
   beforeRouteEnter(to, from, next) {
     cookie.getCookie("memberId", function(data) {
       if (data !== "undefined") {
-        to.matched[0].meta.login = true;
+        // to.matched[0].meta.login = true;
         next();
         return;
       } else {
@@ -37,7 +35,6 @@ export default {
   components: {
     tap,
     mCourse,
-    search
   }
 };
 </script>

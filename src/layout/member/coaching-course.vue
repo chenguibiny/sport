@@ -7,13 +7,12 @@
 <script>
 import tap from "@/components/member/img.vue";
 import cCourse from "@/components/member/coaching-course/course.vue";
-import search from "@/components/member/search.vue";
 import cookie from "@/cookie/cookie.js";
 export default {
   beforeRouteEnter(to, from, next) {
     cookie.getCookie("memberId", function(data) {
       if (data !== "undefined") {
-        to.matched[0].meta.login = true;
+        // to.matched[0].meta.login = true;
         next();
         return;
       } else {
@@ -36,7 +35,6 @@ export default {
   components: {
     tap,
     cCourse,
-    search
   }
 };
 </script>

@@ -145,7 +145,7 @@ export default {
                     type: "success"
                   });
                   this.clearInput();
-                } else if (res.data.code === 500100) {
+                } else {
                   this.outAlert();
                 }
               })
@@ -165,7 +165,7 @@ export default {
                     type: "success"
                   });
                   this.clearInput();
-                } else if (res.data.code === 500100) {
+                } else {
                   this.outAlert();
                 }
               })

@@ -85,7 +85,7 @@ export default {
           this.userName === "cadministrator" &&
           this.password === "cadministrator"
         ) {
-          cookie.setCookie("cadministrator", "cadministrator", 5000);
+          cookie.setCookie("cadministrator", "cadministrator", 10000);
           this.$router.push({ name: "cadministrator" });
         } else {
           this.$message.error("账号或密码错误！");
@@ -97,17 +97,13 @@ export default {
           this.userName === "sadministrator" &&
           this.password === "sadministrator"
         ) {
-          cookie.setCookie("sadministrator", "sadministrator", 5000);
+          cookie.setCookie("sadministrator", "sadministrator", 10000);
           this.$router.push({ name: "sadministrator" });
         } else {
           this.$message.error("账号或密码错误！");
         }
       }
       if (this.radio === 3) {
-        var params = {
-          id: String(this.userName),
-          password: String(this.password)
-        };
         api
           .memberLogin({
             username: this.userName,
@@ -130,11 +126,6 @@ export default {
         this.error = null;
       }
       if (this.radio === 6) {
-        var params = {
-          id: String(this.userName),
-          password: String(this.password)
-        };
-        console.log(params);
         api
           .coachLogin({
             coachName: this.userName,
