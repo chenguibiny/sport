@@ -1,41 +1,50 @@
 <template>
   <div class="content">
     <change-message></change-message>
-    <button class="toLogin" @click="centerDialogVisible = true">注销</button>
+    <button
+      class="toLogin"
+      @click="centerDialogVisible = true"
+    >注销</button>
     <el-dialog
       title=""
       :visible.sync="centerDialogVisible"
       width="30%"
-      center>
+      center
+    >
       <span>确定要退出吗？</span>
-      <span slot="footer" class="dialog-footer">
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
         <el-button @click="centerDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="toLogin">确 定</el-button>
+        <el-button
+          type="primary"
+          @click="toLogin"
+        >确 定</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 <script>
 import changeMessage from "@/components/member/person-message.vue";
-import cookie from '@/cookie/cookie.js'
+import cookie from "@/cookie/cookie.js";
 export default {
-  data(){
-    return{
+  data() {
+    return {
       centerDialogVisible: false
-    }
+    };
   },
   components: {
     changeMessage
   },
-  methods:{
-    toLogin(){
+  methods: {
+    toLogin() {
       this.centerDialogVisible = false;
+      cookie.removeCookie("memberId");
       setTimeout(() => {
-        this.$route.matched[0].meta.login = false;
-        cookie.removeCookie("memberId");
-        this.$router.push('/');
+        // this.$route.matched[0].meta.login = false;
+        this.$router.push("/");
       }, 500);
-
     }
   }
 };
@@ -55,14 +64,13 @@ export default {
     line-height: 30px;
     cursor: pointer;
     span {
-    position: absolute;
-    display: block;
-    margin-top: -14px;
-    margin-left: 15px;
-    font-size: 16px;
-    color: #fff;
+      position: absolute;
+      display: block;
+      margin-top: -14px;
+      margin-left: 15px;
+      font-size: 16px;
+      color: #fff;
     }
-
   }
   .toLogin {
     position: absolute;
@@ -73,7 +81,7 @@ export default {
     line-height: 30px;
     text-decoration: none;
     background: #303133;
-    border:none;
+    border: none;
     cursor: pointer;
     right: 30px;
   }

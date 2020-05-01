@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-table
-      :data="currentPage"
+      :data="currentPageList"
       style="width: 90%"
       v-if="showcourselist"
     >
@@ -34,7 +34,7 @@
           <el-button
             size="mini"
             type="primary"
-            @click="handleEdit(scope.$index, scope.row)"
+            @click="showDetail(scope.$index, scope.row)"
           >查看详情</el-button>
         </template>
       </el-table-column>
@@ -193,7 +193,7 @@ export default {
     this.getData();
   },
   computed: {
-    currentPage() {
+    currentPageList() {
       return this.tableData.slice(
         (this.m - 1) * this.n,
         (this.m - 1) * this.n + this.n
@@ -226,7 +226,7 @@ export default {
           }
         });
     },
-    handleEdit(index, row) {
+    showDetail(index, row) {
       console.log(index, row);
       this.index = index;
       this.tid = row.tid;

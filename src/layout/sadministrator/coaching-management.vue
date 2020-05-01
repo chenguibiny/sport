@@ -238,7 +238,7 @@ export default {
     submitChange() {
       let form = deepClone(this.form);
       this.$confirm(
-        `确认修改会员 "${form.coachName}" 的密码为"${form.password}"吗？`
+        `确认修改教练 "${form.coachName}" 的密码为"${form.password}"吗？`
       )
         .then(_ => {
           api

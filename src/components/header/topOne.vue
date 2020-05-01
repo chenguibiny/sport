@@ -27,7 +27,7 @@ export default {
     toLogin(){
       this.centerDialogVisible = false;
       setTimeout(() => {
-        this.$route.matched[0].meta.login = false;
+        // this.$route.matched[0].meta.login = false;
         cookie.removeCookie("cadministrator")
         cookie.removeCookie("sadministrator")
         this.$router.push('/')
