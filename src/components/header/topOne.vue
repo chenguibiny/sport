@@ -1,6 +1,5 @@
 <template>
     <div class="content">
-        <!-- <router-link class="toLogin" to="/">注销</router-link> -->
         <button class="toLogin" @click="centerDialogVisible = true">注销</button>
         <el-dialog
           title=""
@@ -27,7 +26,6 @@ export default {
     toLogin(){
       this.centerDialogVisible = false;
       setTimeout(() => {
-        // this.$route.matched[0].meta.login = false;
         cookie.removeCookie("cadministrator")
         cookie.removeCookie("sadministrator")
         this.$router.push('/')

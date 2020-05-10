@@ -17,7 +17,6 @@
 export default {
   data() {
     return {
-      arr: ["公告信息管理", "教练管理","会员管理"]
     };
   }
 };

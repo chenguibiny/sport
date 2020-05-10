@@ -1,20 +1,17 @@
 <template>
   <div>
     <tap :List="show" />
-    <!-- <release /> -->
     <release-list />
   </div>
 </template>
 <script>
 import tap from "@/components/coach/img.vue";
-import release from "@/components/coach/release.vue";
 import releaseList from "@/components/coach/release-list.vue";
 import cookie from "@/cookie/cookie.js";
 export default {
   beforeRouteEnter(to, from, next) {
     cookie.getCookie("coachId", function(data) {
       if (data !== "undefined") {
-        // to.matched[0].meta.login = true;
         next();
         return;
       } else {
@@ -36,7 +33,6 @@ export default {
   },
   components: {
     tap,
-    release,
     releaseList
   }
 };

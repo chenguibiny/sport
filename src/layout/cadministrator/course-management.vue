@@ -8,7 +8,6 @@ export default {
   beforeRouteEnter(to, from, next) {
     cookie.getCookie("cadministrator", function(data) {
       if (data !== "undefined") {
-        // to.matched[0].meta.login = true;
         next();
         return;
       } else {

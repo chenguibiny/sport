@@ -1,7 +1,7 @@
 import axios from "@/axios";
 
 const api = {
-  // 注册
+  // 会员注册
   memberRegister(params) {
     return axios.post("/user/register", params);
   },
@@ -16,6 +16,7 @@ const api = {
   coachLogin(params) {
     return axios.post("/coach/login", params);
   },
+
   // 消息
   // 获取消息列表
   getMessage(params) {
@@ -29,6 +30,7 @@ const api = {
   deleteMessage(params) {
     return axios.post("/message/del", params);
   },
+
   // 会员
   // 获取某会员信息
   getUserInfo(params) {
@@ -58,9 +60,7 @@ const api = {
   toEvaluate(params) {
     return axios.post("/course/evaluate", params);
   },
-  //
-  //
-  //
+
   // 教练
   // 获取某教练信息
   getCoachInfo(params) {
@@ -94,9 +94,7 @@ const api = {
   changeTable(params) {
     return axios.post("/apply/changeTable", params);
   },
-  //
-  //
-  //
+
   // 系统管理员
   // 获取会员列表
   getUserList(params) {
@@ -118,9 +116,7 @@ const api = {
   changePassword(params) {
     return axios.post("/user/changePasswordByManager", params);
   },
-  //
-  //
-  //
+
   // 课程管理员
   // 获取所有课程
   getAllCourse(params) {

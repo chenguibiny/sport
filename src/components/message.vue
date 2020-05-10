@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <tap :List="message"/> -->
     <div class="message-page">
       <ul>
         <li
@@ -40,13 +39,13 @@ import { deepClone, formatDate } from "@/utils/deepClone.js";
 export default {
   data() {
     return {
-      // message:["看过来咯","这里将会有最新的消息哦！"],
       indexshow: null,
       showRight: null,
-      //存放所有数据
+      // 点击某条消息的详情
       title: "",
       time: "",
       context: "",
+      //存放所有数据
       arrList: [],
       //每页多少数据
       n: 8,
@@ -80,7 +79,6 @@ export default {
           });
           this.arrList = list;
         })
-        .catch(rej => {});
     },
     show(index) {
       this.indexshow = index;
