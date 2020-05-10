@@ -154,7 +154,6 @@ export default {
       sid: 0,
       cid: 0,
       showcourselist: true,
-      buy: false,
       // 课程信息,放置所有数据
       tableData: [
         // {
@@ -168,133 +167,6 @@ export default {
         //   count: 12,
         //   prohibit: true
         // },
-        // {
-        //   cid: 2,
-        //   cname: "腹肌撕裂者初级",
-        //   coachName: "陈桂槟",
-        //   location: "肇庆市肇庆学院",
-        //   cost: 2030,
-        //   description:
-        //     "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-        //   count: 12,
-        //   prohibit: false
-        // },
-        // {
-        //   cid: 3,
-        //   cname: "腹肌撕裂者初级",
-        //   coachName: "陈桂槟",
-        //   location: "肇庆市肇庆学院",
-        //   cost: 2030,
-        //   description:
-        //     "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-        //   count: 12,
-        //   prohibit: false
-        // },
-        // {
-        //   cid: 4,
-        //   cname: "腹肌撕裂者初级",
-        //   coachName: "陈桂槟",
-        //   location: "肇庆市肇庆学院",
-        //   cost: 2030,
-        //   description:
-        //     "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-        //   count: 12,
-        //   prohibit: false
-        // },
-        // {
-        //   cid: 5,
-        //   cname: "腹肌撕裂者初级",
-        //   coachName: "陈桂槟",
-        //   location: "肇庆市肇庆学院",
-        //   cost: 2030,
-        //   description:
-        //     "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-        //   count: 12,
-        //   prohibit: false
-        // },
-        // {
-        //   cid: 6,
-        //   cname: "腹肌撕裂者初级",
-        //   coachName: "陈桂槟",
-        //   location: "肇庆市肇庆学院",
-        //   cost: 2030,
-        //   description:
-        //     "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-        //   count: 12,
-        //   prohibit: false
-        // },
-        // {
-        //   cid: 7,
-        //   cname: "腹肌撕裂者进阶",
-        //   coachName: "陈",
-        //   location: "肇庆市肇庆学院123",
-        //   cost: 2000,
-        //   description:
-        //     "全球[最流行]的腹部动作，全方位打造腹肌线条！建议隔天练习，坚持2-4周后腹肌会越发清晰。",
-        //   count: 12,
-        //   prohibit: true
-        // },
-        // {
-        //   cid: 8,
-        //   cname: "哑铃手臂塑形",
-        //   coachName: "肖",
-        //   location: "上海市普陀区金沙江路343243",
-        //   cost: 21000,
-        //   description: "只要一副小哑铃就可以练出[好看的臂膀]",
-        //   count: 12,
-        //   prohibit: false
-        // },
-        // {
-        //   cid: 9,
-        //   cname: "健身房廋腿训练",
-        //   coachName: "林",
-        //   location: "上海市普陀区金沙江路132123123",
-        //   cost: 1050,
-        //   description:
-        //     "学生党的[廋腿]秘籍！动作简单有效，在床上也能轻松练习，帮你快速打造修长双腿！",
-        //   count: 12,
-        //   prohibit: true
-        // },
-        // {
-        //   cid: 10,
-        //   cname: "腹肌撕裂",
-        //   coachName: "1234",
-        //   location: "上海市普陀区金沙江路 1516 弄",
-        //   cost: 2030,
-        //   description: "",
-        //   count: 12,
-        //   prohibit: true
-        // },
-        // {
-        //   cid: 11,
-        //   cname: "腹肌撕裂",
-        //   coachName: "1234",
-        //   location: "上海市普陀区金沙江路 1516 弄",
-        //   cost: 2030,
-        //   description: "",
-        //   count: 12,
-        //   prohibit: true
-        // },
-        // {
-        //   cid: 12,
-        //   cname: "腹肌撕裂",
-        //   coachName: "1234",
-        //   location: "上海市普陀区金沙江路 1516 弄",
-        //   cost: 2030,
-        //   description: "",
-        //   count: 12,
-        //   prohibit: true
-        // },
-        // {
-        //   cid: 13,
-        //   cname: "腹肌撕裂",
-        //   coachName: "1234",
-        //   location: "上海市普陀区金沙江路 1516 弄",
-        //   cost: 2030,
-        //   description: "",
-        //   count: 12,
-        //   prohibit: true
-        // }
       ],
       n: 10,
       m: 1,
@@ -342,6 +214,7 @@ export default {
   },
   methods: {
     async getData() {
+      // 随便取一个会员的id，用来下面获取所有教练课程的列表
       await api.getUserList().then(res => {
         this.sid = res.data.data.list[0].sid;
       });
@@ -353,9 +226,7 @@ export default {
         })
         .then(res => {
           let list = res.data.data.map(v => {
-            if (v.prohibit === null) {
-              v.prohibit = 0;
-            }
+            v.prohibit = v.prohibit ? v.prohibit : 0;
             return v;
           });
           this.tableData = list;
@@ -367,7 +238,6 @@ export default {
       this.cid = row.cid;
       this.showcourselist = false;
       this.apartList = row;
-      this.buy = row.flag;
     },
     // 点击禁用按钮
     prohibit(index, row) {
@@ -405,13 +275,6 @@ export default {
           }
         });
       this.dialogTableVisible = true;
-    },
-    sign() {
-      this.$confirm("确定要报名吗？")
-        .then(_ => {
-          this.buy = true;
-        })
-        .catch(_ => {});
     },
     quit() {
       this.showcourselist = true;

@@ -70,8 +70,6 @@ export default {
   data() {
     return {
       searchWord: "",
-      // isHotPlace:false,
-      // isSearchList:false,
       isFocus: false,
       searchList: [],
       suggestList: ["哑铃", "腹肌", "腿部", "胸肌", "手臂"],
@@ -131,11 +129,6 @@ export default {
       });
     }
   }
-  //   watch: {
-  //     "$route.params.name": function() {
-  //       this.searchWord = this.$route.params.name;
-  //     }
-  //   }
 };
 </script>
 <style lang="scss">
