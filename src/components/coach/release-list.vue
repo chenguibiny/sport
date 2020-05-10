@@ -69,6 +69,7 @@
     </div>
     <!-- 课程列表 -->
     <el-table
+      v-loading="tableLoading"
       :data="currentPage"
       style="width: 90%; min-height:500px;"
       :row-class-name="tableRowClassName"
@@ -295,7 +296,8 @@ export default {
         }
       ],
       // 课程评价的show
-      dialogTableVisible: false
+      dialogTableVisible: false,
+      tableLoading: true
     };
   },
   async created() {
@@ -339,6 +341,7 @@ export default {
             });
             this.tableData = list;
             this.listSort();
+            this.tableLoading = false;
           }
         });
     },

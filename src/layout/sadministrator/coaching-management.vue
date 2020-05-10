@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-table
+      v-loading="tableLoading"
       :data="currentPage"
       style="width: 90%;margin:0 auto;min-height:600px;"
     >
@@ -132,7 +133,8 @@ export default {
       ],
       dialogFormVisible: false,
       formLabelWidth: "120px",
-      form: {}
+      form: {},
+      tableLoading:true
     };
   },
   created() {
@@ -152,6 +154,7 @@ export default {
         if (res.data.code === 1) {
           let list = deepClone(res.data.data.list);
           this.tableData = list;
+          this.tableLoading = false;
         }
       });
     },

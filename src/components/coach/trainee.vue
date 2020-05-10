@@ -1,6 +1,7 @@
 ﻿<template>
   <div>
     <el-table
+      v-loading="tableLoading"
       class="traineelist"
       :data="currentPage"
       style="width: 90%; min-height:550px;"
@@ -255,7 +256,8 @@ export default {
       centerDialogVisible: false,
       // 确认预约 show
       dialogVisible: false,
-      punch: 0
+      punch: 0,
+      tableLoading: true
     };
   },
   async created() {
@@ -321,6 +323,7 @@ export default {
               return v;
             });
             this.tableData = newList;
+            this.tableLoading = false;
           }
         });
     },

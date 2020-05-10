@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-table
+      v-loading="tableLoading"
       :data="currentPage"
       style="width: 90%;min-height:600px;"
       v-if="showcourselist"
@@ -251,7 +252,8 @@ export default {
       dialogFormVisible: false,
       formLabelWidth: "120px",
       // 我对某课程的课程评价
-      context: ""
+      context: "",
+      tableLoading: true
     };
   },
   async created() {
@@ -299,6 +301,7 @@ export default {
               return v;
             });
             this.tableData = list;
+            this.tableLoading = false;
           }
         });
     },

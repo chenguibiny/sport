@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-table
+      v-loading="tableLoading"
       :data="currentPage"
       style="width: 90%"
       v-if="showcourselist"
@@ -198,7 +199,8 @@ export default {
       // 禁用标志
       isprohibit: false,
       // 课程详情页  放临时数据
-      apartList: {}
+      apartList: {},
+      tableLoading: true
     };
   },
   async created() {
@@ -230,6 +232,7 @@ export default {
             return v;
           });
           this.tableData = list;
+          this.tableLoading = false;
         });
     },
     // 查看详情

@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-table
+      v-loading="tableLoading"
       :data="currentPage"
       style="width: 90%;margin:0 auto; min-height:600px;"
     >
@@ -134,76 +135,12 @@ export default {
         //   sid: 2,
         //   username: "wangxiaohu",
         //   password: "1321"
-        // },
-        // {
-        //   sid: 3,
-        //   username: "wangxiaohu",
-        //   password: "1231"
-        // },
-        // {
-        //   sid: 4,
-        //   username: "wangxiaohu",
-        //   password: "1341"
-        // },
-        // {
-        //   sid: 5,
-        //   username: "wangxiaohu",
-        //   password: "2341"
-        // },
-        // {
-        //   sid: 6,
-        //   username: "wangxiaohu",
-        //   password: "151"
-        // },
-        // {
-        //   sid: 7,
-        //   username: "wangxiaohu",
-        //   password: "3221"
-        // },
-        // {
-        //   sid: 8,
-        //   username: "wangxiaohu",
-        //   password: "1312"
-        // },
-        // {
-        //   sid: 9,
-        //   username: "wangxiaohu",
-        //   password: "4124321"
-        // },
-        // {
-        //   sid: 10,
-        //   username: "wangxiaohu",
-        //   password: "34124"
-        // },
-        // {
-        //   sid: 11,
-        //   username: "wangxiaohu",
-        //   password: "41412"
-        // },
-        // {
-        //   sid: 12,
-        //   username: "wangxiaohu",
-        //   password: "123412"
-        // },
-        // {
-        //   sid: 13,
-        //   username: "wangxiaohu",
-        //   password: "13421"
-        // },
-        // {
-        //   sid: 14,
-        //   username: "wangxiaohu",
-        //   password: "354234"
-        // },
-        // {
-        //   sid: 15,
-        //   username: "wangxiaohu",
-        //   password: "3464"
         // }
       ],
       dialogFormVisible: false,
       formLabelWidth: "120px",
-      form: {}
+      form: {},
+      tableLoading: true
     };
   },
   created() {
@@ -224,6 +161,7 @@ export default {
         if (res.data.code === 1) {
           let list = deepClone(res.data.data.list);
           this.tableData = list;
+          this.tableLoading = false;
         }
       });
     },

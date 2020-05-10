@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-table
+      v-loading="tableLoading"
       :data="currentPage"
       style="width: 90%"
       v-if="showcourselist"
@@ -168,7 +169,8 @@ export default {
         description:
           "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
         count: 12
-      }
+      },
+      tableLoading: true
     };
   },
   async created() {
@@ -217,6 +219,7 @@ export default {
               }
               return true;
             });
+            this.tableLoading = false;
           }
         });
     },

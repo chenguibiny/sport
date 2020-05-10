@@ -13,6 +13,7 @@
       <el-divider></el-divider>
 
       <el-table
+        v-loading="tableLoading"
         :data="currentPage"
         style="width: 100%;min-height:600px;"
       >
@@ -209,11 +210,12 @@ export default {
 
       tableData: [],
       // 详情页信息
-      currentForm: {}
+      currentForm: {},
+      tableLoading: true
     };
   },
-  async created() {
-    await this.getData();
+   created() {
+     this.getData();
   },
   computed: {
     currentPage() {
@@ -233,9 +235,9 @@ export default {
         return 1;
       }
     },
-    getData() {
+    async getData() {
       let list;
-      api
+      await api
         .getMessage()
         .then(res => {
           list = res.data.data.list.map(v => {
@@ -246,6 +248,7 @@ export default {
             return this.timeSort(a.ptime, b.ptime);
           });
           this.tableData = list;
+          this.tableLoading = false;
         })
         .catch(rej => {});
     },
@@ -269,6 +272,7 @@ export default {
         this.form.ptime = this.getTime();
         this.$confirm("确定要提交内容吗？")
           .then(_ => {
+            this.tableLoading = true;
             this.loading = true;
             let { title, context, ptime } = deepClone(this.form);
             api
@@ -291,7 +295,7 @@ export default {
                     done();
                   }, 1000);
                 }
-              })
+              });
           })
           .catch(_ => {});
       } else {
@@ -311,8 +315,9 @@ export default {
     // 确认修改公告
     changeNodes() {
       if (this.formChange.title && this.formChange.context) {
+        this.tableLoading = true;
         let nid = this.nid;
-        let {title,ptime,context} = this.formChange;
+        let { title, ptime, context } = this.formChange;
         api
           .saveMessage({
             nid,
@@ -328,7 +333,7 @@ export default {
               });
               this.getData();
             }
-          })
+          });
         this.dialogFormVisible = false;
       } else {
         this.$alert("请完善所有的信息！", "", {
@@ -360,7 +365,7 @@ export default {
                 });
                 this.getData();
               }
-            })
+            });
         })
         .catch(_ => {});
     },
