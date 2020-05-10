@@ -129,24 +129,11 @@ export default {
       memberId: 0,
       cid: 0,
       showcourselist: true,
-      // 索引
-      index: 0,
       //该会员是否该买了该课程
       havePaid: false,
       // 当前详情的教练的id
       tid: 0,
       myselfform: {},
-      // 课程信息,放置所有数据
-      obj: {
-        cid: 1,
-        cname: "背部健美",
-        cost: 800,
-        coachName: "晓梦",
-        location: "xx广场一楼108室",
-        description: "啦啦",
-        count: "36",
-        havePaid: 1
-      },
       tableData: [],
       n: 8,
       m: 1,
@@ -221,9 +208,7 @@ export default {
           if (res.data.code === 1) {
             let form = deepClone(res.data.data);
             let newList = form.map(v => {
-              if (v.prohibit === null) {
-                v.prohibit = 0;
-              }
+              v.prohibit = v.prohibit ? v.prohibit : 0;
               return v;
             });
             this.tableData = newList.filter(v => {
@@ -237,7 +222,6 @@ export default {
     },
     handleEdit(index, row) {
       console.log(index, row);
-      this.index = index;
       this.tid = row.tid;
       this.showcourselist = false;
       this.apartList = row;
@@ -303,14 +287,15 @@ export default {
                   });
                   this.havePaid = true;
                   let form = deepClone(this.myselfform);
+                  let { birthday, phone, sex, username } = form;
                   form.money = form.money - this.apartList.cost;
                   api.saveUserInfo({
                     sid: this.memberId,
-                    birthday: form.birthday,
+                    birthday,
                     money: form.money,
-                    phone: form.phone,
-                    sex: form.sex ? (form.sex === "male" ? 1 : 2) : 0,
-                    username: form.username
+                    phone,
+                    sex: sex ? (sex === "male" ? 1 : 2) : 0,
+                    username
                   });
                   this.getData();
                   this.quit();

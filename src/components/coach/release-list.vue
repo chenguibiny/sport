@@ -251,14 +251,11 @@ export default {
 
       coachId: 0,
       cid: 0,
-      index: 0,
       // 编辑信息的show
       dialogFormVisible: false,
       // 编辑课程内容
       changeform: {},
       formLabelWidth: "120px",
-
-      flag: false,
       //存放所有数据
       tableData: [
         {
@@ -391,7 +388,6 @@ export default {
     // 查看课程评价
     async showEvaluation(index, row) {
       console.log(index, row);
-      this.index = index;
       this.cid = row.cid;
       await api
         .getCourseEvaluate({

@@ -190,7 +190,6 @@ export default {
     return {
       memberId: 0,
       cid: 0,
-      index: 0,
       // 切换展示
       showcourselist: true,
       cloneMessage: {},
