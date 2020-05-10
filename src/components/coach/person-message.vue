@@ -176,20 +176,8 @@ export default {
         rePass: [{ validator: validatePass2, trigger: "blur" }]
       },
       form: {}
-      // coach:{
-      //       username:"甄子丹",
-      //       password:"123",
-      //       birthday:"1998-01-23",
-      //       sex:"男",
-      //       phone:"15218968678",
-      // }
     };
   },
-  // computed: {
-  //   form() {
-  //     return this.$store.state.coach;
-  //   }
-  // },
   methods: {
     async changeMessage() {
       this.error = null;
@@ -233,14 +221,14 @@ export default {
           setTimeout(() => {
             this.loading = false;
             let form = deepClone(this.form);
-            console.log("提交的form", form);
+            let { birthday, phone, sex, coachName } = form;
             api
               .coachRegister({
                 tid: this.coachId,
-                birthday: form.birthday,
-                phone: form.phone,
-                sex: form.sex ? (form.sex === "male" ? 1 : 2) : 0,
-                coachName: form.coachName
+                birthday,
+                phone,
+                sex: sex ? (sex === "male" ? 1 : 2) : 0,
+                coachName
               })
               .then(res => {
                 if (res.data.code === 1) {
@@ -250,7 +238,6 @@ export default {
                   });
                 }
               });
-            this.$store.commit("changeCoachMessage", this.form);
             done();
           }, 2000);
         })
@@ -283,7 +270,6 @@ export default {
                     this.error = res.data.msg;
                   }
                 })
-                .catch(rej => {});
               this.ruleForm.pass = "";
               this.ruleForm.rePass = "";
             })

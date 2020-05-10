@@ -142,7 +142,7 @@
 
         <!-- 充值 -->
         <el-dialog
-          append-to-body="true"
+          :append-to-body="true"
           title=""
           :visible.sync="dialogFormVisible"
         >
@@ -223,22 +223,8 @@ export default {
       },
       // 存放个人信息
       form: {}
-      //  模拟数据
-      // member:{
-      //       username:"陈桂槟",
-      //       password:"123",
-      //       birthday:"1998-01-02",
-      //       sex:"男",
-      //       phone:"15218968678",
-      //       money:20000
-      // }
     };
   },
-  // computed: {
-  //   form() {
-  //     return this.$store.state.member;
-  //   }
-  // },
   methods: {
     async changeMessage() {
       this.error = null;
@@ -248,7 +234,6 @@ export default {
         memberId = data;
       });
       this.memberId = memberId;
-      console.log("memberId", this.memberId);
       api
         .getUserInfo({
           params: {
@@ -274,7 +259,6 @@ export default {
             this.dialog = true;
           }
         });
-      // this.form = this.member;
     },
     // 外层提交表单
     handleClose1(done) {
@@ -284,15 +268,15 @@ export default {
           this.loading = true;
           setTimeout(() => {
             this.loading = false;
-            let form = deepClone(this.form);
+            let {birthday,money,phone,sex,username} = deepClone(this.form);
             api
               .saveUserInfo({
                 sid: this.memberId,
-                birthday: form.birthday,
-                money: form.money,
-                phone: form.phone,
-                sex: form.sex ? (form.sex === "male" ? 1 : 2) : 0,
-                username: form.username
+                birthday,
+                money,
+                phone,
+                sex: sex ? (sex === "male" ? 1 : 2) : 0,
+                username
               })
               .then(res => {
                 if (res.data.code === 1) {
@@ -302,7 +286,6 @@ export default {
                   });
                 }
               });
-            this.$store.commit("changeMemberMessage", this.form);
             done();
           }, 2000);
         })
@@ -336,7 +319,6 @@ export default {
                     this.error = res.data.msg;
                   }
                 })
-                .catch(rej => {});
               this.ruleForm.pass = "";
               this.ruleForm.rePass = "";
             })
@@ -365,18 +347,19 @@ export default {
             let form = deepClone(this.form);
             // 拿到暂存的值，防止充值前修改了 性别、电话、生日，充值后一并修改了。
             let temporalForm = deepClone(this.temporalForm);
+            let {birthday,phone,sex,username} = temporalForm;
             api
               .saveUserInfo({
                 sid: this.memberId,
-                birthday: temporalForm.birthday,
+                birthday,
                 money: form.money,
-                phone: temporalForm.phone,
-                sex: temporalForm.sex
-                  ? temporalForm.sex === "male"
+                phone,
+                sex: sex
+                  ? sex === "male"
                     ? 1
                     : 2
                   : 0,
-                username: form.username
+                username
               })
               .then(res => {
                 if (res.data.code === 1) {
@@ -391,7 +374,6 @@ export default {
           }
         })
         .catch(_ => {});
-      // this.$store.commit("changeMemberMessage", this.form);
     }
   }
 };
