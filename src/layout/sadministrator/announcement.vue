@@ -172,7 +172,6 @@ export default {
   beforeRouteEnter(to, from, next) {
     cookie.getCookie("sadministrator", function(data) {
       if (data !== "undefined") {
-        // to.matched[0].meta.login = true;
         next();
         return;
       } else {
@@ -271,12 +270,12 @@ export default {
         this.$confirm("确定要提交内容吗？")
           .then(_ => {
             this.loading = true;
-            let form = deepClone(this.form);
+            let { title, context, ptime } = deepClone(this.form);
             api
               .saveMessage({
-                title: form.title,
-                context: form.context,
-                ptime: form.ptime
+                title,
+                context,
+                ptime
               })
               .then(res => {
                 if (res.data.code === 1) {
@@ -293,7 +292,6 @@ export default {
                   }, 1000);
                 }
               })
-              .catch(rej => {});
           })
           .catch(_ => {});
       } else {
@@ -313,12 +311,14 @@ export default {
     // 确认修改公告
     changeNodes() {
       if (this.formChange.title && this.formChange.context) {
+        let nid = this.nid;
+        let {title,ptime,context} = this.formChange;
         api
           .saveMessage({
-            nid: this.nid,
-            title: this.formChange.title,
-            ptime: this.formChange.ptime,
-            context: this.formChange.context
+            nid,
+            title,
+            ptime,
+            context
           })
           .then(res => {
             if (res.data.code === 1) {
@@ -329,7 +329,6 @@ export default {
               this.getData();
             }
           })
-          .catch(rej => {});
         this.dialogFormVisible = false;
       } else {
         this.$alert("请完善所有的信息！", "", {
@@ -360,13 +359,8 @@ export default {
                   type: "success"
                 });
                 this.getData();
-              } else {
-                console.log(res);
               }
             })
-            .catch(rej => {
-              console.log(rej);
-            });
         })
         .catch(_ => {});
     },

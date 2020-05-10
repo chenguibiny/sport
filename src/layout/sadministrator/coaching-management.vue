@@ -102,7 +102,6 @@ export default {
   beforeRouteEnter(to, from, next) {
     cookie.getCookie("sadministrator", function(data) {
       if (data !== "undefined") {
-        // to.matched[0].meta.login = true;
         next();
         return;
       } else {
@@ -130,76 +129,6 @@ export default {
         //   coachName:"wangxiaohu",
         //   password:"11111",
         // },
-        // {
-        //   tid:2,
-        //   coachName:"wangxiaohu",
-        //   password:"1321",
-        // },
-        // {
-        //   tid:3,
-        //   coachName:"wangxiaohu",
-        //   password:"1231",
-        // },
-        // {
-        //   tid:4,
-        //   coachName:"wangxiaohu",
-        //   password:"1341",
-        // },
-        // {
-        //   tid:5,
-        //   coachName:"wangxiaohu",
-        //   password:"2341",
-        // },
-        // {
-        //   tid:6,
-        //   coachName:"wangxiaohu",
-        //   password:"151",
-        // },
-        // {
-        //   tid:7,
-        //   coachName:"wangxiaohu",
-        //   password:"3221",
-        // },
-        // {
-        //   tid:8,
-        //   coachName:"wangxiaohu",
-        //   password:"1312",
-        // },
-        // {
-        //   tid:9,
-        //   coachName:"wangxiaohu",
-        //   password:"4124321",
-        // },
-        // {
-        //   tid:10,
-        //   coachName:"wangxiaohu",
-        //   password:"34124",
-        // },
-        // {
-        //   tid:11,
-        //   coachName:"wangxiaohu",
-        //   password:"41412",
-        // },
-        // {
-        //   tid:12,
-        //   coachName:"wangxiaohu",
-        //   password:"123412",
-        // },
-        // {
-        //   tid:13,
-        //   coachName:"wangxiaohu",
-        //   password:"13421",
-        // },
-        // {
-        //   tid:14,
-        //   coachName:"wangxiaohu",
-        //   password:"354234",
-        // },
-        // {
-        //   tid:15,
-        //   coachName:"wangxiaohu",
-        //   password:"3464",
-        // }
       ],
       dialogFormVisible: false,
       formLabelWidth: "120px",

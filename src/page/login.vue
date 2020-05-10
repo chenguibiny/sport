@@ -70,7 +70,6 @@ export default {
       this.$router.push({ name: "register" });
     },
     click() {
-      // console.log(this.userName,this.password,this.radio);
       if (!this.userName) {
         this.error = "请输入用户名";
         return false;
@@ -120,9 +119,6 @@ export default {
               this.$message.error("账号或密码错误！");
             }
           })
-          .catch(rej => {
-            console.log(rej);
-          });
         this.error = null;
       }
       if (this.radio === 6) {
@@ -143,9 +139,6 @@ export default {
               this.$message.error("账号或密码错误！");
             }
           })
-          .catch(rej => {
-            console.log(rej);
-          });
         this.error = null;
       }
     }

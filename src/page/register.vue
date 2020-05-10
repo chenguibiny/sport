@@ -135,8 +135,8 @@ export default {
           if (this.radio == 3) {
             api
               .memberRegister({
-                username: String(username),
-                password: String(password)
+                username,
+                password
               })
               .then(res => {
                 if (res.data.code === 1) {
@@ -148,15 +148,12 @@ export default {
                 } else {
                   this.outAlert();
                 }
-              })
-              .catch(rej => {
-                console.log(rej);
               });
           } else if (this.radio == 6) {
             api
               .coachRegister({
-                coachName: String(username),
-                password: String(password)
+                coachName: username,
+                password
               })
               .then(res => {
                 if (res.data.code === 1) {
@@ -168,14 +165,8 @@ export default {
                 } else {
                   this.outAlert();
                 }
-              })
-              .catch(rej => {
-                console.log(rej);
               });
           }
-        } else {
-          console.log("error submit!!");
-          return false;
         }
       });
     },

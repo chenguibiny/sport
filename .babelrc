@@ -13,8 +13,8 @@
   ],
   "plugins": [
     "transform-vue-jsx",
-    "transform-runtime",
-    "@babel/plugin-proposal-optional-chaining",
-    "@babel/plugin-proposal-nullish-coalescing-operator"
+    "transform-runtime"
+    // "@babel/plugin-proposal-optional-chaining",
+    // "@babel/plugin-proposal-nullish-coalescing-operator"
   ]
 }
