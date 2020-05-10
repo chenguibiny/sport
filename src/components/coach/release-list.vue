@@ -217,7 +217,6 @@
               >确 定</el-button>
             </div>
           </el-dialog>
-          <!-- <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -272,164 +271,6 @@ export default {
             "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
           count: 12,
           prohibit: 1
-        },
-        {
-          cid: 2,
-          cname: "腹肌撕裂者进阶",
-          name: "陈",
-          location: "肇庆市肇庆学院123",
-          cost: 2000,
-          description:
-            "全球[最流行]的腹部动作，全方位打造腹肌线条！建议隔天练习，坚持2-4周后腹肌会越发清晰。",
-          count: 12,
-          prohibit: 0
-        },
-        {
-          cid: 3,
-          cname: "哑铃手臂塑形",
-          name: "肖",
-          location: "上海市普陀区金沙江路343243",
-          cost: 21000,
-          description: "只要一副小哑铃就可以练出[好看的臂膀]",
-          count: 12,
-          prohibit: 0
-        },
-        {
-          cid: 4,
-          cname: "健身房廋腿训练",
-          name: "林",
-          location: "上海市普陀区金沙江路132123123",
-          cost: 1050,
-          description:
-            "学生党的[廋腿]秘籍！动作简单有效，在床上也能轻松练习，帮你快速打造修长双腿！",
-          count: 12,
-          prohibit: 1
-        },
-        {
-          cid: 5,
-          cname: "腹肌撕裂",
-          name: "1234",
-          location: "上海市普陀区金沙江路 1516 弄",
-          cost: 2030,
-          description: "",
-          count: 12,
-          prohibit: 1
-        },
-        {
-          cid: 6,
-          cname: "腹肌撕裂",
-          name: "1234",
-          location: "上海市普陀区金沙江路 1516 弄",
-          cost: 2030,
-          description: "",
-          count: 12,
-          prohibit: 0
-        },
-        {
-          cid: 7,
-          cname: "腹肌撕裂",
-          name: "1234",
-          location: "上海市普陀区金沙江路 1516 弄",
-          cost: 2030,
-          description: "",
-          count: 12,
-          prohibit: 0
-        },
-        {
-          cid: 8,
-          cname: "腹肌撕裂",
-          name: "1234",
-          location: "上海市普陀区金沙江路 1516 弄",
-          cost: 2030,
-          description: "",
-          count: 12,
-          prohibit: 0
-        },
-        {
-          cid: 9,
-          cname: "腹肌撕裂者初级",
-          name: "陈桂槟",
-          location: "肇庆市肇庆学院",
-          cost: 2030,
-          description:
-            "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-          count: 12,
-          prohibit: 0
-        },
-        {
-          cid: 10,
-          cname: "腹肌撕裂者进阶",
-          name: "陈",
-          location: "肇庆市肇庆学院123",
-          cost: 2000,
-          description:
-            "全球[最流行]的腹部动作，全方位打造腹肌线条！建议隔天练习，坚持2-4周后腹肌会越发清晰。",
-          count: 12,
-          prohibit: 0
-        },
-        {
-          cid: 11,
-          cname: "哑铃手臂塑形",
-          name: "肖",
-          location: "上海市普陀区金沙江路343243",
-          cost: 21000,
-          description: "只要一副小哑铃就可以练出[好看的臂膀]",
-          count: 12,
-          prohibit: 0
-        },
-        {
-          cid: 12,
-          cname: "健身房廋腿训练",
-          name: "林",
-          location: "上海市普陀区金沙江路132123123",
-          cost: 1050,
-          description:
-            "学生党的[廋腿]秘籍！动作简单有效，在床上也能轻松练习，帮你快速打造修长双腿！",
-          count: 12,
-          prohibit: 0
-        },
-        {
-          cid: 13,
-          cname: "腹肌撕裂者初级",
-          name: "陈桂槟",
-          location: "肇庆市肇庆学院",
-          cost: 2030,
-          description:
-            "全球流行的腹部动作，锻炼你的腹肌。建议每周练习3-5次，训练中出现气喘和腹部[撕裂]、[酸胀]感属于正常现象，坚持2-4周后腹肌感觉会逐渐减弱，可进入进阶课程。",
-          count: 12,
-          prohibit: 0
-        },
-        {
-          cid: 14,
-          cname: "腹肌撕裂者进阶",
-          name: "陈",
-          location: "肇庆市肇庆学院123",
-          cost: 2000,
-          description:
-            "全球[最流行]的腹部动作，全方位打造腹肌线条！建议隔天练习，坚持2-4周后腹肌会越发清晰。",
-          count: 12,
-          prohibit: 0
-        },
-        {
-          cid: 15,
-          cname: "哑铃手臂塑形",
-          name: "肖",
-          location: "上海市普陀区金沙江路343243",
-          cost: 21000,
-          description: "只要一副小哑铃就可以练出[好看的臂膀]",
-          count: 12,
-          prohibit: 0
-        },
-        {
-          cid: 16,
-          cname: "健身房廋腿训练",
-          name: "林",
-          location: "上海市普陀区金沙江路132123123",
-          cost: 1050,
-          description:
-            "学生党的[廋腿]秘籍！动作简单有效，在床上也能轻松练习，帮你快速打造修长双腿！",
-          count: 12,
-          prohibit: 0
         }
       ],
       //每页多少数据
@@ -479,6 +320,7 @@ export default {
   },
   methods: {
     listSort() {
+      // 将禁用的课程放掉最后面
       this.tableData.sort((a, b) => {
         return a.prohibit - b.prohibit;
       });
@@ -493,14 +335,9 @@ export default {
         .then(res => {
           if (res.data.code === 1) {
             let list = deepClone(res.data.data);
-            console.log("mycourse", list);
             list.map(e => {
-              if (e.count === null) {
-                e.count = 0;
-              }
-              if (e.prohibit === null) {
-                e.prohibit = 0;
-              }
+              e.count = e.count ? e.count : 0;
+              e.prohibit = e.prohibit ? e.prohibit : 0;
               return e;
             });
             this.tableData = list;
@@ -516,21 +353,17 @@ export default {
       return "";
     },
     addCourse() {
-      if (
-        this.addform.cname &&
-        this.addform.cost &&
-        this.addform.location &&
-        this.addform.description
-      ) {
+      let { cname, cost, location, description } = this.addform;
+      if (cname && cost && location && description) {
         this.$confirm("确定添加此课程吗？")
           .then(_ => {
             api
               .saveCourse({
                 tid: this.coachId,
-                cname: this.addform.cname,
-                cost: this.addform.cost,
-                location: this.addform.location,
-                description: this.addform.description
+                cname,
+                cost,
+                location,
+                description
               })
               .then(res => {
                 if (res.data.code === 1) {
@@ -583,20 +416,16 @@ export default {
     // 确认修改
     changeCourseMessage() {
       let change = deepClone(this.changeform);
-      if (
-        change.cname &&
-        change.cost &&
-        change.description &&
-        change.location
-      ) {
+      let { cid, cname, cost, count, description, location } = change;
+      if (cname && cost && description && location) {
         api
           .saveCourse({
-            cid: change.cid,
-            cname: change.cname,
-            cost: change.cost,
-            count: change.count,
-            description: change.description,
-            location: change.location,
+            cid,
+            cname,
+            cost,
+            count,
+            description,
+            location,
             tid: change.tid
           })
           .then(res => {
@@ -634,12 +463,7 @@ export default {
                   type: "success"
                 });
                 this.getData();
-              } else {
-                console.log(res);
               }
-            })
-            .catch(rej => {
-              console.log(rej);
             });
         })
         .catch(_ => {});

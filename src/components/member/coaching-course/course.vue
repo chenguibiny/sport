@@ -153,23 +153,23 @@ export default {
 
       // 课程评价内容   放临时数据
       gridData: [
-        {
-          username: "肖",
-          context:
-            "教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评！"
-        },
-        {
-          username: "林",
-          context: "教练很走心，好评！"
-        },
-        {
-          username: "邱",
-          context: "教练很走心，好评！"
-        },
-        {
-          username: "钟",
-          context: "教练很走心，好评！"
-        }
+        // {
+        //   username: "肖",
+        //   context:
+        //     "教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评教练很走心，好评！"
+        // },
+        // {
+        //   username: "林",
+        //   context: "教练很走心，好评！"
+        // },
+        // {
+        //   username: "邱",
+        //   context: "教练很走心，好评！"
+        // },
+        // {
+        //   username: "钟",
+        //   context: "教练很走心，好评！"
+        // }
       ],
       dialogTableVisible: false,
       // 课程详情页  放临时数据
@@ -212,9 +212,7 @@ export default {
           if (res.data.code === 1) {
             let form = deepClone(res.data.data);
             let newList = form.map(v => {
-              if (v.prohibit === null) {
-                v.prohibit = 0;
-              }
+              v.prohibit = v.prohibit ? v.prohibit : 0;
               return v;
             });
             this.tableData = newList.filter(v => {
@@ -294,21 +292,20 @@ export default {
                   });
                   this.havePaid = true;
                   let form = deepClone(this.myselfform);
+                  let { birthday, phone, sex, username } = form;
                   form.money = form.money - this.apartList.cost;
                   api.saveUserInfo({
                     sid: this.memberId,
-                    birthday: form.birthday,
+                    birthday,
                     money: form.money,
-                    phone: form.phone,
-                    sex: form.sex ? (form.sex === "male" ? 1 : 2) : 0,
-                    username: form.username
+                    phone,
+                    sex: sex ? (sex === "male" ? 1 : 2) : 0,
+                    username
                   });
                   this.getData();
                   this.quit();
-                } else {
                 }
               })
-              .catch(rej => {});
           } else {
             this.$confirm("余额不足以购买该课程，请先充值！")
               .then(_ => {})
